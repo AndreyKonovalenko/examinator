@@ -11,10 +11,7 @@ const routes = [
   {
     path: 'app',
     element: <MainLayout />,
-    children: [
-      { path: 'quiz', element: <Quiz /> },
-      { path: '*', element: <Navigate to='/404' /> },
-    ],
+    children: [{ path: 'quiz', element: <Quiz /> }],
   },
   {
     path: '/',
@@ -22,8 +19,6 @@ const routes = [
     children: [
       { path: 'login', element: <Login /> },
       { path: 'admin', element: <Admin /> },
-      { path: '404', element: <NotFound /> },
-      { path: '*', element: <Navigate to='/404' /> },
     ],
   },
 ];

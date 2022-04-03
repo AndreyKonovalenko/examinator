@@ -1,156 +1,141 @@
-import React from 'react';
-import { useState } from 'react';
+import * as React from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 import {
   Box,
   Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Divider,
-  TextareaAutosize,
+  Container,
+  Grid,
+  Link,
+  TextField,
   Typography,
 } from '@mui/material';
 
-const TextFormaterCard = () => {
-  const [textData, setTextData] = useState('');
-  const [presentData, setPresentData] = useState('');
-  const [pastData, setPastData] = useState('');
+const Login = () => {
+  // const navigate = useNavigate();
 
-  const onSumbmitHandler = (event) => {
-    event.preventDefault();
-    console.log(`"Your text ${textData}"`);
-  };
-  const onChangeHandler = (event) => {
-    setTextData(event.target.value);
-
-    console.log(event.target.value);
-  };
-
-  const clearFields = () => {
-    setPresentData('');
-    setPastData('');
-    setTextData('');
-  };
-
-  const onSaveHandler = (id) => {
-    let copyText = document.getElementById(id);
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-    document.execCommand('copy');
-  };
-
-  const sortText = (data) => {
-    let myArr = data.split(/\n/g);
-    let presentResult = '';
-    let pastResult = '';
-    myArr.forEach(function (element) {
-      element = element.replaceAll(/\t/g, ' ');
-      let re = /\(/g;
-      if (element.search(re) !== -1) {
-        if (element !== '') {
-          pastResult = pastResult + element + '\n';
-        }
-      } else {
-        if (element !== '') {
-          presentResult = presentResult + element + '\n';
-        }
-      }
-    });
-    setPresentData(presentResult);
-    setPastData(pastResult);
-  };
+  // const formik = useFormik({
+  //   initialValues: {
+  //     email: 'demo@devias.io',
+  //     password: 'Password123',
+  //   },
+  //   validationSchema: Yup.object().shape({
+  //     email: Yup.string()
+  //       .email('Must be a valid email')
+  //       .max(255)
+  //       .required('Email is required'),
+  //     password: Yup.string().max(255).required('Password is required'),
+  //   }),
+  //   onSubmit: () => {
+  //     navigate('/app/quiz', { replace: true });
+  //   },
+  // });
 
   return (
-    <Card>
-      <CardHeader
-        subheader='Введите текс который нужно отформатировать'
-        title='TextFormater'
-      />
-      <Divider />
-      <CardContent>
-        <TextareaAutosize
-          aria-label='input'
-          color='textSecondary'
-          id={'input'}
-          value={textData}
-          minRows={10}
-          onSubmit={onSumbmitHandler}
-          onChange={onChangeHandler}
-          style={{ width: '100%' }}
-          placeholder='Empty'
-        />
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-evenly',
-            p: 2,
-          }}>
-          <Button
-            onClick={() => sortText(textData)}
-            color='primary'
-            variant='contained'>
-            FORMAT
-          </Button>
-          <Button onClick={clearFields} color='primary' variant='contained'>
-            CLEAR
-          </Button>
-        </Box>
-        <Typography color='textSecondary' variant='body1'>
-          Present
-        </Typography>
-        <TextareaAutosize
-          aria-label='present'
-          color='textSecondary'
-          id={'present'}
-          value={presentData}
-          minRows={10}
-          onSubmit={onSumbmitHandler}
-          onChange={onChangeHandler}
-          style={{ width: '100%' }}
-          placeholder='Empty'
-        />
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            p: 2,
-          }}>
-          <Button
-            onClick={() => onSaveHandler('present')}
-            color='primary'
-            variant='contained'>
-            SAVE
-          </Button>
-        </Box>
-        <Typography color='textSecondary' variant='body1'>
-          Past
-        </Typography>
-        <TextareaAutosize
-          aria-label='past'
-          color='textSecondary'
-          id={'past'}
-          value={pastData}
-          minRows={10}
-          onSubmit={onSumbmitHandler}
-          onChange={onChangeHandler}
-          style={{ width: '100%' }}
-          placeholder='Empty'
-        />
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            p: 2,
-          }}>
-          <Button
-            onClick={() => onSaveHandler('past')}
-            color='primary'
-            variant='contained'>
-            SAVE
-          </Button>
-        </Box>
-      </CardContent>
-    </Card>
+    <>
+      <Helmet>
+        <title>Login | Material Kit</title>
+      </Helmet>
+      <Box
+        sx={{
+          backgroundColor: 'background.default',
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          justifyContent: 'center',
+        }}>
+        <Container maxWidth='sm'>
+          <form onSubmit={() => {}}>
+            <Box sx={{ mb: 3 }}>
+              <Typography color='textPrimary' variant='h2'>
+                Sign in
+              </Typography>
+              <Typography color='textSecondary' gutterBottom variant='body2'>
+                Sign in on the internal platform
+              </Typography>
+            </Box>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6}>
+                <Button
+                  color='primary'
+                  fullWidth
+                  startIcon={''}
+                  onClick={() => {}}
+                  size='large'
+                  variant='contained'>
+                  Login with Facebook
+                </Button>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Button
+                  fullWidth
+                  startIcon={''}
+                  onClick={() => {}}
+                  size='large'
+                  variant='contained'>
+                  Login with Google
+                </Button>
+              </Grid>
+            </Grid>
+            <Box
+              sx={{
+                pb: 1,
+                pt: 3,
+              }}>
+              <Typography align='center' color='textSecondary' variant='body1'>
+                or login with email address
+              </Typography>
+            </Box>
+            <TextField
+              error={Boolean(() => {})}
+              fullWidth
+              helperText={() => {}}
+              label='Email Address'
+              margin='normal'
+              name='email'
+              onBlur={() => {}}
+              onChange={() => {}}
+              type='email'
+              value={() => {}}
+              variant='outlined'
+            />
+            <TextField
+              error={Boolean(() => {})}
+              fullWidth
+              helperText={() => {}}
+              label='Password'
+              margin='normal'
+              name='password'
+              onBlur={() => {}}
+              onChange={() => {}}
+              type='password'
+              value={() => {}}
+              variant='outlined'
+            />
+            <Box sx={{ py: 2 }}>
+              <Button
+                color='primary'
+                disabled={() => {}}
+                fullWidth
+                size='large'
+                type='submit'
+                variant='contained'>
+                Sign in now
+              </Button>
+            </Box>
+            <Typography color='textSecondary' variant='body1'>
+              Don&apos;t have an account?{' '}
+              <Link component={RouterLink} to='/app/quiz' variant='h6'>
+                Sign up
+              </Link>
+            </Typography>
+          </form>
+        </Container>
+      </Box>
+    </>
   );
 };
-export default TextFormaterCard;
+
+export default Login;
