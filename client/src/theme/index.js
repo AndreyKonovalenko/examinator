@@ -1,7 +1,6 @@
-import { createTheme } from '@mui/material/styles';
 
-const theme = createTheme({
-  palette: {
+const theme = {
+  colors: {
     type: 'light',
     primary: {
       main: '#efa452',
@@ -10,6 +9,7 @@ const theme = createTheme({
       main: '#0057b8',
     },
   },
-});
+  mobile: '768px'
+};
 
 export default theme;

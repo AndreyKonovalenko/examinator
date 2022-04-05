@@ -1,10 +1,10 @@
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material/styles';
-import { GlobalStyles } from '@mui/material';
+import { ThemeProvider } from 'styled-components';
+import  GlobalStyles  from './components/styles/GlobalStyles';
 import theme from './theme/index';
 import routes from './routes';
-import gstyles from './theme/gstyles';
+import gstyles from './components/styles/GlobalStyles';
 
 // Redux
 // import { Provider } from 'react-redux';
@@ -16,8 +16,8 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      {inputGlobalStyles}
-      {routing}
+      <GlobalStyles/>
+        {routing}
     </ThemeProvider>
   );
 };
