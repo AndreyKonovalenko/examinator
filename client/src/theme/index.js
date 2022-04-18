@@ -1,4 +1,3 @@
-
 const theme = {
   colors: {
     type: 'light',
@@ -9,7 +8,7 @@ const theme = {
       main: '#0057b8',
     },
   },
-  mobile: '768px'
+  mobile: '768px',
 };
 
 export default theme;
