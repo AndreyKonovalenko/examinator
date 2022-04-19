@@ -1,12 +1,12 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import {Container} from './styles/Container.styled'
-import MainNavbar from './MainNavbar';
+import Header from './Header';
 
 
 const MainLayout = () => (
       <>
-        <MainNavbar />
+        <Header />
         <Container>
           <Outlet />
         </Container>

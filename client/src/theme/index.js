@@ -1,12 +1,20 @@
 const theme = {
   colors: {
-    type: 'light',
     primary: {
-      main: '#efa452',
+      light: '#BB86FC',
+      main: '#6200EE',
+      dark:"#3700B3"
     },
-    secondary: {
-      main: '#0057b8',
-    },
+    background: '#FDFFF5',
+    error:'#B00020',
+    surface:'#FFFFFF',
+    text: {
+      onPrimary: '#FFFFFF',
+      onBackground:'#000000',
+      onSurface: '#000000',
+      onError: '#000000'
+    }
+    
   },
   mobile: '768px',
 };
