@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Helmet} from 'react-helmet';
 
 const Login = () => {
   // const navigate = useNavigate();
@@ -22,6 +23,10 @@ const Login = () => {
 
   return (
     <>
+    <Helmet>
+      <meta charSet="utf-8" />
+      <title>Login | Examinator</title>
+    </Helmet>
     <p>Login Page</p>
     </>
   );
