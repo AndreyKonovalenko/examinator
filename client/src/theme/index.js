@@ -3,18 +3,17 @@ const theme = {
     primary: {
       light: '#BB86FC',
       main: '#6200EE',
-      dark:"#3700B3"
+      dark: '#3700B3',
     },
     background: '#FDFFF5',
-    error:'#B00020',
-    surface:'#FFFFFF',
+    error: '#B00020',
+    surface: '#FFFFFF',
     text: {
       onPrimary: '#FFFFFF',
-      onBackground:'#000000',
+      onBackground: '#000000',
       onSurface: '#000000',
-      onError: '#000000'
-    }
-    
+      onError: '#000000',
+    },
   },
   mobile: '768px',
 };
