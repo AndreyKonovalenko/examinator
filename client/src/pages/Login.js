@@ -1,5 +1,7 @@
 import * as React from 'react';
-import {Helmet} from 'react-helmet';
+import {Link} from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { Button } from '../components/styles/Button.styled'
 
 const Login = () => {
   // const navigate = useNavigate();
@@ -20,7 +22,6 @@ const Login = () => {
   //     navigate('/app/quiz', { replace: true });
   //   },
   // });
-
   return (
     <>
     <Helmet>
@@ -28,6 +29,9 @@ const Login = () => {
       <title>Login | Examinator</title>
     </Helmet>
     <p>Login Page</p>
+    <Button>
+      <Link to="/app/quiz" style={{textDecoration:"none"}}>Начать тест</Link>
+    </Button>
     </>
   );
 };
