@@ -5,9 +5,10 @@ import GlobalStyles from './components/styles/GlobalStyles';
 import theme from './theme/index';
 import routes from './routes';
 
-// Redux
+//Redux;
 // import { Provider } from 'react-redux';
 // import store from './store/store';
+
 const App = () => {
   const routing = useRoutes(routes);
 
