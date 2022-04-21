@@ -9,7 +9,7 @@ const Quiz = () => (
   <>
     <Helmet>
       <meta charSet='utf-8' />
-      <title>Account | Material Kit</title>
+      <title>Quiz | Examinator </title>
     </Helmet>
     <h1>Quiz Page</h1>
     {shuffle(data).map((item) => (

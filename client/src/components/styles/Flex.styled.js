@@ -5,8 +5,8 @@ export const Flex = styled.div`
   align-items: center;
   & > div,
   & > ul {
-    flex: 1;
-  }
+    flex: auto;
+  },
   @media (max-width: ${({ theme }) => theme.mobile}) {
     flex-direction: column;
     text-align: center;
