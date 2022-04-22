@@ -7,6 +7,7 @@ import shuffle from '../utils/shuffle';
 
 const Card = () => {
   const quiz = shuffle(data);
+  console.log(quiz.length)
   const [quest, setQuest] = useState(quiz[0]);
 
   //
