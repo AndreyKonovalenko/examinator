@@ -2,7 +2,7 @@ import { StyledCard } from './styles/Card.styled';
 import { ListElem } from './styles/ListElem.styled';
 
 import uniqid from 'uniqid';
-import shuffle from '../utils/shuffle';
+import shuffle from '../features/quiz/quizService';
 
 const Card = (props) => {
   const { question, answers } = props.item;

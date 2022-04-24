@@ -2,8 +2,9 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Button } from '../components/styles/Button.styled';
 import { Helmet } from 'react-helmet';
+import { useSelector, useDispatch } from 'react-redux';
 import Card from '../components/Card';
-import shuffle from '../utils/shuffle';
+import shuffle from '../features/quiz/quizService';
 import data from '../__mocks__/questions';
 
 const Quiz = () => {
@@ -15,6 +16,8 @@ const Quiz = () => {
   const [result, setResult] = useState(0);
   console.log(quiz);
 
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
   // Event handlers
 
   const onClickHundler = (event) => {

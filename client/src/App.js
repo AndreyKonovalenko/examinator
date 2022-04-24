@@ -5,18 +5,20 @@ import GlobalStyles from './components/styles/GlobalStyles';
 import theme from './theme/index';
 import routes from './routes';
 
-//Redux;
-// import { Provider } from 'react-redux';
-// import store from './store/store';
+// Redux;
+import { Provider } from 'react-redux';
+import store from './app/store';
 
 const App = () => {
   const routing = useRoutes(routes);
 
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      {routing}
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        {routing}
+      </ThemeProvider>
+    </Provider>
   );
 };
 
