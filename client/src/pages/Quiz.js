@@ -3,21 +3,27 @@ import { useState, useEffect } from 'react';
 import { Button } from '../components/styles/Button.styled';
 import { Helmet } from 'react-helmet';
 import { useSelector, useDispatch } from 'react-redux';
+import { loadQuiz } from '../features/quiz/quizSlice';
 import Card from '../components/Card';
 import shuffle from '../features/quiz/quizService';
 import data from '../__mocks__/questions';
 
-const Quiz = () => {
+
+export default function Quiz() {
+  const dispatch = useDispatch();
   //Local state
   const [inProgress, setInProgress] = useState(false);
   const [quiz, setQuiz] = useState(undefined);
   const [qIndex, setQIndex] = useState(0);
   const [log, setLog] = useState([]);
   const [result, setResult] = useState(0);
-  console.log(quiz);
+  
 
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector(state => state.auth);
+  const quizT = useSelector(state => state.quiz);
+
   console.log(user);
+  console.log(quizT.quiz,"quizT");
   // Event handlers
 
   const onClickHundler = (event) => {
@@ -51,13 +57,20 @@ const Quiz = () => {
     });
     setResult(result);
   };
+  const onClickHundler2 = event => {
+    event.preventDefault();
+    dispatch(loadQuiz(data));
+  }
+
+  
 
   // Effect Hooks -----------------------------------------
 
   useEffect(() => {
-    setQuiz(shuffle(data));
+    //dispatch(loadQuiz(data));
+   // setQuiz(shuffle(data));
     setInProgress(true);
-  }, [quiz, qIndex]);
+  }, [quiz, qIndex, quizT]);
 
   const resultField = (
     <>
@@ -73,14 +86,13 @@ const Quiz = () => {
         <meta charSet='utf-8' />
         <title>Quiz | Examinator </title>
       </Helmet>
+      <Button onClick={onClickHundler2}>loadQuiz</Button>
       <h1>Quiz Page</h1>
-      {quiz !== undefined && inProgress === true ? (
-        <Card item={quiz[qIndex]} onClick={onClickHundler} />
+      {quizT.quiz !== undefined && inProgress === true ? (
+        <Card item={quizT.quiz[qIndex]} onClick={onClickHundler} />
       ) : null}
 
       {inProgress === true ? null : resultField}
     </>
   );
-};
-
-export default Quiz;
+}
