@@ -67,7 +67,10 @@ export default function Quiz() {
   // Effect Hooks -----------------------------------------
 
   useEffect(() => {
-    //dispatch(loadQuiz(data));
+    if (quizT.quiz === null) {
+        dispatch(loadQuiz(data));
+    }
+    
    // setQuiz(shuffle(data));
     setInProgress(true);
   }, [quiz, qIndex, quizT]);
