@@ -13,9 +13,10 @@ export const quizSlice = createSlice({
   reducers: {
     loadQuiz: (state, actions) => {
       state.quiz = shuffle(actions.payload); 
-    }
+    },
+    reset: (state) => initialState
   },
 });
 
-export const {loadQuiz} = quizSlice.actions;
+export const {loadQuiz, reset} = quizSlice.actions;
 export default quizSlice.reducer;

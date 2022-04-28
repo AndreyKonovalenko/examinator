@@ -3,27 +3,26 @@ import { useState, useEffect } from 'react';
 import { Button } from '../components/styles/Button.styled';
 import { Helmet } from 'react-helmet';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadQuiz } from '../features/quiz/quizSlice';
+import { loadQuiz, reset } from '../features/quiz/quizSlice';
 import Card from '../components/Card';
-import shuffle from '../features/quiz/quizService';
 import data from '../__mocks__/questions';
 
 
 export default function Quiz() {
   const dispatch = useDispatch();
+  const { user } = useSelector(state => state.auth);
+  const {quiz} = useSelector(state => state.quiz);
   //Local state
   const [inProgress, setInProgress] = useState(false);
-  const [quiz, setQuiz] = useState(undefined);
+
   const [qIndex, setQIndex] = useState(0);
   const [log, setLog] = useState([]);
   const [result, setResult] = useState(0);
   
 
-  const { user } = useSelector(state => state.auth);
-  const quizT = useSelector(state => state.quiz);
+
 
   console.log(user);
-  console.log(quizT.quiz,"quizT");
   // Event handlers
 
   const onClickHundler = (event) => {
@@ -41,9 +40,8 @@ export default function Quiz() {
 
   const tryAgain = (event) => {
     event.preventDefault();
+    dispatch(reset());
     setQIndex(0);
-    setResult(0);
-    setQuiz(shuffle(data));
     setInProgress(true);
   };
   // utils
@@ -57,23 +55,19 @@ export default function Quiz() {
     });
     setResult(result);
   };
-  const onClickHundler2 = event => {
-    event.preventDefault();
-    dispatch(loadQuiz(data));
-  }
 
-  
+ 
 
   // Effect Hooks -----------------------------------------
 
   useEffect(() => {
-    if (quizT.quiz === null) {
+    if (quiz === null) {
         dispatch(loadQuiz(data));
     }
     
    // setQuiz(shuffle(data));
     setInProgress(true);
-  }, [quiz, qIndex, quizT]);
+  }, [quiz, qIndex]);
 
   const resultField = (
     <>
@@ -89,10 +83,9 @@ export default function Quiz() {
         <meta charSet='utf-8' />
         <title>Quiz | Examinator </title>
       </Helmet>
-      <Button onClick={onClickHundler2}>loadQuiz</Button>
       <h1>Quiz Page</h1>
-      {quizT.quiz !== undefined && inProgress === true ? (
-        <Card item={quizT.quiz[qIndex]} onClick={onClickHundler} />
+      {quiz !== null && inProgress === true ? (
+        <Card item={quiz[qIndex]} onClick={onClickHundler} />
       ) : null}
 
       {inProgress === true ? null : resultField}
