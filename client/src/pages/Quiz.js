@@ -1,73 +1,62 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { Button } from '../components/styles/Button.styled';
-import { Helmet } from 'react-helmet';
-import { useSelector, useDispatch } from 'react-redux';
-import { loadQuiz, reset } from '../features/quiz/quizSlice';
-import Card from '../components/Card';
-import data from '../__mocks__/questions';
-
+import React from 'react'
+import { useState, useEffect } from 'react'
+import { Button } from '../components/styles/Button.styled'
+import { Helmet } from 'react-helmet'
+import { useSelector, useDispatch } from 'react-redux'
+import { loadQuiz, reset, writeLog } from '../features/quiz/quizSlice'
+import Card from '../components/Card'
+import data from '../__mocks__/questions'
 
 export default function Quiz() {
-  const dispatch = useDispatch();
-  const { user } = useSelector(state => state.auth);
-  const {quiz} = useSelector(state => state.quiz);
+  const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.auth)
+  const { quiz } = useSelector((state) => state.quiz)
   //Local state
-  const [inProgress, setInProgress] = useState(false);
+  const [inProgress, setInProgress] = useState(false)
 
-  const [qIndex, setQIndex] = useState(0);
-  const [log, setLog] = useState([]);
-  const [result, setResult] = useState(0);
-  
+  const [qIndex, setQIndex] = useState(0)
+  const [result, setResult] = useState(0)
 
-
-
-  console.log(user);
+  console.log(user)
   // Event handlers
 
-  const onClickHundler = (event) => {
-    event.preventDefault();
+  const onClickHundler = (id, event) => {
+    event.preventDefault()
     if (qIndex < quiz.length - 1) {
-      setQIndex(qIndex + 1);
+      setQIndex(qIndex + 1)
     }
-    if (qIndex === quiz.length - 1) {
-      calculator(quiz, log);
-      setInProgress(false);
-    }
-    setLog((oldState) => [...oldState, event.target.innerText]);
-    console.log('clicked', qIndex);
-  };
+
+    dispatch(writeLog(id))
+  }
 
   const tryAgain = (event) => {
-    event.preventDefault();
-    dispatch(reset());
-    setQIndex(0);
-    setInProgress(true);
-  };
+    event.preventDefault()
+    dispatch(reset())
+    setQIndex(0)
+    setInProgress(true)
+  }
   // utils
-  const calculator = (data, log) => {
-    let result = 0;
-    data.forEach((element, index) => {
-      //  console.log(element.answer, element.id);
-      if (element.answer === log[index]) {
-        result++;
-      }
-    });
-    setResult(result);
-  };
-
- 
+  //   const calculator = (data, log) => {
+  //     let result = 0
+  //     data.forEach((element, index) => {
+  //       //  console.log(element.answer, element.id);
+  //       if (element.answer === log[index]) {
+  //         result++
+  //       }
+  //     })
+  //     setResult(result)
+  //   }
 
   // Effect Hooks -----------------------------------------
 
   useEffect(() => {
     if (quiz === null) {
-        dispatch(loadQuiz(data));
+      dispatch(loadQuiz(data))
     }
-    
-   // setQuiz(shuffle(data));
-    setInProgress(true);
-  }, [quiz, qIndex]);
+
+    // setQuiz(shuffle(data));
+    setInProgress(true)
+  }, [quiz, qIndex])
 
   const resultField = (
     <>
@@ -75,12 +64,12 @@ export default function Quiz() {
       <Button onClick={tryAgain}>Повторить</Button>
       <Button>Пeчатоть результат</Button>
     </>
-  );
+  )
 
   return (
     <>
       <Helmet>
-        <meta charSet='utf-8' />
+        <meta charSet="utf-8" />
         <title>Quiz | Examinator </title>
       </Helmet>
       <h1>Quiz Page</h1>
@@ -90,5 +79,5 @@ export default function Quiz() {
 
       {inProgress === true ? null : resultField}
     </>
-  );
+  )
 }
