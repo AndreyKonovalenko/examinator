@@ -11,15 +11,15 @@ export const quizSlice = createSlice({
   name: 'quiz',
   initialState,
   reducers: {
+    reset: (state) => initialState,
     loadQuiz: (state, actions) => {
       state.quiz = shuffle(actions.payload)
     },
-    reset: (state) => initialState,
     writeLog: (state, actions) => {
       state.log.push(actions.payload)
     },
   },
 })
 
-export const { loadQuiz, reset, writeLog } = quizSlice.actions
+export const { loadQuiz, reset, writeLog, setInProgress } = quizSlice.actions
 export default quizSlice.reducer

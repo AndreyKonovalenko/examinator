@@ -11,9 +11,9 @@ export default function Quiz() {
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.auth)
   const { quiz } = useSelector((state) => state.quiz)
-  //Local state
-  const [inProgress, setInProgress] = useState(false)
+  // const { inProgress } = useSelector((state) => state.inProgress)
 
+  const [inProgress, setInProgress] = useState(false)
   const [qIndex, setQIndex] = useState(0)
   const [result, setResult] = useState(0)
 
@@ -25,7 +25,10 @@ export default function Quiz() {
     if (qIndex < quiz.length - 1) {
       setQIndex(qIndex + 1)
     }
-
+    if (qIndex == quiz.length - 1) {
+      setInProgress(false)
+      // need calculate result action here!!!
+    }
     dispatch(writeLog(id))
   }
 
@@ -33,7 +36,7 @@ export default function Quiz() {
     event.preventDefault()
     dispatch(reset())
     setQIndex(0)
-    setInProgress(true)
+    setInProgress(false)
   }
   // utils
   //   const calculator = (data, log) => {
@@ -52,10 +55,9 @@ export default function Quiz() {
   useEffect(() => {
     if (quiz === null) {
       dispatch(loadQuiz(data))
+      setInProgress(true)
     }
-
     // setQuiz(shuffle(data));
-    setInProgress(true)
   }, [quiz, qIndex])
 
   const resultField = (
@@ -76,7 +78,6 @@ export default function Quiz() {
       {quiz !== null && inProgress === true ? (
         <Card item={quiz[qIndex]} onClick={onClickHundler} />
       ) : null}
-
       {inProgress === true ? null : resultField}
     </>
   )

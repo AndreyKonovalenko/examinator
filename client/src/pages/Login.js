@@ -1,6 +1,6 @@
-import * as React from 'react';
-import {Link} from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import * as React from 'react'
+import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import { Button } from '../components/styles/Button.styled'
 
 const Login = () => {
@@ -24,16 +24,16 @@ const Login = () => {
   // });
   return (
     <>
-    <Helmet>
-      <meta charSet="utf-8" />
-      <title>Login | Examinator</title>
-    </Helmet>
-    <p>Login Page</p>
-    <Button>
-      <Link to="/app/quiz" style={{textDecoration:"none"}}>Начать тест</Link>
-    </Button>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Login | Examinator</title>
+      </Helmet>
+      <p>Login Page</p>
+      <Link to="/app/quiz" style={{ textDecoration: 'none' }}>
+        <Button>Начать тест</Button>
+      </Link>
     </>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
