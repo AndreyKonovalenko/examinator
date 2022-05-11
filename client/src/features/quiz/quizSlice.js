@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import shuffle from './quizService'
+import quizService from './quizService'
 
 const initialState = {
   quiz: null,
@@ -13,13 +13,22 @@ export const quizSlice = createSlice({
   reducers: {
     reset: (state) => initialState,
     loadQuiz: (state, actions) => {
-      state.quiz = shuffle(actions.payload)
+      state.quiz = quizService.shuffle(actions.payload)
     },
     writeLog: (state, actions) => {
       state.log.push(actions.payload)
     },
+    getResult: (state) => {
+      state.result = quizService.calculate(state.quiz, state.log)
+    },
   },
 })
 
-export const { loadQuiz, reset, writeLog, setInProgress } = quizSlice.actions
+export const {
+  loadQuiz,
+  reset,
+  writeLog,
+  setInProgress,
+  getResult,
+} = quizSlice.actions
 export default quizSlice.reducer

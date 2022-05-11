@@ -3,7 +3,12 @@ import { useState, useEffect } from 'react'
 import { Button } from '../components/styles/Button.styled'
 import { Helmet } from 'react-helmet'
 import { useSelector, useDispatch } from 'react-redux'
-import { loadQuiz, reset, writeLog } from '../features/quiz/quizSlice'
+import {
+  loadQuiz,
+  reset,
+  writeLog,
+  getResult,
+} from '../features/quiz/quizSlice'
 import Card from '../components/Card'
 import data from '../__mocks__/questions'
 
@@ -11,11 +16,12 @@ export default function Quiz() {
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.auth)
   const { quiz } = useSelector((state) => state.quiz)
+  const { result } = useSelector((state) => state.quiz)
   // const { inProgress } = useSelector((state) => state.inProgress)
 
   const [inProgress, setInProgress] = useState(false)
   const [qIndex, setQIndex] = useState(0)
-  const [result, setResult] = useState(0)
+  // const [result, setResult] = useState(0)
 
   console.log(user)
   // Event handlers
@@ -27,6 +33,7 @@ export default function Quiz() {
     }
     if (qIndex == quiz.length - 1) {
       setInProgress(false)
+      dispatch(getResult())
       // need calculate result action here!!!
     }
     dispatch(writeLog(id))
@@ -62,7 +69,10 @@ export default function Quiz() {
 
   const resultField = (
     <>
-      <h2>Ваш результат: {result}</h2>
+      <h2>
+        Правленых ответов:{' '}
+        {quiz != null ? `${((result / quiz.length) * 100).toFixed(0)} %` : null}
+      </h2>
       <Button onClick={tryAgain}>Повторить</Button>
       <Button>Пeчатоть результат</Button>
     </>
