@@ -10,6 +10,7 @@ import {
   getResult,
 } from '../features/quiz/quizSlice'
 import Card from '../components/Card'
+import Certificate from '../components/Certificate'
 import data from '../__mocks__/questions'
 
 export default function Quiz() {
@@ -20,6 +21,7 @@ export default function Quiz() {
   // const { inProgress } = useSelector((state) => state.inProgress)
 
   const [inProgress, setInProgress] = useState(false)
+  const [pdf, setPdf] = useState(false)
   const [qIndex, setQIndex] = useState(0)
   // const [result, setResult] = useState(0)
 
@@ -56,6 +58,10 @@ export default function Quiz() {
   //     })
   //     setResult(result)
   //   }
+  const getPdf = (event) => {
+    event.preventDefault()
+    setPdf(true)
+  }
 
   // Effect Hooks -----------------------------------------
 
@@ -74,7 +80,7 @@ export default function Quiz() {
         {quiz != null ? `${((result / quiz.length) * 100).toFixed(0)} %` : null}
       </h2>
       <Button onClick={tryAgain}>Повторить</Button>
-      <Button>Пeчатоть результат</Button>
+      <Button onClick={setPdf}>Пeчатоть результат</Button>
     </>
   )
 
@@ -89,6 +95,7 @@ export default function Quiz() {
         <Card item={quiz[qIndex]} onClick={onClickHundler} />
       ) : null}
       {inProgress === true ? null : resultField}
+      {pdf ? <Certificate /> : null}
     </>
   )
 }
