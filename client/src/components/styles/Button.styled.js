@@ -14,4 +14,9 @@ export const Button = styled.button`
     opacity: 0.9;
     transform: scale(0.98);
   }
+  &:disabled {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+  }
 `

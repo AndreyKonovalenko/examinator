@@ -9,6 +9,7 @@ import {
   writeLog,
   getResult,
 } from '../features/quiz/quizSlice'
+import { modalSwitch } from '../features/ui/uiSlice'
 import Card from '../components/Card'
 import Certificate from '../components/Certificate'
 import data from '../__mocks__/questions'
@@ -18,10 +19,10 @@ export default function Quiz() {
   const { user } = useSelector((state) => state.auth)
   const { quiz } = useSelector((state) => state.quiz)
   const { result } = useSelector((state) => state.quiz)
+  const { modal } = useSelector((state) => state.ui)
   // const { inProgress } = useSelector((state) => state.inProgress)
 
   const [inProgress, setInProgress] = useState(false)
-  const [pdf, setPdf] = useState(false)
   const [qIndex, setQIndex] = useState(0)
   // const [result, setResult] = useState(0)
 
@@ -33,7 +34,7 @@ export default function Quiz() {
     if (qIndex < quiz.length - 1) {
       setQIndex(qIndex + 1)
     }
-    if (qIndex == quiz.length - 1) {
+    if (qIndex === quiz.length - 1) {
       setInProgress(false)
       dispatch(getResult())
       // need calculate result action here!!!
@@ -60,7 +61,7 @@ export default function Quiz() {
   //   }
   const getPdf = (event) => {
     event.preventDefault()
-    setPdf(true)
+    dispatch(modalSwitch(true))
   }
 
   // Effect Hooks -----------------------------------------
@@ -71,16 +72,20 @@ export default function Quiz() {
       setInProgress(true)
     }
     // setQuiz(shuffle(data));
-  }, [quiz, qIndex])
+  }, [quiz, qIndex, dispatch])
 
   const resultField = (
     <>
       <h2>
         Правленых ответов:{' '}
-        {quiz != null ? `${((result / quiz.length) * 100).toFixed(0)} %` : null}
+        {quiz !== null
+          ? `${((result / quiz.length) * 100).toFixed(0)} %`
+          : null}
       </h2>
       <Button onClick={tryAgain}>Повторить</Button>
-      <Button onClick={setPdf}>Пeчатоть результат</Button>
+      <Button onClick={getPdf} disabled={'true'}>
+        Пeчатоть результат
+      </Button>
     </>
   )
 
@@ -95,7 +100,7 @@ export default function Quiz() {
         <Card item={quiz[qIndex]} onClick={onClickHundler} />
       ) : null}
       {inProgress === true ? null : resultField}
-      {pdf ? <Certificate /> : null}
+      {modal ? <Certificate /> : null}
     </>
   )
 }

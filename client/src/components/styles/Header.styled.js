@@ -6,7 +6,7 @@ export const StyledHeader = styled.header`
   padding: 40px 0;
 `
 
-export const Nav = styled.nav`
+export const StyledNav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -15,4 +15,3 @@ export const Nav = styled.nav`
     flex-direction: column;
   }
 `
-
