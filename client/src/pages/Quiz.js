@@ -83,7 +83,7 @@ export default function Quiz() {
           : null}
       </h2>
       <Button onClick={tryAgain}>Повторить</Button>
-      <Button onClick={getPdf} disabled={'true'}>
+      <Button onClick={getPdf} disabled={modal ? 'true' : null}>
         Пeчатоть результат
       </Button>
     </>
