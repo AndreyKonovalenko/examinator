@@ -11,7 +11,6 @@ import {
   writeLog,
   getResult,
 } from '../features/quiz/quizSlice'
-import { modalSwitch } from '../features/ui/uiSlice'
 import Card from '../components/Card'
 import Certificate from '../components/Certificate'
 import data from '../__mocks__/questions'
@@ -89,7 +88,7 @@ export default function Quiz() {
   }, [quiz, qIndex, dispatch])
 
   const resultField = (
-    <div id="pdfToPrint">
+    <>
       <h2>
         Правленых ответов:{' '}
         {quiz !== null
@@ -100,7 +99,8 @@ export default function Quiz() {
       <Button onClick={getPdf} disabled={modal ? 'true' : null}>
         Пeчатоть результат
       </Button>
-    </div>
+      <Certificate idTag={'pdfToPrint'} />
+    </>
   )
 
   return (
@@ -114,7 +114,6 @@ export default function Quiz() {
         <Card item={quiz[qIndex]} onClick={onClickHundler} />
       ) : null}
       {inProgress === true ? null : resultField}
-      {modal ? <Certificate /> : null}
     </>
   )
 }
