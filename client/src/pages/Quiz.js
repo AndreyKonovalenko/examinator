@@ -1,5 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import { jsPDF } from 'jspdf'
+import html2canvas from 'html2canvas'
 import { Button } from '../components/styles/Button.styled'
 import { Helmet } from 'react-helmet'
 import { useSelector, useDispatch } from 'react-redux'
@@ -58,10 +60,22 @@ export default function Quiz() {
   //       }
   //     })
   //     setResult(result)
+
   //   }
+
+  const printDocument = () => {
+    html2canvas(document.querySelector('#pdfToPrint')).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF()
+      pdf.addImage(imgData, 'JPEG', 0, 0)
+      pdf.save('download.pdf')
+    })
+  }
+
   const getPdf = (event) => {
     event.preventDefault()
-    dispatch(modalSwitch(true))
+    printDocument()
+    //  dispatch(modalSwitch(true))
   }
 
   // Effect Hooks -----------------------------------------
@@ -75,7 +89,7 @@ export default function Quiz() {
   }, [quiz, qIndex, dispatch])
 
   const resultField = (
-    <>
+    <div id="pdfToPrint">
       <h2>
         Правленых ответов:{' '}
         {quiz !== null
@@ -86,7 +100,7 @@ export default function Quiz() {
       <Button onClick={getPdf} disabled={modal ? 'true' : null}>
         Пeчатоть результат
       </Button>
-    </>
+    </div>
   )
 
   return (
