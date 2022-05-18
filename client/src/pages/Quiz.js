@@ -96,7 +96,6 @@ export default function Quiz() {
   const customImageStyle2 = {
     transform: `rotate(${Math.floor(Math.random() * 180)}deg)`,
   };
-
   const resultField = (
     <>
       <div id={'pdfToPrint'}>
