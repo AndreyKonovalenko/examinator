@@ -1,8 +1,7 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-export const CertificateStyled = styled.div`
-  background: white;
-  display: block;
-  margin: 0 auto;
-  margin-bottom: 0.5cm;
-`;
+export const StyledCertificate = styled.div`
+  widht: 100px;
+  height: 100px;
+  position: relateive;
+`
