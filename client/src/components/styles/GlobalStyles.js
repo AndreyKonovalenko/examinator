@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyles = createGlobalStyle`
 
@@ -17,9 +17,8 @@ const GlobalStyles = createGlobalStyle`
   p {
     line-height: 1.5;
   }
-  img {
-    max-width: 100%;
+  
 }
 `
 
-export default GlobalStyles;
+export default GlobalStyles

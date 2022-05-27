@@ -8,6 +8,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { StyledImage } from './../components/styles/Image.styled'
 import { StyledCertificate } from '../components/styles/Certificate.styled'
 import {
+  BarContainer,
+  Filler,
+  Span,
+} from '../components/styles/ProgressBar.styled'
+import {
   loadQuiz,
   reset,
   writeLog,
@@ -139,13 +144,24 @@ export default function Quiz() {
     </>
   )
 
+  const fillerStyle = {
+    width: quiz !== null ? `${((qIndex + 1) / quiz.length) * 100}%` : '0%',
+  }
+  const ProgressBar = (
+    <BarContainer>
+      <Filler style={fillerStyle}>
+        <Span>{quiz !== null ? ((qIndex + 1) / quiz.length) * 100 : 0}</Span>
+      </Filler>
+    </BarContainer>
+  )
+
   return (
     <>
       <Helmet>
         <meta charSet="utf-8" />
         <title>Quiz | Examinator </title>
       </Helmet>
-      <h1>Quiz Page</h1>
+      {inProgress ? ProgressBar : null}
       {quiz !== null && inProgress === true ? (
         <Card item={quiz[qIndex]} onClick={onClickHundler} />
       ) : null}
