@@ -4,13 +4,13 @@ const { Schema } = mongoose;
 const quizSchema = new Schema({
   title: {
     type: String,
-    require: true,
+    required: true,
   },
   questions: {
     type: Array,
-    require: true,
+    required: true,
   },
 });
-const Quiz = mongoose.model('quizSchema', quizSchema);
+const Quiz = mongoose.model('quiz', quizSchema);
 
 export default Quiz;

@@ -9,6 +9,16 @@ const getQuizzes = asyncHandler(async (req, res) => {
   res.status(200).json(quiz);
 });
 
+// set quiz for testing
+const setQuiz = asyncHandler(async (req, res) => {
+  const quiz = await Quiz.create({
+    title: req.body.title,
+    questions: req.body.questions,
+  });
+
+  res.status(200).json(quiz);
+});
+
 // @desc Get Quizz
 // @route GET /api/quiz:id
 // @access Private
@@ -17,4 +27,4 @@ const getQuiz = asyncHandler(async (req, res) => {
   res.status(200).json({ massage: 'GET QUIZ by ID' });
 });
 
-export default { getQuizzes, getQuiz };
+export default { getQuizzes, getQuiz, setQuiz };
