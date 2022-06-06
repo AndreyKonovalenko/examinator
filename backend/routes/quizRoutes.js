@@ -1,13 +1,13 @@
-import express from 'express';
-import controller from './controllers/quizController.js';
-const router = express.Router();
+import express from 'express'
+import controller from './controllers/quizController.js'
+const router = express.Router()
+const { getQuizzes, setQuiz, getQuiz } = controller
 // get all quizzes
 
-router.get('/', (req, res) => controller.getQuizzes(req, res));
-
+router.get('/', getQuizzes)
 // post quiz for test
-router.post('/', (req, res) => controller.setQuiz(req, res));
+router.post('/', setQuiz)
 // get quiz by id
-router.get('/:id', (req, res) => controller.getQuiz(req, res));
+router.get('/:id', getQuiz)
 
-export default router;
+export default router
