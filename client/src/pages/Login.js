@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { Button } from '../components/styles/Button.styled'
@@ -7,6 +8,11 @@ import { Form, Input, Title, Wrapper } from '../components/styles/Form.Styled'
 import theme from '../theme/index'
 
 const Login = () => {
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+  })
+  const { username, password } = formData
   // const navigate = useNavigate();
 
   // const formik = useFormik({
@@ -26,23 +32,39 @@ const Login = () => {
   //   },
   // });
 
+  const onChange = (event) => {
+    event.preventDefault()
+    setFormData((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }))
+  }
+
+  const onSubmit = (event) => {
+    event.preventDefault()
+    const userData = { username, password }
+    console.log(userData)
+
+    // dispatch(login(userData))
+  }
+
   const loginForm = (
     <Wrapper>
-      <Form onSubmit={() => {}}>
+      <Form onSubmit={onSubmit}>
         <Title>Идентификация пользователя</Title>
         <Input
           placeholder="Username"
           type="text"
           name="username"
-          value=""
-          onChange={() => {}}
+          value={username}
+          onChange={onChange}
         />
         <Input
           placeholder="Password"
-          type="text"
+          type="password"
           name="password"
-          value=""
-          onChange={() => {}}
+          value={password}
+          onChange={onChange}
         />
         <Button
           bg={theme.colors.primary.light}

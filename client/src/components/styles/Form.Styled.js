@@ -35,7 +35,7 @@ export const Input = styled.input`
   max-width: 100%;
   padding: 11px 13px;
   background-color: ${({ theme }) => theme.colors.surface};
-  color: #f03d4e;
+  color:  ${({ theme }) => theme.colors.text.onSurface};
   margin-bottom: 0.9rem;
   border-radius: 4px;
   outline: 0;
