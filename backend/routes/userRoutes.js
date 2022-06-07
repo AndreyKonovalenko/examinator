@@ -1,9 +1,10 @@
 import express from 'express'
 import controller from './controllers/userController.js'
 const router = express.Router()
-const { login, getMe } = controller
+const { login, getMe, registerUser } = controller
 // get all quizzes
+router.post('/', registerUser)
 router.post('/login', login)
-router.post('/me', getMe)
+router.get('/me', getMe)
 
 export default router

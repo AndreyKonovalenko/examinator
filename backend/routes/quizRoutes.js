@@ -7,7 +7,7 @@ const { getQuizzes, setQuiz, getQuiz } = controller
 router.get('/', getQuizzes)
 // post quiz for test
 router.post('/', setQuiz)
-// get quiz by id
+// get quiz by id, don't have logic yet
 router.get('/:id', getQuiz)
 
 export default router
