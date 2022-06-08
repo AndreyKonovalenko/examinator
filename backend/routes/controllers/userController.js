@@ -66,7 +66,12 @@ const login = asyncHandler(async (req, res) => {
 // @access Privet
 
 const getMe = asyncHandler(async (req, res) => {
-  res.status(200).json({ massage: 'User data display' })
+  const { _id, name, username } = await User.findById(req.user.id)
+  res.status(200).json({
+    id: _id,
+    name,
+    username,
+  })
 })
 
 // Generate JWT
