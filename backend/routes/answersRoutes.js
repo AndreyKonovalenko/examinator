@@ -1,7 +1,7 @@
 import express from 'express'
-import controller from './controllers/answersController.js'
+import { getAnswers } from './controllers/answersController.js'
 const router = express.Router()
-const { getAnswers } = controller
+
 // get all quizzes
 
 router.get('/', getAnswers)

@@ -1,13 +1,26 @@
 import express from 'express'
-import controller from './controllers/quizController.js'
+import {
+  getQuizzes,
+  setQuiz,
+  getQuiz,
+  setQuestion,
+  getQuestions,
+} from './controllers/quizController.js'
 import protect from '../middleware/authMiddleware.js'
 const router = express.Router()
-const { getQuizzes, setQuiz, getQuiz } = controller
+
 // get all quizzes
 
-router.get('/', protect, getQuizzes)
+//router.get('/', protect, getQuizzes)
+router.get('/', getQuizzes)
 // post quiz for test
 router.post('/', setQuiz)
+// upadate quiz by id
+//router.post('/:id', addQuestion)
+// upadate quiz by id
+router.get('/question', getQuestions)
+router.post('/question', setQuestion)
+
 // get quiz by id, don't have logic yet
 router.get('/:id', getQuiz)
 

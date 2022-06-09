@@ -4,7 +4,7 @@ import Answers from '../../models/answersModel.js'
 // @route GET /api/answers
 // @access Private
 
-const getAnswers = asyncHandler(async (req, res) => {
+export const getAnswers = asyncHandler(async (req, res) => {
   const log = {
     title: 'Охрана трудна на предриятии',
     answers: [{ qid: '1', answer: ['2'] }],
@@ -30,5 +30,3 @@ const getAnswers = asyncHandler(async (req, res) => {
 // @desc Get Quizz
 // @route GET /api/quiz:id
 // @access Private
-
-export default { getAnswers }

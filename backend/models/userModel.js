@@ -18,6 +18,6 @@ const userSchema = new Schema({
     type: Boolean,
   },
 })
-const User = mongoose.model('user', userSchema)
+export const User = mongoose.model('user', userSchema)
 
-export default User
+
