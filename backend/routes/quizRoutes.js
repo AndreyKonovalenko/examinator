@@ -5,6 +5,7 @@ import {
   getQuiz,
   setQuestion,
   getQuestions,
+  addQuestionToQuiz
 } from './controllers/quizController.js'
 import protect from '../middleware/authMiddleware.js'
 const router = express.Router()
@@ -16,7 +17,7 @@ router.get('/', getQuizzes)
 // post quiz for test
 router.post('/', setQuiz)
 // upadate quiz by id
-//router.post('/:id', addQuestion)
+router.post('/:id', addQuestionToQuiz)
 // upadate quiz by id
 router.get('/question', getQuestions)
 router.post('/question', setQuestion)

@@ -15,6 +15,7 @@ const { Schema } = mongoose
 // export const Option = mongoose.model('option', optionSchema)
 
 const questionSchema = new Schema({
+  _id: Schema.Types.ObjectId,
   question: {
     type: String,
     required: true,
@@ -30,6 +31,6 @@ const quizSchema = new Schema({
     type: String,
     required: true,
   },
-  questions: [questionSchema],
+  questions: [{ type: Schema.Types.ObjectId, ref: 'question' }],
 })
 export const Quiz = mongoose.model('quiz', quizSchema)
