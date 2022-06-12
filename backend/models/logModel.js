@@ -9,6 +9,7 @@ const logSchema = new Schema(
     },
     quiz: {
       type: Schema.Types.ObjectId,
+      ref: 'quiz',
     },
     answers: Array,
     result: String,
@@ -17,4 +18,4 @@ const logSchema = new Schema(
     timestamps: true,
   }
 );
-export const Log = mongoose.model('log', attemptSchema);
+export const Log = mongoose.model('log', logSchema);

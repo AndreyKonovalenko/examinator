@@ -1,35 +1,42 @@
 import asyncHandler from 'express-async-handler';
 import { Log } from '../../models/logModel.js';
+import { Quiz } from '../../models/quizModel.js';
 
-// @desc Get Questions
-// @route GET /api//question
+// @desc Get all Logs
+// @route GET /api/log
 // @access Private
 
-export const getQuestions = asyncHandler(async (req, res) => {
-  const quiz = await Question.find().select('-currect');
-  // req.user = await User.findById(decoded.id).select('-password') need more deep quiz model
-  res.status(200).json(quiz);
+export const getLogs = asyncHandler(async (req, res) => {
+  const data = await Log.find();
+  res.status(200).json(data);
 });
 
-// @desc Get Question by id
-// @route GET /api//question/id
+// @desc Get Log by id
+// @route GET /api/log/id
 // @access Private
 
-// @desc Create new Question
-// @route POST /api/question
+// @desc Create new Log
+// @route POST /api/log
 // @access Private
 
-export const setQuestion = asyncHandler(async (req, res) => {
-  const { question, options, currect } = req.body;
-  const newQuestion = await Question.create({
-    question,
-    options,
-    currect,
+export const setLog = asyncHandler(async (req, res) => {
+  const { quizId, answers } = req.body;
+  const currentQuiz = await Quiz.findOne({ _id: quizId })
+    .populate('questions')
+    .exec();
+
+  console.log(currentQuiz);
+  const currect = 'result need to be calulated';
+  const newLog = await Log.create({
+    user: req.user.id,
+    quiz: quizId,
+    answers,
+    result: currect,
   });
-  if (newQuestion) {
-    res.status(200).json(newQuestion);
+  if (newLog) {
+    res.status(200).json(newLog);
   } else {
     res.status(400);
-    throw new Error('New question has not been created');
+    throw new Error('New Log has not been created');
   }
 });

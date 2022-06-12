@@ -6,9 +6,9 @@ import { Question } from '../../models/questionModel.js';
 // @access Private
 
 export const getQuestions = asyncHandler(async (req, res) => {
-  const quiz = await Question.find().select('-currect');
+  const data = await Question.find().select('-currect');
   // req.user = await User.findById(decoded.id).select('-password') need more deep quiz model
-  res.status(200).json(quiz);
+  res.status(200).json(data);
 });
 
 // @desc Get Question by id

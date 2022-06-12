@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import quizRouter from './routes/quizRoutes.js';
 import userRouter from './routes/userRoutes.js';
+import logRouter from './routes/logRoutes.js';
 import questionRouter from './routes/questionRoutes.js';
 import errorHandler from './middleware/errorMiddleware.js';
 
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/quiz/', quizRouter);
 app.use('/api/users/', userRouter);
 app.use('/api/question', questionRouter);
+app.use('/api/log', logRouter);
 
 // app.get('/', (req, res) => res.status(200).json({ massage: 'API Running' }))
 app.use(errorHandler);

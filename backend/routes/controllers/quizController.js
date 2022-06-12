@@ -47,11 +47,11 @@ export const addQuestionToQuiz = asyncHandler(async (req, res) => {
 // @access Private
 
 export const getQuiz = asyncHandler(async (req, res) => {
-  const currenQuiz = await Quiz.findOne({ _id: req.params.id })
+  const currentQuiz = await Quiz.findOne({ _id: req.params.id })
     .populate({ path: 'questions', select: ['question', 'options'] })
     .exec();
-  if (currenQuiz) {
-    res.status(200).json(currenQuiz);
+  if (currentQuiz) {
+    res.status(200).json(currentQuiz);
   } else {
     res.status(400);
     throw new Error('Invalid quiz id');
