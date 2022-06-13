@@ -27,24 +27,30 @@ export const setLog = asyncHandler(async (req, res) => {
   if (currentQuiz) {
     const { questions } = currentQuiz;
     const result = await culcResult(questions, answers);
-  }
-  if (result) {
-    const newLog = await Log.create({
-      user: req.user.id,
-      quiz: quizId,
-      answers,
-      result: currect,
-    });
-    if (newLog) {
-      res.status(200).json(newLog);
+    if (result) {
+      const newLog = await Log.create({
+        user: req.user.id,
+        quiz: quizId,
+        answers,
+        result: result,
+      });
+      if (newLog) {
+        res.status(200).json(newLog);
+      } else {
+        res.status(400);
+        throw new Error('New Log has not been created');
+      }
     } else {
       res.status(400);
-      throw new Error('New Log has not been created');
+      throw new Error('Something goes wrong during result calculation');
     }
+  } else {
+    res.status(400);
+    throw new Error('Quiz not found');
   }
 });
 
-// util fuctions
+// util fuction test two array for equality
 const arrayEquals = (a, b) => {
   return (
     Array.isArray(a) &&
@@ -56,16 +62,18 @@ const arrayEquals = (a, b) => {
 
 // answers schema must be
 // [
-//   {qId:_id, answer:[String]]}
+// { qId:_id,
+//   answer:[String]
+// }
 // ]
 
-// culculate Result function
+// calculate result function for log object data
 const culcResult = (questions, answers) => {
   let result = 0;
   questions.forEach((element) => {
     const { _id, currect } = element;
     answers.forEach((el) => {
-      if (el.qId === _id) {
+      if (el.qId === _id.toString()) {
         arrayEquals(currect, el.answer) ? (result += 1) : result;
       }
     });
