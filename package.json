@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node backend/server",
-    "server": "nodemon backend/server"
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server \" \" npm run client\""
   },
   "repository": {
     "type": "git",
@@ -33,7 +35,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "concurrently": "^7.0.0",
+    "concurrently": "^7.2.1",
     "nodemon": "^2.0.15"
   },
   "type": "module"
