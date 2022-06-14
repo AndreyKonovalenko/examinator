@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { Button } from '../components/styles/Button.styled'
 import { Form, Input, Title, Wrapper } from '../components/styles/Form.Styled'
+import { useSelector } from 'react-redux'
 
 import theme from '../theme/index'
 
@@ -12,6 +13,8 @@ const Login = () => {
     username: '',
     password: '',
   })
+  const { user } = useSelector((state) => state.auth)
+
   const { username, password } = formData
   // const navigate = useNavigate();
 

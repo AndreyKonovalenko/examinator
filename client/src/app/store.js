@@ -5,8 +5,8 @@ import uiReducer from '../features/ui/uiSlice'
 
 export default configureStore({
   reducer: {
-    quiz: quizReducer,
     auth: authReducer,
+    quiz: quizReducer,
     ui: uiReducer,
   },
 })
