@@ -1,11 +1,15 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { Button } from '../components/styles/Button.styled'
 import { Form, Input, Title, Wrapper } from '../components/styles/Form.Styled'
-import { useSelector } from 'react-redux'
-
+import { login, reset } from '../features/auth/authSlice'
+import { toast } from 'react-toastify'
+import Spinner from '../components/Spinner'
+import 'react-toastify/dist/ReactToastify.css'
+import Error from '../components/Error'
 import theme from '../theme/index'
 
 const Login = () => {
@@ -13,27 +17,23 @@ const Login = () => {
     username: '',
     password: '',
   })
-  const { user } = useSelector((state) => state.auth)
-
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth,
+  )
   const { username, password } = formData
-  // const navigate = useNavigate();
 
-  // const formik = useFormik({
-  //   initialValues: {
-  //     email: 'demo@devias.io',
-  //     password: 'Password123',
-  //   },
-  //   validationSchema: Yup.object().shape({
-  //     email: Yup.string()
-  //       .email('Must be a valid email')
-  //       .max(255)
-  //       .required('Email is required'),
-  //     password: Yup.string().max(255).required('Password is required'),
-  //   }),
-  //   onSubmit: () => {
-  //     navigate('/app/quiz', { replace: true });
-  //   },
-  // });
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message)
+    }
+    if (isSuccess || user) {
+      navigate('/')
+    }
+    dispatch(reset())
+  }, [user, isError, isSuccess, message, navigate, dispatch])
 
   const onChange = (event) => {
     event.preventDefault()
@@ -48,7 +48,11 @@ const Login = () => {
     const userData = { username, password }
     console.log(userData)
 
-    // dispatch(login(userData))
+    dispatch(login(userData))
+  }
+
+  if (isLoading) {
+    return <Spinner />
   }
 
   const loginForm = (
@@ -81,6 +85,7 @@ const Login = () => {
 
   return (
     <>
+      <Error />
       <Helmet>
         <meta charSet="utf-8" />
         <title>Login | Examinator</title>
