@@ -10,7 +10,7 @@ const initialState = {
   massage: '',
 }
 
-// Get All Quizzes
+// Get all Quizzes
 
 export const getQuizzes = createAsyncThunk(
   'quiz/getAll',
