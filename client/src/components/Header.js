@@ -20,7 +20,7 @@ const Header = () => {
     <StyledHeader>
       <Container>
         <StyledNav>
-          <h1>Тема: Охрана труда на предприятии</h1>
+          <h1>Examinator</h1>
           {user ? <Button onClick={onLogout}>Logout</Button> : null}
         </StyledNav>
       </Container>

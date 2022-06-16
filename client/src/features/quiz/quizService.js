@@ -1,3 +1,7 @@
+import axios from 'axios'
+
+const API_URL = '/api/quiz/'
+
 const shuffle = (array) => {
   const arr = array.slice()
   let currentIndex = array.length,
@@ -29,8 +33,30 @@ const calculate = (quiz, log) => {
   return сorrect
 }
 
+export const getQuizzes = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.get(API_URL, config)
+  return response.data
+}
+
+export const getQuiz = async (quizId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.get(API_URL + quizId, config)
+  return response.data
+}
+
 const quizService = {
   shuffle,
   calculate,
+  getQuizzes,
+  getQuiz,
 }
 export default quizService
