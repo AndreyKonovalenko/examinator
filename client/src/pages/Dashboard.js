@@ -20,12 +20,10 @@ const Dashboard = () => {
       toast.error(message)
     }
     if (!user) {
-      navigate('/login')
-    }
-
-    dispatch(getQuizzes())
-    return () => {
       dispatch(reset())
+      navigate('/login')
+    } else {
+      dispatch(getQuizzes())
     }
   }, [user, navigate, isError, message, dispatch])
 
