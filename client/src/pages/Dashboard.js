@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet'
 import { useSelector, useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { getQuizzes, reset } from '../features/quiz/quizSlice'
+import QuizListCard from '../components/QuizListCard'
 import Spinner from '../components/Spinner'
 import Error from '../components/Error'
 const Dashboard = () => {
@@ -38,9 +39,10 @@ const Dashboard = () => {
         <meta charSet="utf-8" />
         <title>Dashboard | Examinator</title>
       </Helmet>
-      <h3>Испытуемый: {user ? user.name : null}</h3>
-      <h3>Доступные тесты:</h3>
-      {quizzes.length !== 0 ? quizzes[0].title : null}
+
+      {quizzes.length !== 0 && user ? (
+        <QuizListCard user={user.name} item={quizzes} />
+      ) : null}
       <h3>Статистика:</h3>
     </>
   )
