@@ -4,34 +4,40 @@ import { useNavigate } from 'react-router'
 import { Helmet } from 'react-helmet'
 import { useSelector, useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
-import { getQuizzes, reset } from '../features/quiz/quizSlice'
+import { getQuizzes, resetQuizState } from '../features/quiz/quizSlice'
+import { getLogs, resetLogState } from '../features/log/logSlice'
 import QuizListCard from '../components/QuizListCard'
+import LogListCard from '../components/LogListCard'
 import Spinner from '../components/Spinner'
 import Error from '../components/Error'
 const Dashboard = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.auth)
-  const { quizzes, isLoading, isError, message } = useSelector(
-    (state) => state.quiz,
-  )
+  const quizState = useSelector((state) => state.quiz)
+  const logState = useSelector((state) => state.log)
 
   useEffect(() => {
-    if (isError) {
-      toast.error(message)
+    if (quizState.isError) {
+      toast.error(quizState.message)
+    }
+
+    if (logState.isError) {
+      toast.error(logState.message)
     }
     if (!user) {
-      dispatch(reset())
+      dispatch(resetQuizState())
+      dispatch(resetLogState())
       navigate('/login')
     } else {
       dispatch(getQuizzes())
+      dispatch(getLogs())
     }
-  }, [user, navigate, isError, message, dispatch])
+  }, [user, navigate, quizState.isError, quizState.message, dispatch])
 
-  if (isLoading) {
+  if (quizState.isLoading || logState.isLoading) {
     return <Spinner />
   }
-
   const dashboard = (
     <>
       <Error />
@@ -40,10 +46,12 @@ const Dashboard = () => {
         <title>Dashboard | Examinator</title>
       </Helmet>
 
-      {quizzes.length !== 0 && user ? (
-        <QuizListCard user={user.name} item={quizzes} />
+      {quizState.quizzes.length !== 0 && user ? (
+        <QuizListCard user={user.name} item={quizState.quizzes} />
       ) : null}
-      <h3>Статистика:</h3>
+      {logState.logs.length !== 0 && user ? (
+        <LogListCard item={logState.logs} />
+      ) : null}
     </>
   )
   return dashboard

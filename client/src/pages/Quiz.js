@@ -12,12 +12,7 @@ import {
   Filler,
   Span,
 } from '../components/styles/ProgressBar.styled'
-import {
-  loadQuiz,
-  reset,
-  writeLog,
-  getResult,
-} from '../features/quiz/quizSlice'
+import { loadQuiz, writeLog, getResult } from '../features/quiz/quizSlice'
 import Card from '../components/Card'
 import data from '../__mocks__/questions'
 
@@ -51,7 +46,6 @@ export default function Quiz() {
 
   const tryAgain = (event) => {
     event.preventDefault()
-    dispatch(reset())
     setQIndex(0)
     setInProgress(false)
   }

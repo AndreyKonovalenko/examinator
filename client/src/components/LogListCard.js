@@ -1,16 +1,18 @@
 import { StyledQuizCard } from './styles/QuizCard.styled'
 import { ListElem } from './styles/ListElem.styled'
 import uniqid from 'uniqid'
-export default function QuizListCard(props) {
+export default function LogListCard(props) {
   const list = props.item.map((element) => (
     <ListElem key={uniqid()}>
-      <p>{element.title}</p>
+      <p>{element.quiz}</p>
+      <p>{element.result}</p>
+      <p>{element.updatedAt}</p>
     </ListElem>
   ))
 
   return (
     <StyledQuizCard>
-      <h2>{props.user} Bам доступны темы для тестирования: </h2>
+      <h2>История:</h2>
       {list}
     </StyledQuizCard>
   )

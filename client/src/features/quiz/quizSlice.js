@@ -37,7 +37,7 @@ export const quizSlice = createSlice({
   name: 'quiz',
   initialState,
   reducers: {
-    reset: (state) => initialState,
+    resetQuizState: (state) => initialState,
     loadQuiz: (state, actions) => {
       state.quiz = quizService.shuffle(actions.payload)
     },
@@ -68,7 +68,7 @@ export const quizSlice = createSlice({
 
 export const {
   loadQuiz,
-  reset,
+  resetQuizState,
   writeLog,
   setInProgress,
   getResult,
