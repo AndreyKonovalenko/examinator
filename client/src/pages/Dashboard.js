@@ -4,7 +4,11 @@ import { useNavigate } from 'react-router';
 import { Helmet } from 'react-helmet';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getQuizzes, resetQuizState } from '../features/quiz/quizSlice';
+import {
+  getQuizzes,
+  resetQuizState,
+  getQuizById,
+} from '../features/quiz/quizSlice';
 import { getLogs, resetLogState } from '../features/log/logSlice';
 import QuizListCard from '../components/QuizListCard';
 import LogListCard from '../components/LogListCard';
@@ -43,6 +47,15 @@ const Dashboard = () => {
     dispatch,
   ]);
 
+  const onQuizSelect = (id, event) => {
+    event.preventDefault();
+    navigate('/quiz');
+    if (id) {
+      dispatch(getQuizById(id));
+    }
+    console.log(id);
+  };
+
   if (quizState.isLoading || logState.isLoading) {
     return <Spinner />;
   }
@@ -55,7 +68,11 @@ const Dashboard = () => {
       </Helmet>
 
       {quizState.quizzes.length !== 0 && user ? (
-        <QuizListCard user={user.name} item={quizState.quizzes} />
+        <QuizListCard
+          user={user.name}
+          item={quizState.quizzes}
+          onClick={onQuizSelect}
+        />
       ) : null}
       {logState.logs.length !== 0 && user ? (
         <LogListCard item={logState.logs} />
