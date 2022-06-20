@@ -43,8 +43,8 @@ const Quiz = () => {
     if (quizState.quiz !== null) {
       console.log(quizState.quiz);
     }
-    if (user && quizState.quiz === null) {
-      toast.error('Вы приравли тесет, начните за ново!');
+    if (user && quizState.quiz === null && !quizState.isLoading) {
+      toast.error('Вы приравли тесет, начните заново!');
       navigate('/');
     }
   }, [
@@ -54,6 +54,7 @@ const Quiz = () => {
     dispatch,
     quizState.isError,
     quizState.quiz,
+    quizState.isLoading,
   ]);
 
   const onClickHundler = (id, event) => {

@@ -48,9 +48,10 @@ const Dashboard = () => {
 
   const onQuizSelect = (id, event) => {
     event.preventDefault();
-    dispatch(getQuizById(id));
-    navigate('/quiz');
-
+    if (id) {
+      dispatch(getQuizById(id));
+      navigate('/quiz');
+    }
     console.log(id);
   };
 
