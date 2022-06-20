@@ -13,7 +13,6 @@ import { getLogs, resetLogState } from '../features/log/logSlice';
 import QuizListCard from '../components/QuizListCard';
 import LogListCard from '../components/LogListCard';
 import Spinner from '../components/Spinner';
-import Error from '../components/Error';
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -49,10 +48,9 @@ const Dashboard = () => {
 
   const onQuizSelect = (id, event) => {
     event.preventDefault();
+    dispatch(getQuizById(id));
     navigate('/quiz');
-    if (id) {
-      dispatch(getQuizById(id));
-    }
+
     console.log(id);
   };
 
@@ -61,7 +59,6 @@ const Dashboard = () => {
   }
   const dashboard = (
     <>
-      <Error />
       <Helmet>
         <meta charSet='utf-8' />
         <title>Dashboard | Examinator</title>
