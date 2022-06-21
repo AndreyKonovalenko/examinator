@@ -5,4 +5,7 @@ export const StyledFooter = styled.footer`
   color: ${({ theme }) => theme.colors.primary.light};
   text-align: center;
   padding: 0px 0;
+  & > h6 {
+    opacity: 0.2;
+  }
 `
