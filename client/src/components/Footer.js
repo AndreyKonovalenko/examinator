@@ -1,10 +1,10 @@
-import { StyledFooter } from './styles/Footer.styled.js'
+import { StyledFooter } from './styles/Footer.styled.js';
 
 const Footer = () => {
   return (
     <StyledFooter>
-      <h6>Created by ak</h6>
+      <h6>Created by a.k</h6>
     </StyledFooter>
-  )
-}
-export default Footer
+  );
+};
+export default Footer;
