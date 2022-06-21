@@ -1,19 +1,21 @@
-import React from 'react';
-import Error from '../components/Error.js';
+import React from 'react'
+import Error from '../components/Error.js'
 
-import { Outlet } from 'react-router-dom';
-import { Container } from './styles/Container.styled';
+import { Outlet } from 'react-router-dom'
+import { StyledMainLayout } from './styles/MainLayout.styled'
 
-import Header from './Header';
+import Header from './Header'
+import Footer from './Footer.js'
 
 export default function MainLayout() {
   return (
     <>
       <Header />
       <Error />
-      <Container>
+      <StyledMainLayout>
         <Outlet />
-      </Container>
+      </StyledMainLayout>
+      <Footer />
     </>
-  );
+  )
 }

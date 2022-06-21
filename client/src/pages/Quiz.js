@@ -1,74 +1,74 @@
-import React from 'react';
-import Spinner from '../components/Spinner.js';
-import Error from '../components/Error.js';
-import { useState, useEffect } from 'react';
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
-import { Button } from '../components/styles/Button.styled';
-import { Helmet } from 'react-helmet';
-import { toast } from 'react-toastify';
-import { useSelector, useDispatch } from 'react-redux';
-import { StyledImage } from './../components/styles/Image.styled';
-import { StyledCertificate } from '../components/styles/Certificate.styled';
+import React from 'react'
+import Spinner from '../components/Spinner.js'
+import Error from '../components/Error.js'
+import { useState, useEffect } from 'react'
+import { jsPDF } from 'jspdf'
+import html2canvas from 'html2canvas'
+import { Button } from '../components/styles/Button.styled'
+import { Helmet } from 'react-helmet'
+import { toast } from 'react-toastify'
+import { useSelector, useDispatch } from 'react-redux'
+import { StyledImage } from './../components/styles/Image.styled'
+import { StyledCertificate } from '../components/styles/Certificate.styled'
 
 import {
   loadQuiz,
   writeLog,
   getResult,
   resetQuizState,
-} from '../features/quiz/quizSlice';
-import Card from '../components/Card';
-import { useNavigate } from 'react-router';
+} from '../features/quiz/quizSlice'
+import Card from '../components/Card'
+import { useNavigate } from 'react-router'
 
 const Quiz = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  const quizState = useSelector((state) => state.quiz);
-  const { modal } = useSelector((state) => state.ui);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.auth)
+  const quizState = useSelector((state) => state.quiz)
+  const { modal } = useSelector((state) => state.ui)
   // const { inProgress } = useSelector((state) => state.inProgress)
 
   // const [inProgress, setInProgress] = useState(false)
-  const [qIndex, setQIndex] = useState(0);
+  const [qIndex, setQIndex] = useState(0)
   // const [result, setResult] = useState(0)
 
   useEffect(() => {
     if (quizState.isError) {
-      toast.error(quizState.message);
+      toast.error(quizState.message)
     }
     if (!user) {
-      dispatch(resetQuizState());
-      navigate('/login');
+      dispatch(resetQuizState())
+      navigate('/login')
     }
     if (quizState.quiz !== null) {
-      console.log(quizState.quiz);
+      console.log(quizState.quiz)
     }
     if (user && quizState.quiz === null && !quizState.isLoading) {
-      toast.error('Вы приравли тесет, начните заново!');
-      navigate('/');
+      toast.error('Вы приравли тесет, начните заново!')
+      navigate('/')
     }
   }, [
     user,
     navigate,
-    quizState.message,
     dispatch,
+    quizState.message,
     quizState.isError,
     quizState.quiz,
     quizState.isLoading,
-  ]);
+  ])
 
   const onClickHundler = (id, event) => {
-    event.preventDefault();
+    event.preventDefault()
     if (qIndex < quizState.quiz.questions.length - 1) {
-      setQIndex(qIndex + 1);
+      setQIndex(qIndex + 1)
     }
     if (qIndex === quizState.quiz.questions.length - 1) {
       // setInProgress(false)
       // dispatch(getResult())
       // need calculate result action here!!!
     }
-    console.log(id);
-  };
+    console.log(id)
+  }
 
   // const tryAgain = (event) => {
   //   event.preventDefault()
@@ -176,12 +176,12 @@ const Quiz = () => {
   // )
 
   if (quizState.isLoading) {
-    return <Spinner />;
+    return <Spinner />
   }
   return (
     <>
       <Helmet>
-        <meta charSet='utf-8' />
+        <meta charSet="utf-8" />
         <title>Quiz | Examinator </title>
       </Helmet>
       {quizState.quiz !== null ? (
@@ -191,7 +191,7 @@ const Quiz = () => {
         />
       ) : null}
     </>
-  );
-};
+  )
+}
 
-export default Quiz;
+export default Quiz

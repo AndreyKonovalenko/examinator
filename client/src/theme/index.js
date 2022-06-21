@@ -13,9 +13,10 @@ const theme = {
       onBackground: '#000000',
       onSurface: '#000000',
       onError: '#000000',
+      onFooter: 'grey',
     },
   },
   mobile: '768px',
-};
+}
 
-export default theme;
+export default theme
