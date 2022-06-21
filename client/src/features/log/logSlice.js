@@ -25,6 +25,25 @@ export const getLogs = createAsyncThunk('log/getAll', async (_, thunkAPI) => {
   }
 })
 
+// Create new log
+export const setLog = createAsyncThunk(
+  'log/create',
+  async (userAnswers, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await logService.setLog(userAnswers, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  },
+)
+
 export const logSlice = createSlice({
   name: 'log',
   initialState,
@@ -42,6 +61,19 @@ export const logSlice = createSlice({
         state.logs = action.payload
       })
       .addCase(getLogs.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(setLog.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(setLog.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.logs.push(action.payload)
+      })
+      .addCase(setLog.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

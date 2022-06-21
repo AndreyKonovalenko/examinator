@@ -1,4 +1,3 @@
-import { Container } from './styles/Container.styled'
 import { StyledFooter } from './styles/Footer.styled.js'
 
 const Footer = () => {

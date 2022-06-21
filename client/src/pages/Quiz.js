@@ -10,13 +10,16 @@ import { toast } from 'react-toastify'
 import { useSelector, useDispatch } from 'react-redux'
 import { StyledImage } from './../components/styles/Image.styled'
 import { StyledCertificate } from '../components/styles/Certificate.styled'
+import quizService from '../features/quiz/quizService'
 
 import {
   loadQuiz,
   writeLog,
   getResult,
   resetQuizState,
+  setUserAnswer,
 } from '../features/quiz/quizSlice'
+import { setLog } from '../features/log/logSlice'
 import Card from '../components/Card'
 import { useNavigate } from 'react-router'
 
@@ -25,26 +28,31 @@ const Quiz = () => {
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.auth)
   const quizState = useSelector((state) => state.quiz)
+  const logState = useSelector((state) => state.log)
   const { modal } = useSelector((state) => state.ui)
-  // const { inProgress } = useSelector((state) => state.inProgress)
-
-  // const [inProgress, setInProgress] = useState(false)
   const [qIndex, setQIndex] = useState(0)
-  // const [result, setResult] = useState(0)
+  const [quesitonsShuffled, setQuestionsShuffled] = useState(null)
 
   useEffect(() => {
     if (quizState.isError) {
       toast.error(quizState.message)
     }
+    if (logState.isError) {
+      toast.error(logState.message)
+    }
     if (!user) {
       dispatch(resetQuizState())
       navigate('/login')
     }
-    if (quizState.quiz !== null) {
-      console.log(quizState.quiz)
+    if (quizState.quiz !== null && quesitonsShuffled === null) {
+      const data = quizService.shuffle(quizState.quiz.questions)
+      setQuestionsShuffled(data)
     }
     if (user && quizState.quiz === null && !quizState.isLoading) {
       toast.error('Вы приравли тесет, начните заново!')
+      navigate('/')
+    }
+    if (quizState.userAnswers.length > 0 && logState.isSuccess) {
       navigate('/')
     }
   }, [
@@ -55,19 +63,23 @@ const Quiz = () => {
     quizState.isError,
     quizState.quiz,
     quizState.isLoading,
+    logState.isError,
+    logState.message,
   ])
 
-  const onClickHundler = (id, event) => {
-    event.preventDefault()
+  const onClickHundler = (id, questionId) => {
     if (qIndex < quizState.quiz.questions.length - 1) {
+      dispatch(setUserAnswer({ qId: questionId, answer: [id] }))
       setQIndex(qIndex + 1)
     }
     if (qIndex === quizState.quiz.questions.length - 1) {
+      dispatch(
+        setLog({ quizId: quizState.quiz._id, answers: quizState.userAnswers }),
+      )
       // setInProgress(false)
       // dispatch(getResult())
       // need calculate result action here!!!
     }
-    console.log(id)
   }
 
   // const tryAgain = (event) => {
@@ -163,19 +175,7 @@ const Quiz = () => {
   //   </>
   // )
 
-  // const oldQuizCard  = (
-  //   <>
-  //   <Helmet>
-  //     <meta charSet="utf-8" />
-  //     <title>Quiz | Examinator </title>
-  //   </Helmet>
-  //   {quiz !== null && inProgress === true ? (
-  //     <Card item={quiz[qIndex]} onClick={onClickHundler} />
-  //   ) : null}
-  // </>
-  // )
-
-  if (quizState.isLoading) {
+  if (quizState.isLoading || logState.isLoading) {
     return <Spinner />
   }
   return (
@@ -184,11 +184,8 @@ const Quiz = () => {
         <meta charSet="utf-8" />
         <title>Quiz | Examinator </title>
       </Helmet>
-      {quizState.quiz !== null ? (
-        <Card
-          item={quizState.quiz.questions[qIndex]}
-          onClick={onClickHundler}
-        />
+      {quizState.quiz !== null && quesitonsShuffled !== null ? (
+        <Card item={quesitonsShuffled[qIndex]} onClick={onClickHundler} />
       ) : null}
     </>
   )
