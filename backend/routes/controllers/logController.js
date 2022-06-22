@@ -36,6 +36,7 @@ export const setLog = asyncHandler(async (req, res) => {
     .exec()
   if (currentQuiz) {
     const { questions } = currentQuiz
+    console.log(req.body)
     const result = culcResult(questions, answers)
     if (result) {
       const newLog = await Log.create({

@@ -69,19 +69,15 @@ const Quiz = () => {
 
   const onClickHundler = (args, event) => {
     event.preventDefault()
-    if (qIndex === quizState.quiz.questions.length - 1) {
-      event.stopPropagation()
-    }
-
-    console.log(qIndex)
-    console.log(args)
-    dispatch(setUserAnswer({ qId: args[1], answer: [args[0]] }))
-
     if (qIndex < quizState.quiz.questions.length - 1) {
+      dispatch(setUserAnswer({ qId: args[1], answer: [args[0]] }))
       setQIndex(qIndex + 1)
     }
+    if (qIndex === quizState.quiz.questions.length - 1) {
+      dispatch(setUserAnswer({ qId: args[1], answer: [args[0]] }))
+      navigate('/summary')
+    }
 
-    // navigate('/summary')
     // setInProgress(false)
     // dispatch(getResult())
     // need calculate result action here!!!

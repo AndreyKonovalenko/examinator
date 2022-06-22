@@ -49,6 +49,13 @@ const Summary = () => {
     logState.message,
   ])
 
+  const culcSummry = (event) => {
+    event.preventDefault()
+    dispatch(
+      setLog({ quizId: quizState.quiz._id, answers: quizState.userAnswers }),
+    )
+  }
+
   if (quizState.isLoading || logState.isLoading) {
     return <Spinner />
   }
@@ -58,7 +65,7 @@ const Summary = () => {
         <meta charSet="utf-8" />
         <title>Quiz | Examinator </title>
       </Helmet>
-      <Button>Повторить</Button>
+      <Button onClick={culcSummry}>Рассчитать результат повторно</Button>
       <Button>Пeчатоть результат</Button>
       <h1>результат</h1>
     </>
