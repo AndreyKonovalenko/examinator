@@ -12,7 +12,10 @@ const Card = (props) => {
   })
 
   const list = quizService.shuffle(convertedOptions).map((element) => (
-    <ListElem key={uniqid()} onClick={() => props.onClick(element.id, _id)}>
+    <ListElem
+      key={uniqid()}
+      onClick={(event) => props.onClick([element.id, _id], event)}
+    >
       <p>
         {element.id} {element.value}
       </p>

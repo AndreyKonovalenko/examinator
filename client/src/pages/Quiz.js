@@ -67,19 +67,24 @@ const Quiz = () => {
     logState.message,
   ])
 
-  const onClickHundler = (id, questionId) => {
+  const onClickHundler = (args, event) => {
+    event.preventDefault()
+    if (qIndex === quizState.quiz.questions.length - 1) {
+      event.stopPropagation()
+    }
+
+    console.log(qIndex)
+    console.log(args)
+    dispatch(setUserAnswer({ qId: args[1], answer: [args[0]] }))
+
     if (qIndex < quizState.quiz.questions.length - 1) {
-      dispatch(setUserAnswer({ qId: questionId, answer: [id] }))
       setQIndex(qIndex + 1)
     }
-    if (qIndex === quizState.quiz.questions.length - 1) {
-      dispatch(
-        setLog({ quizId: quizState.quiz._id, answers: quizState.userAnswers }),
-      )
-      // setInProgress(false)
-      // dispatch(getResult())
-      // need calculate result action here!!!
-    }
+
+    // navigate('/summary')
+    // setInProgress(false)
+    // dispatch(getResult())
+    // need calculate result action here!!!
   }
 
   // const tryAgain = (event) => {
