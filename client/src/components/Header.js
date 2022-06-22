@@ -27,7 +27,7 @@ const Header = () => {
           <h1>Examinator</h1>
           {user ? <Button onClick={onLogout}>Logout</Button> : null}
           {location.pathname === '/summary' ? (
-            <Button onClick={() => navigate('/quiz')}>Dashboard</Button>
+            <Button onClick={() => navigate('/')}>Dashboard</Button>
           ) : null}
         </StyledNav>
       </Container>

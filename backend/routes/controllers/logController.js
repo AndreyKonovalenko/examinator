@@ -38,6 +38,7 @@ export const setLog = asyncHandler(async (req, res) => {
     const { questions } = currentQuiz
     console.log(req.body)
     const result = culcResult(questions, answers)
+    console.log('result', result)
     if (result) {
       const newLog = await Log.create({
         user: req.user.id,
@@ -80,7 +81,6 @@ const arrayEquals = (a, b) => {
 
 // calculate result function for log object data
 const culcResult = (questions, answers) => {
-  console.log(answers)
   let result = 0
   questions.forEach((element) => {
     const { _id, currect } = element
