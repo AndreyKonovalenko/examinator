@@ -1,4 +1,4 @@
-//import jwt from 'jsonwebtoken'
+import jwt_decode from 'jwt-decode'
 import { useEffect } from 'react'
 import { Container } from './styles/Container.styled'
 import { StyledHeader, StyledNav } from './styles/Header.styled'
@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
 import { resetLogState } from '../features/log/logSlice'
 import { resetQuizState } from '../features/quiz/quizSlice'
-import { isObjectIdOrHexString } from 'mongoose'
+import finalPropsSelectorFactory from 'react-redux/es/connect/selectorFactory'
 
 const Header = () => {
   const navigate = useNavigate()
@@ -27,12 +27,18 @@ const Header = () => {
     dispatch(resetQuizState())
     navigate('/')
   }
-  // useEffect(() => {
-  //   if (user) {
-  //     const decodedJwt = jwt.parseJwt(user.token)
-  //     console.log(decodedJwt.exp)
-  //   }
-  // })
+  useEffect(() => {
+    if (user) {
+      const decoded = jwt_decode(user.token)
+      if (decoded.exp * 1000 < Date.now()) {
+        dispatch(logout())
+        dispatch(reset())
+        dispatch(resetLogState())
+        dispatch(resetQuizState())
+        navigate('/login')
+      }
+    }
+  })
 
   return (
     <StyledHeader>
