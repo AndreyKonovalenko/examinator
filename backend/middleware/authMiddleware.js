@@ -17,9 +17,12 @@ const protect = asyncHandler(async (req, res, next) => {
       req.user = await User.findById(decoded.id).select('-password')
       next()
     } catch (error) {
-      console.log(error)
       res.status(401)
-      throw new Error('Not authorized')
+      throw new Error(
+        error.message === 'jwt expired'
+          ? 'jwt expired, logout and get new token'
+          : 'Not authorized',
+      )
     }
   }
   if (!token) {
