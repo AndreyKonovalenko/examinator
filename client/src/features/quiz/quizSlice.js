@@ -18,7 +18,6 @@ export const getQuizzes = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      console.log('token', token)
       return await quizService.getQuizzes(token)
     } catch (error) {
       const message =

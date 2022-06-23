@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { StyledQuizCard } from './styles/QuizCard.styled'
 import { ListElem } from './styles/ListElem.styled'
 import uniqid from 'uniqid'

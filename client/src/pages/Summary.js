@@ -1,43 +1,41 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
-import { Button } from '../components/styles/Button.styled.js';
-import { Helmet } from 'react-helmet';
-import { useSelector, useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
-import {
-  getQuizzes,
-  resetQuizState,
-  getQuizById,
-} from '../features/quiz/quizSlice';
-import { getLogs, resetLogState, setLog } from '../features/log/logSlice';
-import QuizListCard from '../components/QuizListCard';
-import LogListCard from '../components/LogListCard';
-import Spinner from '../components/Spinner';
+import React from 'react'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router'
+import { Button } from '../components/styles/Button.styled.js'
+import { Helmet } from 'react-helmet'
+import { useSelector, useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
+import { resetQuizState } from '../features/quiz/quizSlice'
+import { resetLogState, setLog } from '../features/log/logSlice'
+
+import Spinner from '../components/Spinner'
 
 const Summary = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  const quizState = useSelector((state) => state.quiz);
-  const logState = useSelector((state) => state.log);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.auth)
+  const quizState = useSelector((state) => state.quiz)
+  const logState = useSelector((state) => state.log)
 
   useEffect(() => {
     if (quizState.isError) {
-      toast.error(quizState.message);
+      toast.error(quizState.message)
     }
     if (logState.isError) {
-      toast.error(logState.message);
+      toast.error(logState.message)
     }
-    if (!user) {
-      dispatch(resetQuizState());
-      dispatch(resetLogState());
-      navigate('/login');
+    if (quizState.quiz === null) {
+      toast.error('Вы покинули страницу результата теста')
     }
-    if (user && quizState.quiz && quizState.userAnswers.length > 0) {
+    if (!user || quizState.quiz === null) {
+      dispatch(resetQuizState())
+      dispatch(resetLogState())
+      navigate('/login')
+    }
+    if (user && quizState.quiz !== null && quizState.userAnswers.length > 0) {
       dispatch(
-        setLog({ quizId: quizState.quiz._id, answers: quizState.userAnswers })
-      );
+        setLog({ quizId: quizState.quiz._id, answers: quizState.userAnswers }),
+      )
     }
   }, [
     user,
@@ -47,25 +45,24 @@ const Summary = () => {
     logState.isError,
     quizState.message,
     logState.message,
-    quizState.quiz._id,
     quizState.quiz,
     quizState.userAnswers,
-  ]);
+  ])
 
   const culcSummry = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     dispatch(
-      setLog({ quizId: quizState.quiz._id, answers: quizState.userAnswers })
-    );
-  };
+      setLog({ quizId: quizState.quiz._id, answers: quizState.userAnswers }),
+    )
+  }
 
   if (quizState.isLoading || logState.isLoading) {
-    return <Spinner />;
+    return <Spinner />
   }
   const summary = (
     <>
       <Helmet>
-        <meta charSet='utf-8' />
+        <meta charSet="utf-8" />
         <title>Quiz | Examinator </title>
       </Helmet>
       <Button onClick={culcSummry}>Рассчитать результат повторно</Button>
@@ -77,8 +74,8 @@ const Summary = () => {
           : null}
       </p>
     </>
-  );
-  return summary;
-};
+  )
+  return summary
+}
 
-export default Summary;
+export default Summary

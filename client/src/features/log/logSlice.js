@@ -14,7 +14,6 @@ const initialState = {
 export const getLogs = createAsyncThunk('log/getAll', async (_, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.user.token
-    console.log('token', token)
     return await logService.getLogs(token)
   } catch (error) {
     const message =
