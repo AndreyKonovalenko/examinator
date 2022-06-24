@@ -18,6 +18,7 @@ const protect = asyncHandler(async (req, res, next) => {
       next()
     } catch (error) {
       res.status(401)
+      console.log(error)
       throw new Error(
         error.message === 'jwt expired' ? 'jwt expired' : 'Not authorized',
       )

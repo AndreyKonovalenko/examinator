@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
 import { resetLogState } from '../features/log/logSlice'
 import { resetQuizState } from '../features/quiz/quizSlice'
-import finalPropsSelectorFactory from 'react-redux/es/connect/selectorFactory'
 
 const Header = () => {
   const navigate = useNavigate()
