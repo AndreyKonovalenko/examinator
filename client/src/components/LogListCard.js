@@ -11,14 +11,16 @@ const LogListCard = (props) => {
     ).toFixed(0);
     const etemptTime = moment(element.updatedAt).format('HH:mm:ss DD.MM.YYYY');
     return (
-      <ListElem key={uniqid()}>
+      <ListElem
+        key={uniqid()}
+        onClick={(event) => props.onClick(element, event)}>
         <p>
           {element.quiz.title}. Попытка осуществлена в {etemptTime}
         </p>
         <p>
           Тест {score >= 80 ? 'пройден' : 'провален'} с результатом {score}%,
           правлельных ответов: {element.result} из{' '}
-          {element.quiz.questions.length},
+          {element.quiz.questions.length}.
         </p>
       </ListElem>
     );

@@ -1,16 +1,16 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const API_URL = '/api/log/'
+const API_URL = '/api/log/';
 
 export const getLogs = async (token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  }
-  const response = await axios.get(API_URL, config)
-  return response.data
-}
+  };
+  const response = await axios.get(API_URL, config);
+  return response.data;
+};
 
 // Create new log
 const setLog = async (userAnswers, token) => {
@@ -18,15 +18,26 @@ const setLog = async (userAnswers, token) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  }
+  };
 
-  const response = await axios.post(API_URL, userAnswers, config)
+  const response = await axios.post(API_URL, userAnswers, config);
 
-  return response.data
-}
+  return response.data;
+};
+
+export const getLog = async (logId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.get(API_URL + logId, config);
+  return response.data;
+};
 
 const logService = {
   getLogs,
   setLog,
-}
-export default logService
+  getLog,
+};
+export default logService;

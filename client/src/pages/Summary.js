@@ -87,8 +87,8 @@ const Summary = () => {
   let score = null;
   let amount = null;
 
-  if (logState.isSuccess && quizState.quiz !== null) {
-    const { result, updatedAt } = logState.logs[logState.logs.length - 1];
+  if (logState.isSuccess && quizState.quiz !== null && logState.log !== null) {
+    const { result, updatedAt } = logState.log;
     console.log(result);
     etemptResult = result;
     etemptTime = moment(updatedAt).format('DD.MM.YYYY HH:mm:ss');
