@@ -1,39 +1,35 @@
-import moment from 'moment'
-import { StyledQuizCard } from './styles/QuizCard.styled'
-import { ListElem } from './styles/ListElem.styled'
-import uniqid from 'uniqid'
+import moment from 'moment';
+import { StyledQuizCard } from './styles/QuizCard.styled';
+import { ListElem } from './styles/ListElem.styled';
+import uniqid from 'uniqid';
 const LogListCard = (props) => {
   const list = props.item.map((element) => {
     const score = (
       (Number.parseInt(element.result) /
         Number.parseInt(element.quiz.questions.length)) *
       100
-    ).toFixed(0)
-    const date = new Date(element.updatedAt)
-    const month = date.getMonth() + 1 // getMonth() method returns month in the zero-based from where Jan is 0
-    const etemptTime = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} ${date.getDate()}.${
-      month > 9 ? month : '0' + month
-    }.${date.getFullYear()} `
+    ).toFixed(0);
+    const etemptTime = moment(element.updatedAt).format('HH:mm:ss DD.MM.YYYY');
     return (
       <ListElem key={uniqid()}>
         <p>
-          {element.quiz.title}. Попытка осуществлена в {etemptTime}{' '}
+          {element.quiz.title}. Попытка осуществлена в {etemptTime}
         </p>
         <p>
-          Правлельных ответов: {element.result} из{' '}
-          {element.quiz.questions.length}, тест{' '}
-          {score >= 80 ? 'пройден' : 'провален'} с результатом {score}%.
+          Тест {score >= 80 ? 'пройден' : 'провален'} с результатом {score}%,
+          правлельных ответов: {element.result} из{' '}
+          {element.quiz.questions.length},
         </p>
       </ListElem>
-    )
-  })
+    );
+  });
 
   return (
     <StyledQuizCard>
       <h2>История:</h2>
       {list}
     </StyledQuizCard>
-  )
-}
+  );
+};
 
-export default LogListCard
+export default LogListCard;
