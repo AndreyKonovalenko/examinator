@@ -1,5 +1,3 @@
-import jwt_decode from 'jwt-decode'
-import { useEffect } from 'react'
 import { Container } from './styles/Container.styled'
 import { StyledHeader, StyledNav } from './styles/Header.styled'
 import { Button } from './styles/Button.styled'
@@ -28,19 +26,6 @@ const Header = () => {
     dispatch(resetQuizState())
     navigate('/')
   }
-  useEffect(() => {
-    if (user) {
-      const decoded = jwt_decode(user.token)
-      if (decoded.exp * 1000 < Date.now()) {
-        dispatch(logout())
-        dispatch(reset())
-        dispatch(resetLogState())
-        dispatch(resetQuizState())
-        navigate('/login')
-      }
-    }
-  }, [user, dispatch])
-
   return (
     <StyledHeader>
       <Container>

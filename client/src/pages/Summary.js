@@ -25,12 +25,6 @@ const Summary = () => {
   const logState = useSelector((state) => state.log)
 
   useEffect(() => {
-    if (quizState.isError) {
-      toast.error(quizState.message)
-    }
-    if (logState.isError) {
-      toast.error(logState.message)
-    }
     if (!user) {
       console.log('quiz=null')
       dispatch(resetQuizState())

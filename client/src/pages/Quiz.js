@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import quizService from '../features/quiz/quizService'
 
 import { resetQuizState, setUserAnswer } from '../features/quiz/quizSlice'
-import { setLog } from '../features/log/logSlice'
 import Card from '../components/Card'
 import { useNavigate } from 'react-router'
 
@@ -17,17 +16,10 @@ const Quiz = () => {
   const { user } = useSelector((state) => state.auth)
   const quizState = useSelector((state) => state.quiz)
   const logState = useSelector((state) => state.log)
-  const { modal } = useSelector((state) => state.ui)
   const [qIndex, setQIndex] = useState(0)
   const [quesitonsShuffled, setQuestionsShuffled] = useState(null)
 
   useEffect(() => {
-    if (quizState.isError) {
-      toast.error(quizState.message)
-    }
-    if (logState.isError) {
-      toast.error(logState.message)
-    }
     if (!user) {
       dispatch(resetQuizState())
       navigate('/login')
@@ -47,12 +39,6 @@ const Quiz = () => {
     user,
     navigate,
     dispatch,
-    quizState.message,
-    quizState.isError,
-    quizState.quiz,
-    quizState.isLoading,
-    logState.isError,
-    logState.message,
     quizState.userAnswers.length,
     logState.isSuccess,
     quesitonsShuffled,

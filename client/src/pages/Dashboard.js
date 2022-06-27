@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { Helmet } from 'react-helmet'
 import { useSelector, useDispatch } from 'react-redux'
-import { toast } from 'react-toastify'
 import {
   getQuizzes,
   resetQuizState,
@@ -13,6 +12,7 @@ import { getLogs, resetLogState, getLogById } from '../features/log/logSlice'
 import QuizListCard from '../components/QuizListCard'
 import LogListCard from '../components/LogListCard'
 import Spinner from '../components/Spinner'
+
 const Dashboard = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -21,12 +21,6 @@ const Dashboard = () => {
   const logState = useSelector((state) => state.log)
 
   useEffect(() => {
-    if (quizState.isError) {
-      toast.error(quizState.message)
-    }
-    if (logState.isError) {
-      toast.error(logState.message)
-    }
     if (!user) {
       dispatch(resetQuizState())
       dispatch(resetLogState())

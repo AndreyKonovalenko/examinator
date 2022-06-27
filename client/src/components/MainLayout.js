@@ -1,13 +1,35 @@
 import React from 'react'
-import Error from '../components/Error.js'
-
+import jwt_decode from 'jwt-decode'
+import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { StyledMainLayout } from './styles/MainLayout.styled'
+import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { logout, reset } from '../features/auth/authSlice'
+import { resetLogState } from '../features/log/logSlice'
+import { resetQuizState } from '../features/quiz/quizSlice'
 
+import Error from '../components/Error.js'
 import Header from './Header'
 import Footer from './Footer.js'
 
-export default function MainLayout() {
+export const MainLayout = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    if (user) {
+      const decoded = jwt_decode(user.token)
+      if (decoded.exp * 1000 < Date.now()) {
+        dispatch(logout())
+        dispatch(reset())
+        dispatch(resetLogState())
+        dispatch(resetQuizState())
+        navigate('/login')
+      }
+    }
+  }, [user, dispatch])
   return (
     <>
       <Header />
@@ -19,3 +41,5 @@ export default function MainLayout() {
     </>
   )
 }
+
+export default MainLayout

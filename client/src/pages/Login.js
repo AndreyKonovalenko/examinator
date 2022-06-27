@@ -24,9 +24,6 @@ const Login = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (isError) {
-      toast.error(message)
-    }
     if (isSuccess || user) {
       navigate('/')
     }
