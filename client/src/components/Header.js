@@ -1,5 +1,4 @@
 import jwt_decode from 'jwt-decode'
-import { useBeforeunload } from 'react-beforeunload'
 import { useEffect } from 'react'
 import { Container } from './styles/Container.styled'
 import { StyledHeader, StyledNav } from './styles/Header.styled'
@@ -11,7 +10,6 @@ import { resetLogState } from '../features/log/logSlice'
 import { resetQuizState } from '../features/quiz/quizSlice'
 
 const Header = () => {
-  useBeforeunload(() => 'You’ll lose your data!')
   const navigate = useNavigate()
   const dispatch = useDispatch()
   let location = useLocation()
@@ -41,7 +39,7 @@ const Header = () => {
         navigate('/login')
       }
     }
-  }, [user])
+  }, [user, dispatch])
 
   return (
     <StyledHeader>

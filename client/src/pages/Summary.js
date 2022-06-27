@@ -31,12 +31,6 @@ const Summary = () => {
     if (logState.isError) {
       toast.error(logState.message)
     }
-    // if (user & (quizState.quiz === null) & (logState.log === null)) {
-    //   toast.error('Вы принудительно обновили страницу')
-    //   dispatch(resetQuizState())
-    //   dispatch(resetLogState())
-    //   navigate('/')
-    // }
     if (!user) {
       console.log('quiz=null')
       dispatch(resetQuizState())
