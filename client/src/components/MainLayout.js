@@ -6,7 +6,7 @@ import { StyledMainLayout } from './styles/MainLayout.styled'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
-import { resetLogState } from '../features/log/logSlice'
+import { resetLogState, resetAnswersLogState } from '../features/log/logSlice'
 import { resetQuizState } from '../features/quiz/quizSlice'
 
 import Error from '../components/Error.js'
@@ -26,6 +26,7 @@ export const MainLayout = () => {
         dispatch(reset())
         dispatch(resetLogState())
         dispatch(resetQuizState())
+        dispatch(resetAnswersLogState())
         navigate('/login')
       }
     }

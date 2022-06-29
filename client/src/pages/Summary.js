@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet'
 import { useSelector, useDispatch } from 'react-redux'
 import { StyledCertificate } from '../components/styles/Certificate.styled.js'
 import { StyledImage } from '../components/styles/Image.styled'
-import { resetQuizState } from '../features/quiz/quizSlice'
+import { resetQuizState, getQuizById } from '../features/quiz/quizSlice'
 import { resetLogState, setLog } from '../features/log/logSlice'
 import { Flex } from '../components/styles/Flex.styled.js'
 import theme from '../theme/index.js'
@@ -28,6 +28,10 @@ const Summary = () => {
       dispatch(resetQuizState())
       dispatch(resetLogState())
       navigate('/login')
+    }
+
+    if (user & (logState.log !== null) & (quizState.quiz === null)) {
+      dispatch(getQuizById(logState.log.quiz))
     }
   }, [user, navigate, dispatch, quizState.quiz, quizState.userAnswers])
 
@@ -62,9 +66,8 @@ const Summary = () => {
   let score = null
   let amount = null
 
-  if (logState.isSuccess && quizState.quiz !== null && logState.log !== null) {
+  if (quizState.quiz !== null && logState.log !== null) {
     const { result, updatedAt } = logState.log
-    console.log(result)
     etemptResult = result
     etemptTime = moment(updatedAt).format('DD.MM.YYYY HH:mm:ss')
     etemptQuizeTitle = quizState.quiz.title

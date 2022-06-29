@@ -4,7 +4,7 @@ import { Button } from './styles/Button.styled'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
-import { resetLogState } from '../features/log/logSlice'
+import { resetLogState, resetAnswersLogState } from '../features/log/logSlice'
 import { resetQuizState } from '../features/quiz/quizSlice'
 
 const Header = () => {
@@ -17,12 +17,14 @@ const Header = () => {
     dispatch(logout())
     dispatch(resetLogState())
     dispatch(resetQuizState())
+    //  dispatch(resetAnswersLogState())
     dispatch(reset())
     navigate('/login')
   }
 
   const onDashboard = () => {
     dispatch(resetLogState())
+    //dispatch(resetAnswersLogState())
     dispatch(resetQuizState())
     navigate('/')
   }
