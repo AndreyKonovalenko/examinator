@@ -5,6 +5,7 @@ const initialState = {
   quizzes: [],
   quiz: null,
   userAnswers: [],
+  isCompleted: false,
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -59,8 +60,8 @@ export const quizSlice = createSlice({
     loadQuiz: (state, actions) => {
       state.quiz = quizService.shuffle(actions.payload)
     },
-    writeLog: (state, actions) => {
-      state.log.push(actions.payload)
+    finishQuiz: (state) => {
+      state.isCompleted = true
     },
     setUserAnswer: (state, actions) => {
       state.userAnswers.push(actions.payload)
@@ -100,7 +101,7 @@ export const quizSlice = createSlice({
 export const {
   loadQuiz,
   resetQuizState,
-  writeLog,
+  finishQuiz,
   setInProgress,
   getResult,
   setUserAnswer,
