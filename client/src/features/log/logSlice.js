@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import logService from './logService'
 
+const log = JSON.parse(localStorage.getItem('log'))
+
 const initialState = {
   logs: [],
-  log: null,
+  log: log ? log : null,
   isError: false,
   isSuccess: false,
   isLoading: false,

@@ -1,16 +1,17 @@
-import { StyledQuizCard } from './styles/QuizCard.styled';
-import { ListElem } from './styles/ListElem.styled';
-import uniqid from 'uniqid';
+import { StyledQuizCard } from './styles/QuizCard.styled'
+import { ListElem } from './styles/ListElem.styled'
+import uniqid from 'uniqid'
 export default function QuizListCard(props) {
-  const { user } = props;
-  const name = user.split(' ').slice(1);
+  const { user } = props
+  const name = user.split(' ').slice(1)
   const list = props.item.map((element) => (
     <ListElem
       key={uniqid()}
-      onClick={(event) => props.onClick(element._id, event)}>
-      <h3>Тема: {element.title}</h3>
+      onClick={(event) => props.onClick(element._id, event)}
+    >
+      <h2>{element.title}</h2>
     </ListElem>
-  ));
+  ))
 
   return (
     <StyledQuizCard>
@@ -19,5 +20,5 @@ export default function QuizListCard(props) {
       </h2>
       {list}
     </StyledQuizCard>
-  );
+  )
 }

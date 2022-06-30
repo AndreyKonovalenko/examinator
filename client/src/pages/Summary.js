@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { StyledCertificate } from '../components/styles/Certificate.styled.js'
 import { StyledImage } from '../components/styles/Image.styled'
 import { resetQuizState, getQuizById } from '../features/quiz/quizSlice'
-import { resetLogState, setLog } from '../features/log/logSlice'
+import { resetLogState } from '../features/log/logSlice'
 import { Flex } from '../components/styles/Flex.styled.js'
 import theme from '../theme/index.js'
 import uniqid from 'uniqid'
@@ -30,17 +30,17 @@ const Summary = () => {
       navigate('/login')
     }
 
-    if (user & (logState.log !== null) & (quizState.quiz === null)) {
+    if (!quizState.quiz & (quizState.log !== null)) {
       dispatch(getQuizById(logState.log.quiz))
     }
-  }, [user, navigate, dispatch, quizState.quiz, quizState.userAnswers])
-
-  const culcSummry = (event) => {
-    event.preventDefault()
-    // dispatch(
-    //   setLog({ quizId: quizState.quiz._id, answers: quizState.userAnswers }),
-    // )
-  }
+  }, [
+    user,
+    navigate,
+    dispatch,
+    quizState.quiz,
+    quizState.userAnswers,
+    logState.log,
+  ])
 
   const printDocument = () => {
     html2canvas(document.querySelector('#pdfToPrint')).then((canvas) => {
@@ -56,7 +56,7 @@ const Summary = () => {
     printDocument()
   }
 
-  if (quizState.isLoading || logState.isLoading) {
+  if (quizState.isLoading || logState.isLoading || !logState.log) {
     return <Spinner />
   }
 
@@ -66,7 +66,7 @@ const Summary = () => {
   let score = null
   let amount = null
 
-  if (quizState.quiz !== null && logState.log !== null) {
+  if (quizState.quiz && logState.log) {
     const { result, updatedAt } = logState.log
     etemptResult = result
     etemptTime = moment(updatedAt).format('DD.MM.YYYY HH:mm:ss')
@@ -131,9 +131,6 @@ const Summary = () => {
           </p>
           <Flex>{images(3)}</Flex>
         </div>
-        {logState.isSuccess ? null : (
-          <Button onClick={culcSummry}>Рассчитать результат повторно</Button>
-        )}
         <Button onClick={getPdf}>Сохранить в PDF </Button>
       </StyledCertificate>
     </>
