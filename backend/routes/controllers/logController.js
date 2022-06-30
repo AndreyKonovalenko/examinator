@@ -1,6 +1,6 @@
-import asyncHandler from 'express-async-handler';
-import { Log } from '../../models/logModel.js';
-import { Quiz } from '../../models/quizModel.js';
+import asyncHandler from "express-async-handler";
+import { Log } from "../../models/logModel.js";
+import { Quiz } from "../../models/quizModel.js";
 
 // @desc Get user logs
 // @route GET /api/log
@@ -8,18 +8,17 @@ import { Quiz } from '../../models/quizModel.js';
 
 export const getLogs = asyncHandler(async (req, res) => {
   const data = await Log.find({ user: req.user.id })
-    .sort('-updatedAt')
+    .sort("-updatedAt")
     .populate({
-      path: 'quiz',
-      select: ['title', 'questions'],
+      path: "quiz",
+      select: ["title", "questions"],
     })
     .exec();
   if (data) {
-    console.log(data);
     res.status(200).json(data);
   } else {
     res.status(400);
-    throw new Error('Log not found');
+    throw new Error("Log not found");
   }
 });
 
@@ -33,7 +32,7 @@ export const getLog = asyncHandler(async (req, res) => {
     res.status(200).json(log);
   } else {
     res.status(400);
-    throw new Error('Invalid log id');
+    throw new Error("Invalid log id");
   }
 });
 
@@ -44,11 +43,10 @@ export const getLog = asyncHandler(async (req, res) => {
 export const setLog = asyncHandler(async (req, res) => {
   const { quizId, answers } = req.body;
   const currentQuiz = await Quiz.findOne({ _id: quizId })
-    .populate('questions')
+    .populate("questions")
     .exec();
   if (currentQuiz) {
     const { questions } = currentQuiz;
-    console.log(req.body);
     //const result = culcResult(questions, answers);
     const newLog = await Log.create({
       user: req.user.id,
@@ -57,15 +55,14 @@ export const setLog = asyncHandler(async (req, res) => {
       result: culcResult(questions, answers),
     });
     if (newLog) {
-      console.log(newLog);
       res.status(200).json(newLog);
     } else {
       res.status(400);
-      throw new Error('New Log has not been created');
+      throw new Error("New Log has not been created");
     }
   } else {
     res.status(400);
-    throw new Error('Quiz not found');
+    throw new Error("Quiz not found");
   }
 });
 
@@ -94,7 +91,6 @@ const culcResult = (questions, answers) => {
     answers.forEach((el) => {
       if (el.qId === _id.toString()) {
         const test = arrayEquals(currect, el.answer);
-        console.log(test);
         test ? (result += 1) : result;
       }
     });

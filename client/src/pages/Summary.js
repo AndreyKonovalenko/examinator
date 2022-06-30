@@ -30,7 +30,7 @@ const Summary = () => {
       navigate('/login')
     }
 
-    if (!quizState.quiz & (quizState.log !== null)) {
+    if (!quizState.quiz & (logState.log !== null)) {
       dispatch(getQuizById(logState.log.quiz))
     }
   }, [
@@ -54,10 +54,6 @@ const Summary = () => {
   const getPdf = (event) => {
     event.preventDefault()
     printDocument()
-  }
-
-  if (quizState.isLoading || logState.isLoading || !logState.log) {
-    return <Spinner />
   }
 
   let etemptResult = null
@@ -135,7 +131,11 @@ const Summary = () => {
       </StyledCertificate>
     </>
   )
-  return summary
+
+  if (quizState.isLoading || logState.isLoading || !logState.log) {
+    return <Spinner />
+  }
+  return quizState.quiz && logState.log ? summary : <Spinner />
 }
 
 export default Summary
