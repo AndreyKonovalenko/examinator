@@ -1,8 +1,8 @@
-import { SpinnerDiamond } from 'spinners-react';
-import { SpinnerStyled } from './styles/Spinner.styled';
-import theme from '../theme/index';
+import { SpinnerDiamond } from "spinners-react";
+import { SpinnerStyled } from "./styles/Spinner.styled";
+import theme from "../theme/index";
 
-export default function Spinner() {
+const Spinner = () => {
   return (
     <SpinnerStyled>
       <SpinnerDiamond
@@ -12,4 +12,6 @@ export default function Spinner() {
       />
     </SpinnerStyled>
   );
-}
+};
+
+export default Spinner;

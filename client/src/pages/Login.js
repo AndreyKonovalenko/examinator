@@ -1,51 +1,51 @@
-import * as React from 'react'
-import { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { Helmet } from 'react-helmet'
-import { Button } from '../components/styles/Button.styled'
-import { Form, Input, Title, Wrapper } from '../components/styles/Form.Styled'
-import { login, reset } from '../features/auth/authSlice'
-import { toast } from 'react-toastify'
-import Spinner from '../components/Spinner'
-import theme from '../theme/index'
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { Button } from "../components/styles/Button.styled";
+import { Form, Input, Title, Wrapper } from "../components/styles/Form.Styled";
+import { login, reset } from "../features/auth/authSlice";
+import { toast } from "react-toastify";
+import Spinner from "../components/Spinner";
+import theme from "../theme/index";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  })
+    username: "",
+    password: "",
+  });
   const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.auth,
-  )
-  const { username, password } = formData
+    (state) => state.auth
+  );
+  const { username, password } = formData;
 
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isSuccess || user) {
-      navigate('/')
+      navigate("/");
     }
-    dispatch(reset())
-  }, [user, isError, isSuccess, message, navigate, dispatch])
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const onChange = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     setFormData((prevState) => ({
       ...prevState,
       [event.target.name]: event.target.value,
-    }))
-  }
+    }));
+  };
 
   const onSubmit = (event) => {
-    event.preventDefault()
-    const userData = { username, password }
-    dispatch(login(userData))
-  }
+    event.preventDefault();
+    const userData = { username, password };
+    dispatch(login(userData));
+  };
 
   if (isLoading) {
-    return <Spinner />
+    return <Spinner />;
   }
 
   const loginForm = (
@@ -74,7 +74,7 @@ const Login = () => {
         </Button>
       </Form>
     </Wrapper>
-  )
+  );
 
   return (
     <>
@@ -84,7 +84,7 @@ const Login = () => {
       </Helmet>
       {loginForm}
     </>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

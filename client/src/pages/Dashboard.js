@@ -1,34 +1,34 @@
-import React from 'react'
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router'
-import { Helmet } from 'react-helmet'
-import { useSelector, useDispatch } from 'react-redux'
+import React from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { Helmet } from "react-helmet";
+import { useSelector, useDispatch } from "react-redux";
 import {
   getQuizzes,
   resetQuizState,
   getQuizById,
-} from '../features/quiz/quizSlice'
-import { getLogs, resetLogState, getLogById } from '../features/log/logSlice'
-import QuizListCard from '../components/QuizListCard'
-import LogListCard from '../components/LogListCard'
-import Spinner from '../components/Spinner'
+} from "../features/quiz/quizSlice";
+import { getLogs, resetLogState, getLogById } from "../features/log/logSlice";
+import QuizListCard from "../components/QuizListCard";
+import LogListCard from "../components/LogListCard";
+import Spinner from "../components/Spinner";
 
 const Dashboard = () => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const { user } = useSelector((state) => state.auth)
-  const quizState = useSelector((state) => state.quiz)
-  const logState = useSelector((state) => state.log)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const quizState = useSelector((state) => state.quiz);
+  const logState = useSelector((state) => state.log);
 
   useEffect(() => {
     if (!user) {
-      dispatch(resetQuizState())
-      dispatch(resetLogState())
-      navigate('/login')
+      dispatch(resetQuizState());
+      dispatch(resetLogState());
+      navigate("/login");
     }
     if (user) {
-      dispatch(getQuizzes())
-      dispatch(getLogs())
+      dispatch(getQuizzes());
+      dispatch(getLogs());
     }
   }, [
     user,
@@ -38,25 +38,25 @@ const Dashboard = () => {
     quizState.message,
     logState.message,
     dispatch,
-  ])
+  ]);
 
   const onQuizSelect = (id, event) => {
-    event.preventDefault()
+    event.preventDefault();
     if (id) {
-      dispatch(getQuizById(id))
-      navigate('/quiz')
+      dispatch(getQuizById(id));
+      navigate("/quiz");
     }
-  }
+  };
 
   const onLogHandler = (log, event) => {
-    event.preventDefault()
-    dispatch(getLogById(log._id))
-    dispatch(getQuizById(log.quiz._id))
-    navigate('/summary')
-  }
+    event.preventDefault();
+    dispatch(getLogById(log._id));
+    dispatch(getQuizById(log.quiz._id));
+    navigate("/summary");
+  };
 
   if (quizState.isLoading || logState.isLoading) {
-    return <Spinner />
+    return <Spinner />;
   }
   const dashboard = (
     <>
@@ -76,8 +76,8 @@ const Dashboard = () => {
         <LogListCard onClick={onLogHandler} item={logState.logs} />
       ) : null}
     </>
-  )
-  return dashboard
-}
+  );
+  return dashboard;
+};
 
-export default Dashboard
+export default Dashboard;
