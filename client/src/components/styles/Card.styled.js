@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const StyledCard = styled.div`
   align-items: center;
@@ -14,4 +14,4 @@ export const StyledCard = styled.div`
   & > h2 {
     color: ${({ theme }) => theme.colors.primary.dark};
   }
-`
+`;

@@ -1,34 +1,33 @@
-import jwt from 'jsonwebtoken'
-import asyncHandler from 'express-async-handler'
-import { User } from '../models/userModel.js'
+import jwt from "jsonwebtoken";
+import asyncHandler from "express-async-handler";
+import { User } from "../models/userModel.js";
 
 const protect = asyncHandler(async (req, res, next) => {
-  let token
+  let token;
   if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
+    req.headers.authorization.startsWith("Bearer")
   ) {
     try {
       // Get token from header
-      token = req.headers.authorization.split(' ')[1]
+      token = req.headers.authorization.split(" ")[1];
       // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET)
-      console.log('got user from local Storage!!!')
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
       // Get user from token
-      req.user = await User.findById(decoded.id).select('-password')
-      next()
+      req.user = await User.findById(decoded.id).select("-password");
+      next();
     } catch (error) {
-      res.status(401)
-      console.log(error)
+      res.status(401);
+      console.log(error);
       throw new Error(
-        error.message === 'jwt expired' ? 'jwt expired' : 'Not authorized',
-      )
+        error.message === "jwt expired" ? "jwt expired" : "Not authorized"
+      );
     }
   }
   if (!token) {
-    res.status(401)
-    throw new Error('Not authorized, no token')
+    res.status(401);
+    throw new Error("Not authorized, no token");
   }
-})
+});
 
-export default protect
+export default protect;
