@@ -3,15 +3,19 @@ import colors from 'colors';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import quizRouter from './routes/quizRoutes.js';
+import path from 'path';
 import userRouter from './routes/userRoutes.js';
 import logRouter from './routes/logRoutes.js';
 import questionRouter from './routes/questionRoutes.js';
 import errorHandler from './middleware/errorMiddleware.js';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 connectDB();
 
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

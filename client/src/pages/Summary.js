@@ -124,7 +124,7 @@ const Summary = () => {
             Тест {score >= 80 ? 'пройден' : 'провален'} с результатом {score}%
           </h2>
           <p>
-            Правлельных ответов: {etemptResult} из {amount}
+            Правeльных ответов: {etemptResult} из {amount}
           </p>
           <Flex>{images(3)}</Flex>
         </div>
