@@ -11,26 +11,25 @@ const LogListCard = (props) => {
         Number.parseInt(element.quiz.questions.length)) *
       100
     ).toFixed(0);
-    const etemptTime = moment(element.updatedAt).format('HH:mm:ss DD.MM.YYYY');
+    const etemptTime = moment(element.updatedAt).format('HH:mm:ss/DD.MM.YYYY');
 
     const succes = {
       color: theme.colors.primary.light,
     };
-    // const fail = {
-    //   color: theme.colors.error,
-    // };
+    const fail = {
+      color: theme.colors.error,
+    };
     return (
       <ListElem
         key={uniqid()}
         onClick={(event) => props.onClick(element, event)}>
-        <p>
-          {element.quiz.title}. Попытка осуществлена в {etemptTime}
-        </p>
-        <p style={score >= 80 ? succes : null}>
+        <p>Тема: {element.quiz.title}</p>
+        <p style={score >= 80 ? succes : fail}>
           Тест {score >= 80 ? 'пройден успешно' : 'провален'} с результатом{' '}
-          {score}%, правлельных ответов: {element.result} из{' '}
+          {score}%, правельных ответов: {element.result} из{' '}
           {element.quiz.questions.length}
         </p>
+        <p>{etemptTime}</p>
       </ListElem>
     );
   });
