@@ -34,7 +34,7 @@ const Quiz = () => {
       setQuestionsShuffled(data);
     }
     if (user && quizState.quiz === null && !quizState.isLoading) {
-      toast.error('Вы приравли тесет, начните заново!');
+      toast.error('Вы приравли тест, начните заново!');
       navigate('/');
     }
     if (quizState.isCompleted) {
