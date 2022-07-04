@@ -1,21 +1,21 @@
-import React from "react";
-import moment from "moment";
-import html2canvas from "html2canvas";
+import React from 'react';
+import moment from 'moment';
+import html2canvas from 'html2canvas';
 
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
-import { Button } from "../components/styles/Button.styled.js";
-import { Helmet } from "react-helmet";
-import { useSelector, useDispatch } from "react-redux";
-import { StyledCertificate } from "../components/styles/Certificate.styled.js";
-import { StyledImage } from "../components/styles/Image.styled";
-import { resetQuizState, getQuizById } from "../features/quiz/quizSlice";
-import { resetLogState } from "../features/log/logSlice";
-import { Flex } from "../components/styles/Flex.styled.js";
-import logService from "../features/log/logService";
-import theme from "../theme/index.js";
-import uniqid from "uniqid";
-import Spinner from "../components/Spinner";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { Button } from '../components/styles/Button.styled.js';
+import { Helmet } from 'react-helmet';
+import { useSelector, useDispatch } from 'react-redux';
+import { StyledCertificate } from '../components/styles/Certificate.styled.js';
+import { StyledImage } from '../components/styles/Image.styled';
+import { resetQuizState, getQuizById } from '../features/quiz/quizSlice';
+import { resetLogState } from '../features/log/logSlice';
+import { Flex } from '../components/styles/Flex.styled.js';
+import logService from '../features/log/logService';
+import theme from '../theme/index.js';
+import uniqid from 'uniqid';
+import Spinner from '../components/Spinner';
 
 const Summary = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Summary = () => {
     if (!user) {
       dispatch(resetQuizState());
       dispatch(resetLogState());
-      navigate("/login");
+      navigate('/login');
     }
 
     if (!quizState.quiz & (logState.log !== null)) {
@@ -53,10 +53,22 @@ const Summary = () => {
   // };
 
   const printDocument = () => {
-    const doc = logService.createPDF(logState.log.result);
+    const doc = logService.createPDF(
+      logState.log,
+      user.name,
+      quizState.quiz.title
+    );
+    const name = user.name;
     if (doc) {
-      const name = user.name;
-      doc.save(`${name} ${quizState.quiz.title}.pdf`);
+      html2canvas(document.querySelector('#pdfToPrint')).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        doc.addImage(imgData, 'JEPEG', 0, 50);
+        html2canvas(document.querySelector('#pdfToPrint1')).then((canvas) => {
+          const imgData = canvas.toDataURL('image/png');
+          doc.addImage(imgData, 'JEPEG', 0, 130);
+          doc.save(`${name} ${quizState.quiz.title}.pdf`);
+        });
+      });
     }
   };
 
@@ -74,23 +86,18 @@ const Summary = () => {
   if (quizState.quiz && logState.log) {
     const { result, updatedAt } = logState.log;
     etemptResult = result;
-    etemptTime = moment(updatedAt).format("DD.MM.YYYY/HH:mm:ss");
+    etemptTime = moment(updatedAt).format('DD.MM.YYYY/HH:mm:ss');
     etemptQuizeTitle = quizState.quiz.title;
     amount = quizState.quiz.questions.length;
     score = (
       (Number.parseInt(etemptResult) / Number.parseInt(amount)) *
       100
     ).toFixed(0);
-
-    // doc.addFileToVFS(podkova, "podkova");
-    // doc.setFont("podkova", "normal");
-    // doc.text(score, 30, 30);
-    // doc.text("Hello world", 30, 40);
   }
 
   const images = (n) => {
     const styled = {
-      listStyleType: "none",
+      listStyleType: 'none',
     };
     const result = [];
     let i = 0;
@@ -103,8 +110,8 @@ const Summary = () => {
           <StyledImage
             key={uniqid()}
             style={custom}
-            src="/img/chaplain.png"
-            alt=""
+            src='/img/chaplain.png'
+            alt=''
           />
         </li>
       );
@@ -121,26 +128,26 @@ const Summary = () => {
   const summary = (
     <>
       <Helmet>
-        <meta charSet="utf-8" />
+        <meta charSet='utf-8' />
         <title>Quiz | Examinator </title>
       </Helmet>
       <StyledCertificate>
-        <div id={"pdfToPrint"}>
+        <div>
           <h1>Протокол</h1>
           <h1>цифрового тестирования</h1>
-          <Flex>{images(3)}</Flex>
+          <Flex id={'pdfToPrint'}>{images(3)}</Flex>
           <h2>Тема: {etemptQuizeTitle}</h2>
           <h3>ФИО испытуемого/ой: {user.name}</h3>
           <h3>Дата/время проведения: {etemptTime} </h3>
           <br />
           <h2>Реузультат:</h2>
           <h2 style={score >= 80 ? succes : fail}>
-            Тест {score >= 80 ? "пройден" : "провален"} с результатом {score}%
+            Тест {score >= 80 ? 'пройден' : 'провален'} с результатом {score}%
           </h2>
           <p>
             Правильных ответов: {etemptResult} из {amount}
           </p>
-          <Flex>{images(3)}</Flex>
+          <Flex id={'pdfToPrint1'}>{images(3)}</Flex>
         </div>
         <Button onClick={getPdf}>Сохранить в PDF </Button>
       </StyledCertificate>
