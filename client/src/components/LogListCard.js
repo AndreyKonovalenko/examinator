@@ -1,8 +1,8 @@
-import moment from 'moment';
-import { StyledQuizCard } from './styles/QuizCard.styled';
-import { ListElem } from './styles/ListElem.styled';
-import theme from '../theme/index.js';
-import uniqid from 'uniqid';
+import moment from "moment";
+import { StyledQuizCard } from "./styles/QuizCard.styled";
+import { ListElem } from "./styles/ListElem.styled";
+import theme from "../theme/index.js";
+import uniqid from "uniqid";
 
 const LogListCard = (props) => {
   const list = props.item.map((element) => {
@@ -11,7 +11,7 @@ const LogListCard = (props) => {
         Number.parseInt(element.quiz.questions.length)) *
       100
     ).toFixed(0);
-    const etemptTime = moment(element.updatedAt).format('HH:mm:ss/DD.MM.YYYY');
+    const etemptTime = moment(element.updatedAt).format("HH:mm:ss/DD.MM.YYYY");
 
     const succes = {
       color: theme.colors.primary.light,
@@ -22,11 +22,12 @@ const LogListCard = (props) => {
     return (
       <ListElem
         key={uniqid()}
-        onClick={(event) => props.onClick(element, event)}>
+        onClick={(event) => props.onClick(element, event)}
+      >
         <p>Тема: {element.quiz.title}</p>
         <p style={score >= 80 ? succes : fail}>
-          Тест {score >= 80 ? 'пройден успешно' : 'провален'} с результатом{' '}
-          {score}%, правельных ответов: {element.result} из{' '}
+          Тест {score >= 80 ? "пройден успешно" : "провален"} с результатом{" "}
+          {score}%, правильных ответов: {element.result} из{" "}
           {element.quiz.questions.length}
         </p>
         <p>{etemptTime}</p>
