@@ -1,20 +1,20 @@
-import React from 'react';
-import moment from 'moment';
-import html2canvas from 'html2canvas';
-import { jsPDF } from 'jspdf';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
-import { Button } from '../components/styles/Button.styled.js';
-import { Helmet } from 'react-helmet';
-import { useSelector, useDispatch } from 'react-redux';
-import { StyledCertificate } from '../components/styles/Certificate.styled.js';
-import { StyledImage } from '../components/styles/Image.styled';
-import { resetQuizState, getQuizById } from '../features/quiz/quizSlice';
-import { resetLogState } from '../features/log/logSlice';
-import { Flex } from '../components/styles/Flex.styled.js';
-import theme from '../theme/index.js';
-import uniqid from 'uniqid';
-import Spinner from '../components/Spinner';
+import React from "react";
+import moment from "moment";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { Button } from "../components/styles/Button.styled.js";
+import { Helmet } from "react-helmet";
+import { useSelector, useDispatch } from "react-redux";
+import { StyledCertificate } from "../components/styles/Certificate.styled.js";
+import { StyledImage } from "../components/styles/Image.styled";
+import { resetQuizState, getQuizById } from "../features/quiz/quizSlice";
+import { resetLogState } from "../features/log/logSlice";
+import { Flex } from "../components/styles/Flex.styled.js";
+import theme from "../theme/index.js";
+import uniqid from "uniqid";
+import Spinner from "../components/Spinner";
 
 const Summary = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const Summary = () => {
     if (!user) {
       dispatch(resetQuizState());
       dispatch(resetLogState());
-      navigate('/login');
+      navigate("/login");
     }
 
     if (!quizState.quiz & (logState.log !== null)) {
@@ -43,11 +43,11 @@ const Summary = () => {
   ]);
 
   const printDocument = () => {
-    html2canvas(document.querySelector('#pdfToPrint')).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
+    html2canvas(document.querySelector("#pdfToPrint")).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF();
-      pdf.addImage(imgData, 'JPEG', 0, 30);
-      pdf.save('download.pdf');
+      pdf.addImage(imgData, "JPEG", 0, 30);
+      pdf.save("download.pdf");
     });
   };
 
@@ -65,7 +65,7 @@ const Summary = () => {
   if (quizState.quiz && logState.log) {
     const { result, updatedAt } = logState.log;
     etemptResult = result;
-    etemptTime = moment(updatedAt).format('DD.MM.YYYY/HH:mm:ss');
+    etemptTime = moment(updatedAt).format("DD.MM.YYYY/HH:mm:ss");
     etemptQuizeTitle = quizState.quiz.title;
     amount = quizState.quiz.questions.length;
     score = (
@@ -76,7 +76,7 @@ const Summary = () => {
 
   const images = (n) => {
     const styled = {
-      listStyleType: 'none',
+      listStyleType: "none",
     };
     const result = [];
     let i = 0;
@@ -89,8 +89,8 @@ const Summary = () => {
           <StyledImage
             key={uniqid()}
             style={custom}
-            src='/img/chaplain.png'
-            alt=''
+            src="/img/chaplain.png"
+            alt=""
           />
         </li>
       );
@@ -107,11 +107,11 @@ const Summary = () => {
   const summary = (
     <>
       <Helmet>
-        <meta charSet='utf-8' />
+        <meta charSet="utf-8" />
         <title>Quiz | Examinator </title>
       </Helmet>
       <StyledCertificate>
-        <div id={'pdfToPrint'}>
+        <div id={"pdfToPrint"}>
           <h1>Протокол</h1>
           <h1>цифрового тестирования</h1>
           <Flex>{images(3)}</Flex>
@@ -121,10 +121,10 @@ const Summary = () => {
           <br />
           <h2>Реузультат:</h2>
           <h2 style={score >= 80 ? succes : fail}>
-            Тест {score >= 80 ? 'пройден' : 'провален'} с результатом {score}%
+            Тест {score >= 80 ? "пройден" : "провален"} с результатом {score}%
           </h2>
           <p>
-            Правeльных ответов: {etemptResult} из {amount}
+            Правильных ответов: {etemptResult} из {amount}
           </p>
           <Flex>{images(3)}</Flex>
         </div>
