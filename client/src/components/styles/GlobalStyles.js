@@ -1,8 +1,8 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 
-@import url('https://fonts.googleapis.com/css2?family=Podkova:wght@400;500;600;700;800&display=swap');
+@import url(${({ theme }) => theme.font});
 
   * {
     box-sizing: border-box;
@@ -19,6 +19,6 @@ const GlobalStyles = createGlobalStyle`
   }
   
 }
-`
+`;
 
-export default GlobalStyles
+export default GlobalStyles;

@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf";
+
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Button } from "../components/styles/Button.styled.js";
@@ -12,6 +12,7 @@ import { StyledImage } from "../components/styles/Image.styled";
 import { resetQuizState, getQuizById } from "../features/quiz/quizSlice";
 import { resetLogState } from "../features/log/logSlice";
 import { Flex } from "../components/styles/Flex.styled.js";
+import logService from "../features/log/logService";
 import theme from "../theme/index.js";
 import uniqid from "uniqid";
 import Spinner from "../components/Spinner";
@@ -42,13 +43,21 @@ const Summary = () => {
     logState.log,
   ]);
 
+  // const printDocument = () => {
+  //   html2canvas(document.querySelector("#pdfToPrint")).then((canvas) => {
+  //     const imgData = canvas.toDataURL("image/png");
+  //     const pdf = new jsPDF();
+  //     pdf.addImage(imgData, "JPEG", 0, 30);
+  //     pdf.save("download.pdf");
+  //   });
+  // };
+
   const printDocument = () => {
-    html2canvas(document.querySelector("#pdfToPrint")).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, "JPEG", 0, 30);
-      pdf.save("download.pdf");
-    });
+    const doc = logService.createPDF(logState.log.result);
+    if (doc) {
+      const name = user.name;
+      doc.save(`${name} ${quizState.quiz.title}.pdf`);
+    }
   };
 
   const getPdf = (event) => {
@@ -72,6 +81,11 @@ const Summary = () => {
       (Number.parseInt(etemptResult) / Number.parseInt(amount)) *
       100
     ).toFixed(0);
+
+    // doc.addFileToVFS(podkova, "podkova");
+    // doc.setFont("podkova", "normal");
+    // doc.text(score, 30, 30);
+    // doc.text("Hello world", 30, 40);
   }
 
   const images = (n) => {

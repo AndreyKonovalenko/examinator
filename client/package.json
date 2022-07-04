@@ -4,6 +4,7 @@
   "proxy": "http://localhost:5000/",
   "private": true,
   "dependencies": {
+    "@react-pdf/render": "^3.2.0",
     "@reduxjs/toolkit": "^1.8.1",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
