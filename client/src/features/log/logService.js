@@ -49,11 +49,11 @@ const createPDF = (log, user, title) => {
   doc.setFontSize(28);
 
   doc.text('Протокол ', 105, 20, null, null, 'center');
-  doc.text('цифрового тестирования', 105, 40, null, null, 'center');
+  doc.text('проверки знаний работников', 105, 40, null, null, 'center');
   doc.setFontSize(22);
   doc.text(`Тема: ${title}`, 105, 70, null, null, 'center');
   doc.setFontSize(16);
-  doc.text(`ФИО Испытуемого/ой ${user}`, 105, 85, null, null, 'center');
+  doc.text(`ФИО  ${user}`, 105, 85, null, null, 'center');
   doc.text(
     `Дата/время проведения ${etemptTime}`,
     105,

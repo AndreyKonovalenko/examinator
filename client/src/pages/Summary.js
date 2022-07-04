@@ -134,10 +134,10 @@ const Summary = () => {
       <StyledCertificate>
         <div>
           <h1>Протокол</h1>
-          <h1>цифрового тестирования</h1>
+          <h1>проверки знаний работников</h1>
           <Flex id={'pdfToPrint'}>{images(3)}</Flex>
           <h2>Тема: {etemptQuizeTitle}</h2>
-          <h3>ФИО испытуемого/ой: {user.name}</h3>
+          <h3>ФИО: {user.name}</h3>
           <h3>Дата/время проведения: {etemptTime} </h3>
           <br />
           <h2>Реузультат:</h2>
