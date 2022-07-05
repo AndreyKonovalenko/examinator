@@ -1,7 +1,6 @@
 import React from "react";
 import moment from "moment";
 import html2canvas from "html2canvas";
-
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Button } from "../components/styles/Button.styled.js";
@@ -42,15 +41,6 @@ const Summary = () => {
     quizState.userAnswers,
     logState.log,
   ]);
-
-  // const printDocument = () => {
-  //   html2canvas(document.querySelector("#pdfToPrint")).then((canvas) => {
-  //     const imgData = canvas.toDataURL("image/png");
-  //     const pdf = new jsPDF();
-  //     pdf.addImage(imgData, "JPEG", 0, 30);
-  //     pdf.save("download.pdf");
-  //   });
-  // };
 
   const printDocument = () => {
     if (quizState.quiz && logState.log) {

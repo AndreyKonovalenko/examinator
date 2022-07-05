@@ -1,6 +1,6 @@
 import { Container } from "./styles/Container.styled";
 import { StyledHeader, StyledNav } from "./styles/Header.styled";
-import { Button } from "./styles/Button.styled";
+import { IconStyled } from "./styles/Icon.styled";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
@@ -31,15 +31,22 @@ const Header = () => {
     <StyledHeader>
       <Container>
         <StyledNav>
-          <h1>Examinator</h1>
-          {location.pathname === "/summary" ? (
-            <MdMenu onClick={onDashboard} size={"2em"} />
-          ) : null}
+          <h1>
+            Examinator
+            {location.pathname === "/summary" ? (
+              <>
+                <span> |</span>
+                <IconStyled onClick={onDashboard}>
+                  <MdMenu size={"3em"} />
+                </IconStyled>
+              </>
+            ) : null}
+          </h1>
           {user ? (
-            <Button onClick={onLogout}>
-              <MdLogout />
-            </Button>
-          ) : null}
+            <IconStyled onClick={onLogout}>
+              <MdLogout size={"3em"} />
+            </IconStyled>
+          ) : null}{" "}
         </StyledNav>
       </Container>
     </StyledHeader>

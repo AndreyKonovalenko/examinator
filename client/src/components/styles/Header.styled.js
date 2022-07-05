@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledHeader = styled.header`
   background-color: ${({ theme }) => theme.colors.primary.light};
@@ -12,6 +12,6 @@ export const StyledNav = styled.nav`
   justify-content: space-between;
   margin-bottom: 40px;
   @media (max-width: ${({ theme }) => theme.mobile}) {
-    flex-direction: column;
+    flex-direction: row;
   }
 `;

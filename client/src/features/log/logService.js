@@ -1,8 +1,6 @@
 import axios from "axios";
 import { jsPDF } from "jspdf";
 import moment from "moment";
-import Podkova from "../../assets/fonts/Podkova-Regular.ttf";
-import PodkovaExtra from "../../assets/fonts/Podkova-ExtraBold.ttf";
 import PodkovaBold from "../../assets/fonts/Podkova-Bold.ttf";
 import theme from "../../theme/index.js";
 
