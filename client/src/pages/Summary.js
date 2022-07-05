@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { StyledCertificate } from "../components/styles/Certificate.styled.js";
 import { StyledImage } from "../components/styles/Image.styled";
 import { resetQuizState, getQuizById } from "../features/quiz/quizSlice";
-import { resetLogState } from "../features/log/logSlice";
+import { resetLogState, resetAnswersLogState } from "../features/log/logSlice";
 import { Flex } from "../components/styles/Flex.styled.js";
 import logService from "../features/log/logService";
 import theme from "../theme/index.js";
@@ -85,6 +85,9 @@ const Summary = () => {
   }
   const tryAgaineHandler = (event) => {
     event.preventDefault();
+    dispatch(resetLogState());
+    dispatch(resetQuizState());
+    dispatch(resetAnswersLogState());
     navigate("/");
   };
 
