@@ -1,11 +1,12 @@
-import { Container } from './styles/Container.styled';
-import { StyledHeader, StyledNav } from './styles/Header.styled';
-import { Button } from './styles/Button.styled';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { logout, reset } from '../features/auth/authSlice';
-import { resetLogState } from '../features/log/logSlice';
-import { resetQuizState } from '../features/quiz/quizSlice';
+import { Container } from "./styles/Container.styled";
+import { StyledHeader, StyledNav } from "./styles/Header.styled";
+import { IconStyled } from "./styles/Icon.styled";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout, reset } from "../features/auth/authSlice";
+import { resetLogState } from "../features/log/logSlice";
+import { resetQuizState } from "../features/quiz/quizSlice";
+import { MdLogout, MdMenu } from "react-icons/md";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -18,23 +19,34 @@ const Header = () => {
     dispatch(resetLogState());
     dispatch(resetQuizState());
     dispatch(reset());
-    navigate('/login');
+    navigate("/login");
   };
 
   const onDashboard = () => {
     dispatch(resetLogState());
     dispatch(resetQuizState());
-    navigate('/');
+    navigate("/");
   };
   return (
     <StyledHeader>
       <Container>
         <StyledNav>
-          <h1>Examinator</h1>
-          {location.pathname === '/summary' ? (
-            <Button onClick={onDashboard}>Dashboard</Button>
-          ) : null}
-          {user ? <Button onClick={onLogout}>Logout</Button> : null}
+          <h1>
+            Examinator
+            {location.pathname === "/summary" ? (
+              <>
+                <span> |</span>
+                <IconStyled onClick={onDashboard}>
+                  <MdMenu size={"3em"} />
+                </IconStyled>
+              </>
+            ) : null}
+          </h1>
+          {user ? (
+            <IconStyled onClick={onLogout}>
+              <MdLogout size={"3em"} />
+            </IconStyled>
+          ) : null}{" "}
         </StyledNav>
       </Container>
     </StyledHeader>

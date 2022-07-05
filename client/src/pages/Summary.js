@@ -1,7 +1,6 @@
 import React from "react";
 import moment from "moment";
 import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Button } from "../components/styles/Button.styled.js";
@@ -12,6 +11,7 @@ import { StyledImage } from "../components/styles/Image.styled";
 import { resetQuizState, getQuizById } from "../features/quiz/quizSlice";
 import { resetLogState } from "../features/log/logSlice";
 import { Flex } from "../components/styles/Flex.styled.js";
+import logService from "../features/log/logService";
 import theme from "../theme/index.js";
 import uniqid from "uniqid";
 import Spinner from "../components/Spinner";
@@ -43,12 +43,22 @@ const Summary = () => {
   ]);
 
   const printDocument = () => {
-    html2canvas(document.querySelector("#pdfToPrint")).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, "JPEG", 0, 30);
-      pdf.save("download.pdf");
-    });
+    if (quizState.quiz && logState.log) {
+      const doc = logService.createPDF(
+        logState.log,
+        user.name,
+        quizState.quiz.title
+      );
+      html2canvas(document.querySelector("#pdfToPrint")).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        doc.addImage(imgData, "JEPEG", 0, 50);
+        html2canvas(document.querySelector("#pdfToPrint1")).then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+          doc.addImage(imgData, "JEPEG", 0, 155);
+          doc.save(`${user.name} ${quizState.quiz.title}.pdf`);
+        });
+      });
+    }
   };
 
   const getPdf = (event) => {
@@ -73,6 +83,10 @@ const Summary = () => {
       100
     ).toFixed(0);
   }
+  const tryAgaineHandler = (event) => {
+    event.preventDefault();
+    navigate("/");
+  };
 
   const images = (n) => {
     const styled = {
@@ -111,24 +125,27 @@ const Summary = () => {
         <title>Quiz | Examinator </title>
       </Helmet>
       <StyledCertificate>
-        <div id={"pdfToPrint"}>
+        <div>
           <h1>Протокол</h1>
-          <h1>цифрового тестирования</h1>
-          <Flex>{images(3)}</Flex>
+          <h1>проверки знаний работников</h1>
+          <Flex id={"pdfToPrint"}>{images(3)}</Flex>
           <h2>Тема: {etemptQuizeTitle}</h2>
-          <h3>ФИО испытуемого/ой: {user.name}</h3>
+          <h3>ФИО: {user.name}</h3>
           <h3>Дата/время проведения: {etemptTime} </h3>
           <br />
-          <h2>Реузультат:</h2>
+          <h2>Результат:</h2>
           <h2 style={score >= 80 ? succes : fail}>
             Тест {score >= 80 ? "пройден" : "провален"} с результатом {score}%
           </h2>
           <p>
             Правильных ответов: {etemptResult} из {amount}
           </p>
-          <Flex>{images(3)}</Flex>
+          <Flex id={"pdfToPrint1"}>{images(3)}</Flex>
         </div>
-        <Button onClick={getPdf}>Сохранить в PDF </Button>
+        <Flex>
+          <Button onClick={getPdf}>Сохранить в PDF </Button>
+          <Button onClick={tryAgaineHandler}>Пройти заново</Button>
+        </Flex>
       </StyledCertificate>
     </>
   );

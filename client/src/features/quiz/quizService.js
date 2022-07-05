@@ -33,7 +33,7 @@ const calculate = (quiz, log) => {
   return сorrect;
 };
 
-export const getQuizzes = async (token) => {
+const getQuizzes = async (token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -43,7 +43,7 @@ export const getQuizzes = async (token) => {
   return response.data;
 };
 
-export const getQuiz = async (quizId, token) => {
+const getQuiz = async (quizId, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
