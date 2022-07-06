@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
 import { resetLogState } from "../features/log/logSlice";
 import { resetQuizState } from "../features/quiz/quizSlice";
-import { MdLogout, MdMenu } from "react-icons/md";
+import { MdLogout, MdMenu, MdAdminPanelSettings } from "react-icons/md";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -27,12 +27,26 @@ const Header = () => {
     dispatch(resetQuizState());
     navigate("/");
   };
-  return (
+
+  let adimnIcon = null;
+  if (user) {
+    if (user.admin) {
+      adimnIcon = (
+        <>
+          <IconStyled>
+            <MdAdminPanelSettings size={"3em"} />
+          </IconStyled>
+        </>
+      );
+    }
+  }
+  const header = (
     <StyledHeader>
       <Container>
         <StyledNav>
           <h1>
             Examinator
+            {adimnIcon}
             {location.pathname === "/summary" ? (
               <>
                 <span> |</span>
@@ -51,5 +65,6 @@ const Header = () => {
       </Container>
     </StyledHeader>
   );
+  return header;
 };
 export default Header;
