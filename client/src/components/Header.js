@@ -27,13 +27,15 @@ const Header = () => {
     dispatch(resetQuizState());
     navigate("/");
   };
-
+  const onAdmin = () => {
+    navigate("/admin");
+  };
   let adimnIcon = null;
   if (user) {
     if (user.admin) {
       adimnIcon = (
         <>
-          <IconStyled>
+          <IconStyled onClick={onAdmin}>
             <MdAdminPanelSettings size={"3em"} />
           </IconStyled>
         </>
@@ -44,20 +46,21 @@ const Header = () => {
     <StyledHeader>
       <Container>
         <StyledNav>
-          <h1>
-            Examinator
-            {adimnIcon}
-            {location.pathname === "/summary" ? (
-              <>
-                <span> |</span>
-                <IconStyled onClick={onDashboard}>
-                  <MdMenu size={"3em"} />
-                </IconStyled>
-              </>
-            ) : null}
-          </h1>
+          <IconStyled onClick={location.pathname !== "/" ? onDashboard : null}>
+            <span style={{ fontSize: "2em", fontWeight: "bold" }}>
+              Examinator
+            </span>
+          </IconStyled>
+          {adimnIcon}
+          {location.pathname !== "/" && location.pathname !== "/login" ? (
+            <>
+              <IconStyled onClick={onDashboard}>
+                <MdMenu size={"3em"} />
+              </IconStyled>
+            </>
+          ) : null}
           {user ? (
-            <IconStyled onClick={onLogout}>
+            <IconStyled style={{ marginLeft: "auto" }} onClick={onLogout}>
               <MdLogout size={"3em"} />
             </IconStyled>
           ) : null}{" "}

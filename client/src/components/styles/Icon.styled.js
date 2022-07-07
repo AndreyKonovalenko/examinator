@@ -5,6 +5,9 @@ export const IconStyled = styled.button`
   border-radius: 50px;
   border: none;
   cursor: pointer;
+  font-family: "Podkova", serif;
+  margin-top: 10px;
+  margin-bottom: 10px;
   background-color: ${({ theme }) => theme.colors.primary.light};
   color: ${({ theme }) => theme.colors.text.onPrimary};
   &:hover {

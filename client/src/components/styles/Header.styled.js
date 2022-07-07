@@ -9,7 +9,7 @@ export const StyledHeader = styled.header`
 export const StyledNav = styled.nav`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-bottom: 40px;
   @media (max-width: ${({ theme }) => theme.mobile}) {
     flex-direction: row;
