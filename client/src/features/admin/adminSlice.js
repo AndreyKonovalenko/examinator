@@ -3,6 +3,7 @@ import adminService from "./adminService";
 
 const initialState = {
   users: null,
+  userLog: null,
   isError: false,
   isSuccess: false,
   isLoading: false,
