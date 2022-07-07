@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledCard = styled.div`
+export const StyledUsersCard = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.surface};
   color: ${({ theme }) => theme.colors.text.onSurface};

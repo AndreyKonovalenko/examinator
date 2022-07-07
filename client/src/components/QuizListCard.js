@@ -1,25 +1,26 @@
-import { StyledQuizCard } from './styles/QuizCard.styled';
-import { ListElem } from './styles/ListElem.styled';
-import { StatusBage } from './styles/StatusBage.styled';
-import uniqid from 'uniqid';
+import { StyledListCard } from "./styles/ListCard.styled";
+import { ListElem } from "./styles/ListElem.styled";
+import { StatusBage } from "./styles/StatusBage.styled";
+import uniqid from "uniqid";
 
 const QuizListCard = (props) => {
   const { user } = props;
-  const name = user.split(' ').slice(1);
+  const name = user.split(" ").slice(1);
   const list = props.item.map((element) => (
     <ListElem
       key={uniqid()}
-      onClick={(event) => props.onClick(element._id, event)}>
+      onClick={(event) => props.onClick(element._id, event)}
+    >
       <h2>{element.title}</h2>
     </ListElem>
   ));
 
   const styled = {
-    textAlign: 'right',
+    textAlign: "right",
     margin: 0,
   };
   return (
-    <StyledQuizCard>
+    <StyledListCard>
       <div style={styled}>
         <StatusBage disable>
           {name[0]} {name[1]}
@@ -27,7 +28,7 @@ const QuizListCard = (props) => {
       </div>
       <h2>Tемы тестирования: </h2>
       {list}
-    </StyledQuizCard>
+    </StyledListCard>
   );
 };
 

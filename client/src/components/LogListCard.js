@@ -1,5 +1,6 @@
 import moment from "moment";
-import { StyledQuizCard } from "./styles/QuizCard.styled";
+
+import { StyledListCard } from "./styles/ListCard.styled";
 import { ListElem } from "./styles/ListElem.styled";
 import theme from "../theme/index.js";
 import uniqid from "uniqid";
@@ -36,10 +37,10 @@ const LogListCard = (props) => {
   });
 
   return (
-    <StyledQuizCard>
+    <StyledListCard>
       <h2>История:</h2>
       {list}
-    </StyledQuizCard>
+    </StyledListCard>
   );
 };
 

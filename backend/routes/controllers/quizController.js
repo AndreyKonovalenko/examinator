@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import { Quiz } from "../../models/quizModel.js";
+
 // @desc Get Quizzes
 // @route GET /api/quiz
 // @access Private

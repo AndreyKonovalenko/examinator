@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
-export const StyledLogListCard = styled.div`
+export const StyledListCard = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.surface};
   color: ${({ theme }) => theme.colors.text.onSurface};
@@ -14,4 +14,4 @@ export const StyledLogListCard = styled.div`
   & > h2 {
     color: ${({ theme }) => theme.colors.primary.dark};
   }
-`
+`;

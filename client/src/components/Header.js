@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
 import { resetLogState } from "../features/log/logSlice";
 import { resetQuizState } from "../features/quiz/quizSlice";
+import { resetAdminState } from "../features/admin/adminSlice";
 import { MdLogout, MdMenu, MdAdminPanelSettings } from "react-icons/md";
 
 const Header = () => {
@@ -18,6 +19,7 @@ const Header = () => {
     dispatch(logout());
     dispatch(resetLogState());
     dispatch(resetQuizState());
+    dispatch(resetAdminState());
     dispatch(reset());
     navigate("/login");
   };
@@ -25,6 +27,7 @@ const Header = () => {
   const onDashboard = () => {
     dispatch(resetLogState());
     dispatch(resetQuizState());
+    dispatch(resetAdminState());
     navigate("/");
   };
   const onAdmin = () => {
@@ -51,7 +54,6 @@ const Header = () => {
               Examinator
             </span>
           </IconStyled>
-          {adimnIcon}
           {location.pathname !== "/" && location.pathname !== "/login" ? (
             <>
               <IconStyled onClick={onDashboard}>
@@ -59,6 +61,7 @@ const Header = () => {
               </IconStyled>
             </>
           ) : null}
+          {adimnIcon}
           {user ? (
             <IconStyled style={{ marginLeft: "auto" }} onClick={onLogout}>
               <MdLogout size={"3em"} />

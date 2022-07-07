@@ -1,4 +1,4 @@
-import { StyledCard } from "./styles/Card.styled";
+import { StyledListCard } from "./styles/ListCard.styled";
 import { ListElem } from "./styles/ListElem.styled";
 import { StatusBage } from "./styles/StatusBage.styled";
 
@@ -25,13 +25,13 @@ const Card = (props) => {
     margin: 0,
   };
   return (
-    <StyledCard>
+    <StyledListCard>
       <div style={styled}>
         <StatusBage disable>{props.status}</StatusBage>
       </div>
       <h2>{question}</h2>
       <ul>{list}</ul>
-    </StyledCard>
+    </StyledListCard>
   );
 };
 
