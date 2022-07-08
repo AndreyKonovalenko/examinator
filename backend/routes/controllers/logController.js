@@ -7,14 +7,7 @@ import { Quiz } from "../../models/quizModel.js";
 // @access Private
 
 export const getLogs = asyncHandler(async (req, res) => {
-  const { user_id } = req.body;
-  let user;
-  if (!user_id === "") {
-    user = user_id;
-  } else {
-    user = req.user.id;
-  }
-  const data = await Log.find({ user: user })
+  const data = await Log.find({ user: req.user.id })
     .sort("-updatedAt")
     .populate({
       path: "quiz",

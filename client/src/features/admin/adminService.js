@@ -1,14 +1,12 @@
 import axios from "axios";
 
-const API_URL_AUTH = "/api/users/";
-
 const getUsers = async (token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.get(API_URL_AUTH, config);
+  const response = await axios.get("/api/admin/users", config);
   return response.data;
 };
 
