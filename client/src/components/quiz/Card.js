@@ -1,9 +1,9 @@
-import { StyledListCard } from "./styles/ListCard.styled";
-import { ListElem } from "./styles/ListElem.styled";
-import { StatusBage } from "./styles/StatusBage.styled";
+import { StyledListCard } from '../styles/ListCard.styled';
+import { ListElem } from '../styles/ListElem.styled';
+import { StatusBage } from '../styles/StatusBage.styled';
 
-import uniqid from "uniqid";
-import quizService from "../features/quiz/quizService";
+import uniqid from 'uniqid';
+import quizService from '../../features/quiz/quizService';
 
 const Card = (props) => {
   const { options, question, _id } = props.item;
@@ -15,13 +15,12 @@ const Card = (props) => {
   const list = quizService.shuffle(convertedOptions).map((element) => (
     <ListElem
       key={uniqid()}
-      onClick={(event) => props.onClick([element.id, _id], event)}
-    >
+      onClick={(event) => props.onClick([element.id, _id], event)}>
       <p>{element.value}</p>
     </ListElem>
   ));
   const styled = {
-    textAlign: "right",
+    textAlign: 'right',
     margin: 0,
   };
   return (

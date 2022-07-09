@@ -1,6 +1,6 @@
-import { StyledListCard } from './styles/ListCard.styled';
-import { ListElem } from './styles/ListElem.styled';
-import { StatusBage } from './styles/StatusBage.styled';
+import { StyledListCard } from '../styles/ListCard.styled';
+import { ListElem } from '../styles/ListElem.styled';
+import { StatusBage } from '../styles/StatusBage.styled';
 import uniqid from 'uniqid';
 
 const QuizListCard = (props) => {

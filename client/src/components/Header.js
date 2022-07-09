@@ -1,13 +1,13 @@
-import { Container } from "./styles/Container.styled";
-import { StyledHeader, StyledNav } from "./styles/Header.styled";
-import { IconStyled } from "./styles/Icon.styled";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { logout, reset } from "../features/auth/authSlice";
-import { resetLogState } from "../features/log/logSlice";
-import { resetQuizState } from "../features/quiz/quizSlice";
-import { resetAdminState } from "../features/admin/adminSlice";
-import { MdLogout, MdMenu, MdAdminPanelSettings } from "react-icons/md";
+import { Container } from './styles/Container.styled';
+import { StyledHeader, StyledNav } from './styles/Header.styled';
+import { IconStyled } from './styles/Icon.styled';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout, reset } from '../features/auth/authSlice';
+import { resetLogState } from '../features/log/logSlice';
+import { resetQuizState } from '../features/quiz/quizSlice';
+import { resetAdminState } from '../features/admin/adminSlice';
+import { MdLogout, MdMenu, MdAdminPanelSettings } from 'react-icons/md';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -21,17 +21,17 @@ const Header = () => {
     dispatch(resetQuizState());
     dispatch(resetAdminState());
     dispatch(reset());
-    navigate("/login");
+    navigate('/login');
   };
 
   const onDashboard = () => {
     dispatch(resetLogState());
     dispatch(resetQuizState());
     dispatch(resetAdminState());
-    navigate("/");
+    navigate('/');
   };
   const onAdmin = () => {
-    navigate("/admin");
+    navigate('/admin');
   };
   let adimnIcon = null;
   if (user) {
@@ -39,7 +39,7 @@ const Header = () => {
       adimnIcon = (
         <>
           <IconStyled onClick={onAdmin}>
-            <MdAdminPanelSettings size={"3em"} />
+            <MdAdminPanelSettings size={'3em'} />
           </IconStyled>
         </>
       );
@@ -49,24 +49,24 @@ const Header = () => {
     <StyledHeader>
       <Container>
         <StyledNav>
-          <IconStyled onClick={location.pathname !== "/" ? onDashboard : null}>
-            <span style={{ fontSize: "2em", fontWeight: "bold" }}>
+          <IconStyled onClick={location.pathname !== '/' ? onDashboard : null}>
+            <span style={{ fontSize: '2em', fontWeight: 'bold' }}>
               Examinator
             </span>
           </IconStyled>
-          {location.pathname !== "/" && location.pathname !== "/login" ? (
+          {location.pathname !== '/' && location.pathname !== '/login' ? (
             <>
               <IconStyled onClick={onDashboard}>
-                <MdMenu size={"3em"} />
+                <MdMenu size={'3em'} />
               </IconStyled>
             </>
           ) : null}
           {adimnIcon}
           {user ? (
-            <IconStyled style={{ marginLeft: "auto" }} onClick={onLogout}>
-              <MdLogout size={"3em"} />
+            <IconStyled style={{ marginLeft: 'auto' }} onClick={onLogout}>
+              <MdLogout size={'3em'} />
             </IconStyled>
-          ) : null}{" "}
+          ) : null}{' '}
         </StyledNav>
       </Container>
     </StyledHeader>
