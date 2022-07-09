@@ -31,20 +31,16 @@ const Admin = () => {
         dispatch(getUsers());
       }
     }
-    if (isSelected !== null) {
-      const element = document.getElementById(isSelected);
-      console.log(element, isSelected);
-    }
-  }, [user, navigate, dispatch, isSelected]);
+  }, [user, navigate, dispatch]);
 
-  const onUserClickHundler = (userId, event) => {
-    setIsSelected(event.target.id);
+  const onUserClickHundler = (args, event) => {
     event.preventDefault();
-
-    dispatch(getUserLogs(userId));
+    setIsSelected(args[1]);
+    console.log(args);
+    dispatch(getUserLogs(args[0]));
   };
 
-  if (adminState.isLoading) {
+  if (!adminState.users && adminState.isLoading) {
     return <Spinner />;
   }
 
@@ -54,6 +50,7 @@ const Admin = () => {
         <meta charSet='utf-8' />
         <title>Admin | Examinator</title>
       </Helmet>
+      {adminState.isLoading ? <Spinner /> : null}
       <Flex>
         {adminState.users ? (
           <UsersListCard
