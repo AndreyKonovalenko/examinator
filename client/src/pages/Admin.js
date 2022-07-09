@@ -1,13 +1,16 @@
-import React from "react";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Helmet } from "react-helmet";
-import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
-import UsersListCard from "../components/UsersListCard";
-import Spinner from "../components/Spinner";
+import React from 'react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Flex } from '../components/styles/Flex.styled';
+import { Helmet } from 'react-helmet';
+import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
+import UsersListCard from '../components/UsersListCard';
+import LogListCard from '../components/LogListCard';
+import Spinner from '../components/Spinner';
 
-import { getUsers } from "../features/admin/adminSlice";
+import { getUsers, getUserLogs } from '../features/admin/adminSlice';
+
 const Admin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -16,17 +19,22 @@ const Admin = () => {
 
   useEffect(() => {
     if (!user) {
-      navigate("/login");
+      navigate('/login');
     }
     if (user) {
       if (!user.admin) {
-        toast.error("You do not have administrator access!");
-        navigate("/");
+        toast.error('You do not have administrator access!');
+        navigate('/');
       } else {
         dispatch(getUsers());
       }
     }
-  }, [user, navigate]);
+  }, [user, navigate, dispatch]);
+
+  const onUserClickHundler = (userId, event) => {
+    event.preventDefault();
+    dispatch(getUserLogs(userId));
+  };
 
   if (adminState.isLoading) {
     return <Spinner />;
@@ -35,10 +43,17 @@ const Admin = () => {
   return (
     <>
       <Helmet>
-        <meta charSet="utf-8" />
+        <meta charSet='utf-8' />
         <title>Admin | Examinator</title>
       </Helmet>
-      {adminState.users ? <UsersListCard data={adminState.users} /> : null}
+      <Flex>
+        {adminState.users ? (
+          <UsersListCard item={adminState.users} onClick={onUserClickHundler} />
+        ) : null}
+        {adminState.userLogs ? (
+          <LogListCard item={adminState.userLogs} />
+        ) : null}
+      </Flex>
     </>
   );
 };

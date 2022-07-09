@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 const getUsers = async (token) => {
   const config = {
@@ -6,19 +6,17 @@ const getUsers = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.get("/api/admin/users", config);
+  const response = await axios.get('/api/admin/users', config);
   return response.data;
 };
 
-const API_URL_LOG = "/api/log/";
-
-const getUserLogs = async (user_id, token) => {
+const getUserLogs = async (id, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.get(API_URL_LOG, user_id, config);
+  const response = await axios.get('/api/admin/logs/user/' + id, config);
   return response.data;
 };
 
