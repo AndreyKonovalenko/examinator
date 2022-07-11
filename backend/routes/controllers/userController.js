@@ -76,12 +76,3 @@ const generateToken = (id) => {
     expiresIn: "1h",
   });
 };
-
-// @desc Get ALL Users
-// @route GET /api/users
-// @access Private
-
-export const getUsers = asyncHandler(async (req, res) => {
-  const users = await User.find();
-  res.status(200).json(users);
-});

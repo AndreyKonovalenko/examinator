@@ -5,7 +5,6 @@ const isAdmin = asyncHandler(async (req, res, next) => {
     res.status(401);
     throw new Error("You are not admin, soory");
   }
-
   next();
 });
 
