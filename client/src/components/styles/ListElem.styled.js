@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ListElem = styled.li`
   border-radius: 15px;
@@ -12,6 +12,9 @@ export const ListElem = styled.li`
   margin: 10px 0;
   background-color: ${({ theme }) => theme.colors.surface};
   color:  ${({ theme }) => theme.colors.text.onSurface};
+  > p {
+    margin: 5px;
+  }
   &:hover {
     opacity: 0.95;
     transform: scale(0.98);
@@ -19,4 +22,4 @@ export const ListElem = styled.li`
     color:  ${({ theme }) => theme.colors.text.onPrimary};
   },
   
-`
+`;
