@@ -19,6 +19,8 @@ const Login = () => {
   );
   const { username, password } = formData;
 
+  const { ru, en } = useSelector((state) => state.ui);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -50,7 +52,8 @@ const Login = () => {
   const loginForm = (
     <Wrapper>
       <Form onSubmit={onSubmit}>
-        <Title>Идентификация пользователя</Title>
+        {ru ? <Title>Идентификация пользователя</Title> : null}
+        {en ? <Title>Login</Title> : null}
         <Input
           placeholder='Username'
           type='text'
@@ -68,7 +71,8 @@ const Login = () => {
         <Button
           bg={theme.colors.primary.light}
           color={theme.colors.text.onPrimary}>
-          Войти
+          {ru ? 'Войти' : null}
+          {en ? 'Login' : null}
         </Button>
       </Form>
     </Wrapper>

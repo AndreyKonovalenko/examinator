@@ -1,13 +1,15 @@
 import { Container } from './styles/Container.styled';
 import { StyledHeader, StyledNav } from './styles/Header.styled';
 import { IconStyled } from './styles/Icon.styled';
+import { MdLogout, MdMenu, MdAdminPanelSettings } from 'react-icons/md';
+
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../features/auth/authSlice';
 import { resetLogState } from '../features/log/logSlice';
 import { resetQuizState } from '../features/quiz/quizSlice';
 import { resetAdminState } from '../features/admin/adminSlice';
-import { MdLogout, MdMenu, MdAdminPanelSettings } from 'react-icons/md';
+import { setRu, setEn } from '../features/ui/uiSlice';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -32,6 +34,12 @@ const Header = () => {
   };
   const onAdmin = () => {
     navigate('/admin');
+  };
+  const onRu = () => {
+    dispatch(setRu());
+  };
+  const onEn = () => {
+    dispatch(setEn());
   };
   let adimnIcon = null;
   if (user) {
@@ -62,11 +70,21 @@ const Header = () => {
             </>
           ) : null}
           {adimnIcon}
-          {user ? (
-            <IconStyled style={{ marginLeft: 'auto' }} onClick={onLogout}>
-              <MdLogout size={'3em'} />
+
+          <div style={{ marginLeft: 'auto' }}>
+            <IconStyled onClick={onRu}>
+              <span style={{ fontSize: '1.5em', fontWeight: 'bold' }}>RU</span>
             </IconStyled>
-          ) : null}{' '}
+            /
+            <IconStyled onClick={onEn}>
+              <span style={{ fontSize: '1.5em', fontWeight: 'bold' }}>EN</span>
+            </IconStyled>
+            {user ? (
+              <IconStyled onClick={onLogout}>
+                <MdLogout size={'3em'} />
+              </IconStyled>
+            ) : null}{' '}
+          </div>
         </StyledNav>
       </Container>
     </StyledHeader>

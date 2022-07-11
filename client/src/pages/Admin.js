@@ -5,6 +5,7 @@ import { Flex } from '../components/styles/Flex.styled';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
+import Cockpit from '../components/admin/Cockpit';
 import UsersListCard from '../components/admin/UsersListCard';
 import LogListCard from '../components/dashboard/LogListCard';
 import Spinner from '../components/Spinner';
@@ -51,6 +52,7 @@ const Admin = () => {
         <title>Admin | Examinator</title>
       </Helmet>
       {adminState.isLoading ? <Spinner /> : null}
+      <Cockpit />
       <Flex>
         {adminState.users ? (
           <UsersListCard

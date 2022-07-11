@@ -3,7 +3,6 @@ import { ListElem } from '../styles/ListElem.styled';
 import uniqid from 'uniqid';
 import theme from '../../theme/index.js';
 const UsersListCard = (props) => {
-  console.log(props.selected);
   const list = props.item.map((element, index) => {
     if (index === props.selected)
       return (
@@ -38,7 +37,7 @@ const UsersListCard = (props) => {
   };
   return (
     <StyledListCard>
-      <h2>Пользователи:</h2>
+      <h2>Пользователи</h2>
       <div style={styled}></div>
       {list}
     </StyledListCard>
