@@ -1,18 +1,16 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import { Button } from '../components/styles/Button.styled';
-import { Form, Input, Title, Wrapper } from '../components/styles/Form.Styled';
-import { login, reset } from '../features/auth/authSlice';
-import Spinner from '../components/Spinner';
-import theme from '../theme/index';
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { login, reset } from "../features/auth/authSlice";
+import LoginForm from "../components/login/LoginFrom";
+import Spinner from "../components/Spinner";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   });
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
@@ -26,7 +24,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess || user) {
-      navigate('/');
+      navigate("/");
     }
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
@@ -49,42 +47,20 @@ const Login = () => {
     return <Spinner />;
   }
 
-  const loginForm = (
-    <Wrapper>
-      <Form onSubmit={onSubmit}>
-        {ru ? <Title>Идентификация пользователя</Title> : null}
-        {en ? <Title>Login</Title> : null}
-        <Input
-          placeholder='Username'
-          type='text'
-          name='username'
-          value={username}
-          onChange={onChange}
-        />
-        <Input
-          placeholder='Password'
-          type='password'
-          name='password'
-          value={password}
-          onChange={onChange}
-        />
-        <Button
-          bg={theme.colors.primary.light}
-          color={theme.colors.text.onPrimary}>
-          {ru ? 'Войти' : null}
-          {en ? 'Login' : null}
-        </Button>
-      </Form>
-    </Wrapper>
-  );
-
   return (
     <>
       <Helmet>
-        <meta charSet='utf-8' />
+        <meta charSet="utf-8" />
         <title>Login | Examinator</title>
       </Helmet>
-      {loginForm}
+      <LoginForm
+        ru={ru}
+        en={en}
+        onSubmit={onSubmit}
+        onChange={onChange}
+        username={username}
+        password={password}
+      />
     </>
   );
 };

@@ -9,17 +9,30 @@ import Cockpit from "../components/admin/Cockpit";
 import UsersListCard from "../components/admin/UsersListCard";
 import LogListCard from "../components/dashboard/LogListCard";
 import Spinner from "../components/Spinner";
+import RegisterForm from "../components/login/RegisterForm";
 
 import { getUsers, getUserLogs } from "../features/admin/adminSlice";
+import { setAddNewUserOn } from "../features/ui/uiSlice";
 
 const Admin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const { user } = useSelector((state) => state.auth);
-  const { ru, en } = useSelector((state) => state.ui);
+  const { ru, en, addNewUserOn } = useSelector((state) => state.ui);
+
   const adminState = useSelector((state) => state.admin);
 
+  // local ui state
   const [isSelected, setIsSelected] = useState(null);
+  const [formData, setFormData] = useState({
+    username: "",
+    name: "",
+    password: "",
+    password2: "",
+  });
+
+  const { username, password, password2, name } = formData;
 
   useEffect(() => {
     if (!user) {
@@ -35,10 +48,40 @@ const Admin = () => {
     }
   }, [user, navigate, dispatch]);
 
+  // Cockpit handlers
+  const addNewUserSwitch = () => {
+    dispatch(setAddNewUserOn());
+  };
+
+  // Register form handlers
+
+  const onChange = (event) => {
+    event.preventDefault();
+    setFormData((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (password !== password2) {
+      toast.error("Passwords do not match");
+    } else {
+      const userData = {
+        name,
+        username,
+        password,
+      };
+      //   dispatch(register(userData))
+      console.log(userData);
+    }
+  };
+
+  // User list handlers
+
   const onUserClickHundler = (args, event) => {
     event.preventDefault();
-    setIsSelected(args[1]);
-    console.log(args);
     dispatch(getUserLogs(args[0]));
   };
 
@@ -53,8 +96,20 @@ const Admin = () => {
         <title>Admin | Examinator</title>
       </Helmet>
       {adminState.isLoading ? <Spinner /> : null}
-      <Cockpit />
+      <Cockpit addNewUserSwitch={addNewUserSwitch} />
       <Flex>
+        {addNewUserOn ? (
+          <RegisterForm
+            ru={ru}
+            en={en}
+            username={username}
+            name={name}
+            password={password}
+            password2={password2}
+            onChange={onChange}
+            onSubmit={onSubmit}
+          />
+        ) : null}
         {adminState.users ? (
           <UsersListCard
             en={en}

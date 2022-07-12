@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const StyledListCard = styled.div`
+  width: 100%;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.surface};
   color: ${({ theme }) => theme.colors.text.onSurface};

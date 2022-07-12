@@ -1,11 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   ru: true,
   en: false,
+  addNewUserOn: false,
 };
 
 export const uiSlice = createSlice({
-  name: 'ui',
+  name: "ui",
   initialState,
   reducers: {
     resetUiState: (state) => initialState,
@@ -17,8 +18,11 @@ export const uiSlice = createSlice({
       state.ru = false;
       state.en = true;
     },
+    setAddNewUserOn: (state) => {
+      state.addNewUserOn = !state.addNewUserOn;
+    },
   },
 });
 
-export const { setRu, setEn, resetUiState } = uiSlice.actions;
+export const { setRu, setEn, resetUiState, setAddNewUserOn } = uiSlice.actions;
 export default uiSlice.reducer;
