@@ -1,8 +1,9 @@
-import { StyledListCard } from '../styles/ListCard.styled';
-import { ListElem } from '../styles/ListElem.styled';
-import uniqid from 'uniqid';
-import theme from '../../theme/index.js';
+import { StyledListCard } from "../styles/ListCard.styled";
+import { ListElem } from "../styles/ListElem.styled";
+import uniqid from "uniqid";
+import theme from "../../theme/index.js";
 const UsersListCard = (props) => {
+  const { ru, en } = props;
   const list = props.item.map((element, index) => {
     if (index === props.selected)
       return (
@@ -12,7 +13,8 @@ const UsersListCard = (props) => {
             backgroundColor: theme.colors.primary.main,
             color: theme.colors.text.onPrimary,
           }}
-          onClick={(event) => props.onClick([element._id, index], event)}>
+          onClick={(event) => props.onClick([element._id, index], event)}
+        >
           <p>
             {element.username} / {element.name}
           </p>
@@ -22,7 +24,8 @@ const UsersListCard = (props) => {
       return (
         <ListElem
           key={uniqid()}
-          onClick={(event) => props.onClick([element._id, index], event)}>
+          onClick={(event) => props.onClick([element._id, index], event)}
+        >
           <p>
             {element.username} / {element.name}
           </p>
@@ -32,12 +35,13 @@ const UsersListCard = (props) => {
   });
 
   const styled = {
-    textAlign: 'right',
+    textAlign: "right",
     margin: 0,
   };
   return (
     <StyledListCard>
-      <h2>Пользователи</h2>
+      {ru ? <h2>Пользователи</h2> : null}
+      {en ? <h2>Users</h2> : null}
       <div style={styled}></div>
       {list}
     </StyledListCard>
