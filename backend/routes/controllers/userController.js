@@ -6,7 +6,7 @@ import { User } from "../../models/userModel.js";
 // @desc Register new user
 
 export const registerUser = asyncHandler(async (req, res) => {
-  const { name, username, password, admin } = req.body;
+  const { name, username, password } = req.body;
   if (!name || !username || !password) {
     res.status(400);
     throw new Error("Please add all fields");
@@ -24,10 +24,11 @@ export const registerUser = asyncHandler(async (req, res) => {
     name,
     username,
     password: hashedPassword,
-    admin,
+    admin: false,
   });
 
   if (user) {
+    console.log(user);
     res.status(201).json({
       _id: user.id,
       name: user.name,

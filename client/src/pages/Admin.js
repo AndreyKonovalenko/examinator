@@ -12,6 +12,7 @@ import Spinner from "../components/Spinner";
 import RegisterForm from "../components/login/RegisterForm";
 
 import { getUsers, getUserLogs } from "../features/admin/adminSlice";
+import { register } from "../features/auth/authSlice";
 import { setAddNewUserOn } from "../features/ui/uiSlice";
 
 const Admin = () => {
@@ -32,7 +33,7 @@ const Admin = () => {
     password2: "",
   });
 
-  const { username, password, password2, name } = formData;
+  const { username, name, password, password2 } = formData;
 
   useEffect(() => {
     if (!user) {
@@ -73,8 +74,7 @@ const Admin = () => {
         username,
         password,
       };
-      //   dispatch(register(userData))
-      console.log(userData);
+      dispatch(register(userData));
     }
   };
 
@@ -82,6 +82,7 @@ const Admin = () => {
 
   const onUserClickHundler = (args, event) => {
     event.preventDefault();
+    setIsSelected(args[1]);
     dispatch(getUserLogs(args[0]));
   };
 
