@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import adminService from './adminService';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import adminService from "./adminService";
 
 const initialState = {
   users: null,
@@ -7,13 +7,13 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: '',
+  message: "",
 };
 
 // Gell all Users
 
 export const getUsers = createAsyncThunk(
-  'admin/getUsers',
+  "admin/getUsers",
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -31,7 +31,7 @@ export const getUsers = createAsyncThunk(
 );
 
 export const getUserLogs = createAsyncThunk(
-  'admin/getUserLogs',
+  "admin/getUserLogs",
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -48,8 +48,25 @@ export const getUserLogs = createAsyncThunk(
   }
 );
 
+export const createNewUser = createAsyncThunk(
+  "admin/createNewUser",
+  async (user, thunkAPI) => {
+    try {
+      return await authService.register(user);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const adminSlice = createSlice({
-  name: 'admin',
+  name: "admin",
   initialState,
   reducers: {
     resetAdminState: (state) => initialState,
@@ -78,6 +95,18 @@ export const adminSlice = createSlice({
         state.userLogs = action.payload;
       })
       .addCase(getUserLogs.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(createNewUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createNewUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(createNewUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

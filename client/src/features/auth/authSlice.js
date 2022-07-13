@@ -29,6 +29,23 @@ export const register = createAsyncThunk(
     }
   }
 );
+// Create new user / admin route
+export const createNewUser = createAsyncThunk(
+  "auth/createNewUser",
+  async (user, thunkAPI) => {
+    try {
+      return await authService.register(user);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 export const logout = createAsyncThunk("auth/logout", async () => {
   await authService.logout();
@@ -73,6 +90,18 @@ export const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         state.user = null;
+      })
+      .addCase(createNewUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createNewUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(createNewUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       })
       .addCase(login.pending, (state) => {
         state.isLoading = true;
