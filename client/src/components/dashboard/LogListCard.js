@@ -36,7 +36,7 @@ const LogListCard = (props) => {
         ) : null}
         {en ? (
           <p style={score >= 80 ? succes : fail}>
-            {score >= 80 ? "You have secceeded" : "You have failed"} with{" "}
+            {score >= 80 ? "You have succeeded" : "You have failed"} with{" "}
             {score}%, correct answers: {element.result} out of{" "}
             {element.quiz.questions.length}
           </p>

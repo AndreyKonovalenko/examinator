@@ -52,7 +52,7 @@ export const createNewUser = createAsyncThunk(
   "admin/createNewUser",
   async (user, thunkAPI) => {
     try {
-      return await authService.register(user);
+      return await adminService.createNewUser(user);
     } catch (error) {
       const message =
         (error.response &&

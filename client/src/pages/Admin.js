@@ -12,7 +12,7 @@ import Spinner from "../components/Spinner";
 import RegisterForm from "../components/login/RegisterForm";
 
 import { getUsers, getUserLogs } from "../features/admin/adminSlice";
-import { createNewUser } from "../features/auth/authSlice";
+import { createNewUser } from "../features/admin/adminSlice";
 import { setAddNewUserOn } from "../features/ui/uiSlice";
 
 const Admin = () => {
