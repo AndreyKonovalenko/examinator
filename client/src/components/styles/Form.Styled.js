@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const Wrapper = styled.section`
   display: flex;
@@ -6,19 +6,18 @@ export const Wrapper = styled.section`
   align-items: center;
   height: 100%;
   width: 100%;
-`
+`;
 export const Title = styled.h2`
   color: ${({ theme }) => theme.colors.primary.dark};
   font-weight: normal;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
   text-align: center;
-`
+`;
 
 export const Form = styled.form`
   margin: 0 auto;
-  width: 100%;
   max-width: 414px;
-  padding: 1.3rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -26,10 +25,9 @@ export const Form = styled.form`
   color: ${({ theme }) => theme.colors.text.onSurface};
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-  margin: 40px;
-  padding: 40px;
-  }
-`
+  margin: 5px;
+  padding: 25px;
+`;
 
 export const Input = styled.input`
   max-width: 100%;
@@ -62,4 +60,4 @@ export const Input = styled.input`
     color: ${({ theme }) => theme.colors.text.onSurface};
     opacity: 0.4
   }
-`
+`;
