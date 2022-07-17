@@ -24,36 +24,37 @@ const LogListCard = (props) => {
       color: theme.colors.error,
     };
     return (
-      <>
-        <IconStyled>
-          <MdCheckBox />
+      <ListElem
+        key={uniqid()}
+        onClick={(event) => props.onClick(element, event)}>
+        <IconStyled
+          bg={theme.colors.surface}
+          color={theme.colors.primary.light}>
+          <MdCheckBox size={'2em'} />
         </IconStyled>
-        <IconStyled>
-          <MdCheckBoxOutlineBlank />
+        <IconStyled
+          bg={theme.colors.surface}
+          color={theme.colors.primary.light}>
+          <MdCheckBoxOutlineBlank size={'2em'} />
         </IconStyled>
-        <ListElem
-          key={uniqid()}
-          onClick={(event) => props.onClick(element, event)}>
-          {ru ? <p>Тема: {element.quiz.title}</p> : null}
-          {en ? <p>Quiz: {element.quiz.title}</p> : null}
-          {ru ? (
-            <p style={score >= 80 ? succes : fail}>
-              Тест {score >= 80 ? 'пройден успешно' : 'провален'} с результатом{' '}
-              {score}%, правильных ответов: {element.result} из{' '}
-              {element.quiz.questions.length}
-            </p>
-          ) : null}
-          {en ? (
-            <p style={score >= 80 ? succes : fail}>
-              {score >= 80 ? 'You have succeeded' : 'You have failed'} with{' '}
-              {score}%, correct answers: {element.result} out of{' '}
-              {element.quiz.questions.length}
-            </p>
-          ) : null}
-
-          <p>{etemptTime}</p>
-        </ListElem>
-      </>
+        {ru ? <p>Тема: {element.quiz.title}</p> : null}
+        {en ? <p>Quiz: {element.quiz.title}</p> : null}
+        {ru ? (
+          <p style={score >= 80 ? succes : fail}>
+            Тест {score >= 80 ? 'пройден успешно' : 'провален'} с результатом{' '}
+            {score}%, правильных ответов: {element.result} из{' '}
+            {element.quiz.questions.length}
+          </p>
+        ) : null}
+        {en ? (
+          <p style={score >= 80 ? succes : fail}>
+            {score >= 80 ? 'You have succeeded' : 'You have failed'} with{' '}
+            {score}%, correct answers: {element.result} out of{' '}
+            {element.quiz.questions.length}
+          </p>
+        ) : null}
+        <p>{etemptTime}</p>
+      </ListElem>
     );
   });
 
