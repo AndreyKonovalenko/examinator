@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 const getUsers = async (token) => {
   const config = {
@@ -6,7 +6,7 @@ const getUsers = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.get("/api/admin/users", config);
+  const response = await axios.get('/api/admin/users', config);
   return response.data;
 };
 
@@ -16,15 +16,15 @@ const getUserLogs = async (id, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.get("/api/admin/logs/user/" + id, config);
+  const response = await axios.get('/api/admin/logs/user/' + id, config);
   return response.data;
 };
 
 // Create new user
 const createNewUser = async (userData) => {
-  const response = await axios.post("/api/users", userData);
+  const response = await axios.post('/api/users', userData);
   console.log(response);
-  // this for onpe user registartion functionality
+  // this for open user registartion functionality
   // if (response.data) {
   //   localStorage.setItem("user", JSON.stringify(response.data));
   // }
