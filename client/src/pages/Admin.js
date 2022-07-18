@@ -1,23 +1,24 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Flex } from '../components/styles/Flex.styled';
-import { Helmet } from 'react-helmet';
-import { useNavigate } from 'react-router';
-import { toast } from 'react-toastify';
-import Cockpit from '../components/admin/Cockpit';
-import UsersListCard from '../components/admin/UsersListCard';
-import LogListCard from '../components/dashboard/LogListCard';
-import Spinner from '../components/Spinner';
-import RegisterForm from '../components/login/RegisterForm';
+import React from "react";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Flex } from "../components/styles/Flex.styled";
+import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import Cockpit from "../components/admin/Cockpit";
+import UsersListCard from "../components/admin/UsersListCard";
+import LogListCard from "../components/dashboard/LogListCard";
+import LogListCardAdmin from "../components/admin/LogListCardAdmin";
+import Spinner from "../components/Spinner";
+import RegisterForm from "../components/login/RegisterForm";
 
 import {
   getUsers,
   getUserLogs,
   resetAdminState,
-} from '../features/admin/adminSlice';
-import { createNewUser } from '../features/admin/adminSlice';
-import { setAddNewUserOn } from '../features/ui/uiSlice';
+} from "../features/admin/adminSlice";
+import { createNewUser } from "../features/admin/adminSlice";
+import { setAddNewUserOn } from "../features/ui/uiSlice";
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -30,23 +31,24 @@ const Admin = () => {
 
   // local ui state
   const [isSelected, setIsSelected] = useState(null);
+  const [isEditLog, setIsEditLog] = useState(false);
   const [formData, setFormData] = useState({
-    username: '',
-    name: '',
-    password: '',
-    password2: '',
+    username: "",
+    name: "",
+    password: "",
+    password2: "",
   });
 
   const { username, name, password, password2 } = formData;
 
   useEffect(() => {
     if (!user) {
-      navigate('/login');
+      navigate("/login");
     }
     if (user) {
       if (!user.admin) {
-        toast.error('You do not have administrator access!');
-        navigate('/');
+        toast.error("You do not have administrator access!");
+        navigate("/");
       } else {
         dispatch(getUsers());
       }
@@ -64,6 +66,16 @@ const Admin = () => {
     dispatch(getUsers());
   };
 
+  // Settings icon handler on Log Card
+  const isEditHandlerLog = () => {
+    setIsEditLog(!isEditLog);
+  };
+
+  // Delete icon handle on Log Card
+  const deleteLogsHandler = () => {
+    console.log("delete selected logs");
+  };
+
   // Register form handlers
   const onChange = (event) => {
     event.preventDefault();
@@ -76,7 +88,7 @@ const Admin = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     if (password !== password2) {
-      toast.error('Passwords do not match');
+      toast.error("Passwords do not match");
     } else {
       const userData = {
         name,
@@ -102,7 +114,7 @@ const Admin = () => {
   return (
     <>
       <Helmet>
-        <meta charSet='utf-8' />
+        <meta charSet="utf-8" />
         <title>Admin | Examinator</title>
       </Helmet>
       {adminState.isLoading ? <Spinner /> : null}
@@ -130,7 +142,14 @@ const Admin = () => {
           />
         ) : null}
         {adminState.userLogs ? (
-          <LogListCard en={en} ru={ru} item={adminState.userLogs} />
+          <LogListCardAdmin
+            isEditHandlerLog={isEditHandlerLog}
+            deleteLogsHandler={deleteLogsHandler}
+            isEditLog={isEditLog}
+            en={en}
+            ru={ru}
+            item={adminState.userLogs}
+          />
         ) : null}
       </Flex>
     </>
