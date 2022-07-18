@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import adminService from "./adminService";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import adminService from './adminService';
 
 const initialState = {
   users: null,
@@ -7,13 +7,13 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: "",
+  message: '',
 };
 
 // Get all Users
 
 export const getUsers = createAsyncThunk(
-  "admin/getUsers",
+  'admin/getUsers',
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -31,7 +31,7 @@ export const getUsers = createAsyncThunk(
 );
 // Get selected user logs
 export const getUserLogs = createAsyncThunk(
-  "admin/getUserLogs",
+  'admin/getUserLogs',
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -49,11 +49,27 @@ export const getUserLogs = createAsyncThunk(
 );
 
 // Delete selelect user checked log
-export const deleteLog = {};
+export const deleteLog = createAsyncThunk(
+  'admin/deleteLog',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await adminService.deleteLog(id, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 // Admin create new user
 export const createNewUser = createAsyncThunk(
-  "admin/createNewUser",
+  'admin/createNewUser',
   async (user, thunkAPI) => {
     try {
       return await adminService.createNewUser(user);
@@ -70,7 +86,7 @@ export const createNewUser = createAsyncThunk(
 );
 
 export const adminSlice = createSlice({
-  name: "admin",
+  name: 'admin',
   initialState,
   reducers: {
     resetAdminState: (state) => initialState,

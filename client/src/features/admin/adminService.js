@@ -31,9 +31,20 @@ const createNewUser = async (userData) => {
   return response.data;
 };
 
+const deleteLog = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.delete('/api/admin/logs/' + id, config);
+  return response.data;
+};
+
 const quizService = {
   getUsers,
   getUserLogs,
   createNewUser,
+  deleteLog,
 };
 export default quizService;

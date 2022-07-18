@@ -44,7 +44,5 @@ export const deleteLog = asyncHandler(async (req, res) => {
     throw new Error('Log not found');
   }
   await log.remove();
-  res
-    .status(200)
-    .json(`log id: ${req.params.id} has been deleted successfully`);
+  res.status(200).json({ id: req.params.id });
 });
