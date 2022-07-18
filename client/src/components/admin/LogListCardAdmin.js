@@ -8,8 +8,23 @@ import theme from "../../theme/index.js";
 import uniqid from "uniqid";
 
 const LogListCardAdmin = (props) => {
-  const { en, ru, isEditHandlerLog, isEditLog, deleteLogsHandler } = props;
-  const list = props.item.map((element) => {
+  const {
+    en,
+    ru,
+    isEditHandlerLog,
+    isEditLog,
+    deleteLogsHandler,
+    logChecked,
+    logCheckedHandler,
+    logUnCheckHandler,
+  } = props;
+  const list = props.item.map((element, index) => {
+    console.log(logChecked);
+    let checked = false;
+    console.log(logChecked.includes(index));
+    if (logChecked.includes(index)) {
+      checked = true;
+    }
     const score = (
       (Number.parseInt(element.result) /
         Number.parseInt(element.quiz.questions.length)) *
@@ -28,22 +43,33 @@ const LogListCardAdmin = (props) => {
       <div style={{ display: "flex" }} key={uniqid()}>
         {isEditLog ? (
           <>
-            <div style={{ margin: "auto", marginRight: "5px" }}>
-              <IconStyled
-                bg={theme.colors.surface}
-                color={theme.colors.primary.light}
-              >
-                <MdCheckBox size={"2em"} />
-              </IconStyled>
-            </div>
-            <div style={{ margin: "auto", marginRight: "5px" }}>
-              <IconStyled
-                bg={theme.colors.surface}
-                color={theme.colors.primary.light}
-              >
-                <MdCheckBoxOutlineBlank size={"2em"} />
-              </IconStyled>
-            </div>
+            {checked ? (
+              <div style={{ margin: "auto", marginRight: "5px" }}>
+                <IconStyled
+                  bg={theme.colors.surface}
+                  color={theme.colors.primary.light}
+                >
+                  <MdCheckBox
+                    size={"2em"}
+                    onClick={(event) => logUnCheckHandler(index, event)}
+                  />
+                </IconStyled>
+              </div>
+            ) : null}
+
+            {!checked ? (
+              <div style={{ margin: "auto", marginRight: "5px" }}>
+                <IconStyled
+                  bg={theme.colors.surface}
+                  color={theme.colors.primary.light}
+                >
+                  <MdCheckBoxOutlineBlank
+                    size={"2em"}
+                    onClick={(event) => logCheckedHandler(index, event)}
+                  />
+                </IconStyled>
+              </div>
+            ) : null}
           </>
         ) : null}
 

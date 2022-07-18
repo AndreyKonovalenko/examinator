@@ -15,5 +15,5 @@ export const IconStyled = styled.button`
   &:hover {
     opacity: 0.9;
     transform: scale(0.98);
-  }
+    color: ${({ hcolor }) => hcolor}
 `;

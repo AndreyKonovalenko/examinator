@@ -16,7 +16,8 @@ const SettingPanel = (props) => {
       {isEdit ? (
         <IconStyled
           bg={theme.colors.surface}
-          color={theme.colors.error}
+          color={theme.colors.primary.light}
+          hcolor={theme.colors.error}
           onClick={onDelete}
         >
           <MdDelete size={"2em"} />

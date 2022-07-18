@@ -38,6 +38,7 @@ const Admin = () => {
     password: "",
     password2: "",
   });
+  const [logChecked, setLogChecked] = useState([]);
 
   const { username, name, password, password2 } = formData;
 
@@ -66,6 +67,8 @@ const Admin = () => {
     dispatch(getUsers());
   };
 
+  // ---- LOG HANDLERS ---- //
+
   // Settings icon handler on Log Card
   const isEditHandlerLog = () => {
     setIsEditLog(!isEditLog);
@@ -75,6 +78,24 @@ const Admin = () => {
   const deleteLogsHandler = () => {
     console.log("delete selected logs");
   };
+
+  // Log list Handlers
+  const logCheckedHandler = (args, event) => {
+    event.preventDefault();
+    setLogChecked([...logChecked, args]);
+  };
+  const logUnCheckHandler = (args, event) => {
+    event.preventDefault();
+    const edited = [];
+    logChecked.forEach((element) => {
+      if (element !== args) {
+        edited.push(element);
+      }
+    });
+    setLogChecked(edited);
+  };
+
+  // ---- || ---- //
 
   // Register form handlers
   const onChange = (event) => {
@@ -143,6 +164,9 @@ const Admin = () => {
         ) : null}
         {adminState.userLogs ? (
           <LogListCardAdmin
+            logChecked={logChecked}
+            logCheckedHandler={logCheckedHandler}
+            logUnCheckHandler={logUnCheckHandler}
             isEditHandlerLog={isEditHandlerLog}
             deleteLogsHandler={deleteLogsHandler}
             isEditLog={isEditLog}
