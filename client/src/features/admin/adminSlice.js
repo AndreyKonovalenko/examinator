@@ -10,7 +10,7 @@ const initialState = {
   message: "",
 };
 
-// Gell all Users
+// Get all Users
 
 export const getUsers = createAsyncThunk(
   "admin/getUsers",
@@ -29,7 +29,7 @@ export const getUsers = createAsyncThunk(
     }
   }
 );
-
+// Get selected user logs
 export const getUserLogs = createAsyncThunk(
   "admin/getUserLogs",
   async (id, thunkAPI) => {
@@ -48,6 +48,10 @@ export const getUserLogs = createAsyncThunk(
   }
 );
 
+// Delete selelect user checked log
+export const deleteLog = {};
+
+// Admin create new user
 export const createNewUser = createAsyncThunk(
   "admin/createNewUser",
   async (user, thunkAPI) => {
@@ -107,6 +111,21 @@ export const adminSlice = createSlice({
         state.isSuccess = true;
       })
       .addCase(createNewUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(deleteLog.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteLog.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.userLogs = state.userLogs.filter(
+          (log) => log._id !== action.payload.id
+        );
+      })
+      .addCase(deleteLog.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

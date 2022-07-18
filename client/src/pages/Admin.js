@@ -70,6 +70,7 @@ const Admin = () => {
 
   // Settings icon handler on Log Card
   const isEditHandlerLog = () => {
+    setLogChecked([]);
     setIsEditLog(!isEditLog);
   };
 
@@ -85,13 +86,13 @@ const Admin = () => {
   };
   const logUnCheckHandler = (LogId, event) => {
     event.preventDefault();
-    const edited = [];
-    logChecked.forEach((element) => {
-      if (element !== LogId) {
-        edited.push(element);
-      }
-    });
-    setLogChecked(edited);
+    // const edited = [];
+    // logChecked.forEach((element) => {
+    //   if (element !== LogId) {
+    //     edited.push(element);
+    //   }
+    // });
+    setLogChecked(logChecked.filter((element) => element !== LogId));
   };
 
   // ---- || ---- //
