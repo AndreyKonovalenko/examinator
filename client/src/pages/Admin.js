@@ -7,7 +7,6 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import Cockpit from "../components/admin/Cockpit";
 import UsersListCard from "../components/admin/UsersListCard";
-import LogListCard from "../components/dashboard/LogListCard";
 import LogListCardAdmin from "../components/admin/LogListCardAdmin";
 import Spinner from "../components/Spinner";
 import RegisterForm from "../components/login/RegisterForm";
@@ -80,15 +79,15 @@ const Admin = () => {
   };
 
   // Log list Handlers
-  const logCheckedHandler = (args, event) => {
+  const logCheckedHandler = (LogId, event) => {
     event.preventDefault();
-    setLogChecked([...logChecked, args]);
+    setLogChecked([...logChecked, LogId]);
   };
-  const logUnCheckHandler = (args, event) => {
+  const logUnCheckHandler = (LogId, event) => {
     event.preventDefault();
     const edited = [];
     logChecked.forEach((element) => {
-      if (element !== args) {
+      if (element !== LogId) {
         edited.push(element);
       }
     });

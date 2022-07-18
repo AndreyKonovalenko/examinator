@@ -18,11 +18,10 @@ const LogListCardAdmin = (props) => {
     logCheckedHandler,
     logUnCheckHandler,
   } = props;
-  const list = props.item.map((element, index) => {
+  const list = props.item.map((element) => {
     console.log(logChecked);
     let checked = false;
-    console.log(logChecked.includes(index));
-    if (logChecked.includes(index)) {
+    if (logChecked.includes(element._id)) {
       checked = true;
     }
     const score = (
@@ -51,7 +50,7 @@ const LogListCardAdmin = (props) => {
                 >
                   <MdCheckBox
                     size={"2em"}
-                    onClick={(event) => logUnCheckHandler(index, event)}
+                    onClick={(event) => logUnCheckHandler(element._id, event)}
                   />
                 </IconStyled>
               </div>
@@ -65,7 +64,7 @@ const LogListCardAdmin = (props) => {
                 >
                   <MdCheckBoxOutlineBlank
                     size={"2em"}
-                    onClick={(event) => logCheckedHandler(index, event)}
+                    onClick={(event) => logCheckedHandler(element._id, event)}
                   />
                 </IconStyled>
               </div>
