@@ -1,24 +1,23 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Flex } from '../components/styles/Flex.styled';
-import { Helmet } from 'react-helmet';
-import { useNavigate } from 'react-router';
-import { toast } from 'react-toastify';
-import Cockpit from '../components/admin/Cockpit';
-import UsersListCard from '../components/admin/UsersListCard';
-import LogListCardAdmin from '../components/admin/LogListCardAdmin';
-import Spinner from '../components/Spinner';
-import RegisterForm from '../components/login/RegisterForm';
-
+import React from "react";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Flex } from "../components/styles/Flex.styled";
+import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import Cockpit from "../components/admin/Cockpit";
+import UsersListCard from "../components/admin/UsersListCard";
+import LogListCardAdmin from "../components/admin/LogListCardAdmin";
+import Spinner from "../components/Spinner";
+import RegisterForm from "../components/login/RegisterForm";
 import {
   getUsers,
   getUserLogs,
   deleteLog,
   resetAdminState,
-} from '../features/admin/adminSlice';
-import { createNewUser } from '../features/admin/adminSlice';
-import { setAddNewUserOn } from '../features/ui/uiSlice';
+} from "../features/admin/adminSlice";
+import { createNewUser } from "../features/admin/adminSlice";
+import { setAddNewUserOn } from "../features/ui/uiSlice";
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -28,34 +27,39 @@ const Admin = () => {
   const { ru, en, addNewUserOn } = useSelector((state) => state.ui);
   const adminState = useSelector((state) => state.admin);
 
-  // local ui state
-  const [isSelected, setIsSelected] = useState(null);
-  const [isEditLog, setIsEditLog] = useState(false);
+  // local register form state
   const [formData, setFormData] = useState({
-    username: '',
-    name: '',
-    password: '',
-    password2: '',
+    username: "",
+    name: "",
+    password: "",
+    password2: "",
   });
-  const [logChecked, setLogChecked] = useState([]);
-
   const { username, name, password, password2 } = formData;
+
+  // local user state
+  const [isSelected, setIsSelected] = useState(null);
+  const [userChecked, setUserChecked] = useState([]);
+  const [isEditUsersList, setIsEditUsersList] = useState(false);
+
+  // local log state
+  const [logChecked, setLogChecked] = useState([]);
+  const [isEditLogsList, setIsEditLogsList] = useState(false);
 
   useEffect(() => {
     if (!user) {
-      navigate('/login');
+      navigate("/login");
     }
     if (user) {
       if (!user.admin) {
-        toast.error('You do not have administrator access!');
-        navigate('/');
+        toast.error("You do not have administrator access!");
+        navigate("/");
       } else {
         dispatch(getUsers());
       }
     }
   }, [user, navigate, dispatch]);
 
-  // Cockpit handlers
+  // ------------------------ REGISTER FORM HADLERS ------------------------------- //
   const addNewUserSwitch = () => {
     dispatch(setAddNewUserOn());
   };
@@ -66,41 +70,9 @@ const Admin = () => {
     dispatch(getUsers());
   };
 
-  // ----------------------------- LOG LIST HANDLERS -------------------------------- //
+  // ------------------------------------- || ------------------------------------- //
 
-  // Settings icon handler on Log Card
-  const isEditHandlerLog = () => {
-    if (adminState.userLogs.length === 0) {
-      toast.error('Nothing to edit');
-    }
-    if (adminState.userLogs.length > 0) {
-      setLogChecked([]);
-      setIsEditLog(!isEditLog);
-    }
-  };
-
-  // Delete icon handle on Log Card
-  const deleteLogsHandler = () => {
-    if (logChecked.length > 0) {
-      logChecked.forEach((element) => dispatch(deleteLog(element)));
-    } else {
-      toast.error('You try to delete empty or not selected logs');
-    }
-  };
-
-  // Log list handlers
-  const logCheckedHandler = (LogId, event) => {
-    event.preventDefault();
-    setLogChecked([...logChecked, LogId]);
-  };
-  const logUnCheckHandler = (LogId, event) => {
-    event.preventDefault();
-    setLogChecked(logChecked.filter((element) => element !== LogId));
-  };
-
-  // ------------------------------ || -------------------------------- //
-
-  // Register form handlers
+  // ------------------------ REGISTER FORM HADLERS ------------------------------- //
   const onChange = (event) => {
     event.preventDefault();
     setFormData((prevState) => ({
@@ -112,7 +84,7 @@ const Admin = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     if (password !== password2) {
-      toast.error('Passwords do not match');
+      toast.error("Passwords do not match");
     } else {
       const userData = {
         name,
@@ -123,13 +95,63 @@ const Admin = () => {
       dispatch(getUsers());
     }
   };
+  // ------------------------------------- || ------------------------------------- //
 
-  // User list click handler
+  // ----------------------------- LOG LIST HANDLERS -------------------------------- //
+
+  // Settings icon handler on Log Card
+  const isEditHandlerLogs = () => {
+    if (adminState.userLogs.length === 0) {
+      toast.error("Nothing to edit");
+    }
+    if (adminState.userLogs.length > 0) {
+      setLogChecked([]);
+      setIsEditLogsList(!isEditLogsList);
+    }
+  };
+
+  // Delete icon handle on Log Card
+  const deleteLogsHandler = () => {
+    if (logChecked.length > 0) {
+      logChecked.forEach((element) => dispatch(deleteLog(element)));
+    } else {
+      toast.error("You try to delete empty or not selected logs");
+    }
+  };
+
+  // Log list handlers
+  const logCheckedHandler = (logId, event) => {
+    event.preventDefault();
+    setLogChecked([...logChecked, logId]);
+  };
+  const logUnCheckHandler = (logId, event) => {
+    event.preventDefault();
+    setLogChecked(logChecked.filter((element) => element !== logId));
+  };
+
+  // ------------------------------------- || ------------------------------------- //
+
+  // ----------------------------- USER LIST HANDLERS ---------------------------- //
   const onUserClickHundler = (args, event) => {
     event.preventDefault();
     setIsSelected(args[1]);
     dispatch(getUserLogs(args[0]));
   };
+
+  // Settings icon handler on Log Card
+  const isEditHandlerUsers = () => {
+    setIsEditUsersList(!isEditUsersList);
+  };
+
+  const userCheckedHandler = (userId, event) => {
+    event.preventDefault();
+    setUserChecked([...userChecked, userId]);
+  };
+  const userUnCheckHandler = (userId, event) => {
+    event.preventDefault();
+    setUserChecked(userChecked.filter((element) => element !== userId));
+  };
+  // ------------------------------------- || ------------------------------------ //
 
   if (!adminState.users && adminState.isLoading) {
     return <Spinner />;
@@ -138,7 +160,7 @@ const Admin = () => {
   return (
     <>
       <Helmet>
-        <meta charSet='utf-8' />
+        <meta charSet="utf-8" />
         <title>Admin | Examinator</title>
       </Helmet>
       {adminState.isLoading ? <Spinner /> : null}
@@ -158,6 +180,11 @@ const Admin = () => {
         ) : null}
         {adminState.users ? (
           <UsersListCard
+            userChecked={userChecked}
+            userCheckedHandler={userCheckedHandler}
+            userUnCheckHandler={userUnCheckHandler}
+            isEditUsersList={isEditUsersList}
+            isEditHandlerUsers={isEditHandlerUsers}
             en={en}
             ru={ru}
             selected={isSelected}
@@ -170,9 +197,9 @@ const Admin = () => {
             logChecked={logChecked}
             logCheckedHandler={logCheckedHandler}
             logUnCheckHandler={logUnCheckHandler}
-            isEditHandlerLog={isEditHandlerLog}
+            isEditHandlerLogs={isEditHandlerLogs}
             deleteLogsHandler={deleteLogsHandler}
-            isEditLog={isEditLog}
+            isEditLogsList={isEditLogsList}
             en={en}
             ru={ru}
             item={adminState.userLogs}

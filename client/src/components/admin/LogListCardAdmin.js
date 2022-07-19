@@ -12,8 +12,8 @@ const LogListCardAdmin = (props) => {
   const {
     en,
     ru,
-    isEditHandlerLog,
-    isEditLog,
+    isEditHandlerLogs,
+    isEditLogsList,
     deleteLogsHandler,
     logChecked,
     logCheckedHandler,
@@ -40,36 +40,25 @@ const LogListCardAdmin = (props) => {
 
     return (
       <div style={{ display: "flex" }} key={uniqid()}>
-        {isEditLog ? (
-          <>
-            {checked ? (
-              <div style={{ margin: "auto", marginRight: "5px" }}>
-                <IconStyled
-                  bg={theme.colors.surface}
-                  color={theme.colors.primary.light}
-                >
-                  <MdCheckBox
-                    size={"2em"}
-                    onClick={(event) => logUnCheckHandler(element._id, event)}
-                  />
-                </IconStyled>
-              </div>
-            ) : null}
-
-            {!checked ? (
-              <div style={{ margin: "auto", marginRight: "5px" }}>
-                <IconStyled
-                  bg={theme.colors.surface}
-                  color={theme.colors.primary.light}
-                >
-                  <MdCheckBoxOutlineBlank
-                    size={"2em"}
-                    onClick={(event) => logCheckedHandler(element._id, event)}
-                  />
-                </IconStyled>
-              </div>
-            ) : null}
-          </>
+        {isEditLogsList ? (
+          <div style={{ margin: "auto", marginRight: "5px" }}>
+            <IconStyled
+              bg={theme.colors.surface}
+              color={theme.colors.primary.light}
+            >
+              {checked ? (
+                <MdCheckBox
+                  size={"2em"}
+                  onClick={(event) => logUnCheckHandler(element._id, event)}
+                />
+              ) : (
+                <MdCheckBoxOutlineBlank
+                  size={"2em"}
+                  onClick={(event) => logCheckedHandler(element._id, event)}
+                />
+              )}
+            </IconStyled>
+          </div>
         ) : null}
 
         <ListElem
@@ -101,8 +90,8 @@ const LogListCardAdmin = (props) => {
   return (
     <StyledListCard>
       <SettingPanel
-        onSettings={isEditHandlerLog}
-        isEdit={isEditLog}
+        onSettings={isEditHandlerLogs}
+        isEdit={isEditLogsList}
         onDelete={deleteLogsHandler}
       />
       <StyledSeparator />
