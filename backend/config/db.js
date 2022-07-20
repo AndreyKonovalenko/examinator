@@ -6,7 +6,7 @@ const connectDB = async () => {
       dbName: 'prod',
     });
     console.log(
-      `MongoDB Connected! db:${conn.connection.name}  host:${conn.connection.host}`
+      `MongoDB Connected! db:${conn.connection.name} host:${conn.connection.host}`
         .cyan.underline
     );
   } catch (error) {
