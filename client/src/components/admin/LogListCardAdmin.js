@@ -1,12 +1,11 @@
-import moment from "moment";
-import { StyledListCard } from "../styles/ListCard.styled";
-import { ListElem } from "../styles/ListElem.styled";
-import { IconStyled } from "../styles/Icon.styled";
-import { StyledSeparator } from "../styles/Separator.styled";
-import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
-import SettingPanel from "./SettingsPanel";
-import theme from "../../theme/index.js";
-import uniqid from "uniqid";
+import moment from 'moment';
+import { StyledListCard } from '../styles/ListCard.styled';
+import { ListElem } from '../styles/ListElem.styled';
+import { StyledSeparator } from '../styles/Separator.styled';
+import CheckBox from './CheckBox';
+import SettingPanel from './SettingsPanel';
+import theme from '../../theme/index.js';
+import uniqid from 'uniqid';
 
 const LogListCardAdmin = (props) => {
   const {
@@ -29,7 +28,7 @@ const LogListCardAdmin = (props) => {
         Number.parseInt(element.quiz.questions.length)) *
       100
     ).toFixed(0);
-    const etemptTime = moment(element.updatedAt).format("HH:mm:ss/DD.MM.YYYY");
+    const etemptTime = moment(element.updatedAt).format('HH:mm:ss/DD.MM.YYYY');
 
     const succes = {
       color: theme.colors.primary.light,
@@ -39,45 +38,32 @@ const LogListCardAdmin = (props) => {
     };
 
     return (
-      <div style={{ display: "flex" }} key={uniqid()}>
+      <div style={{ display: 'flex' }} key={uniqid()}>
         {isEditLogsList ? (
-          <div style={{ margin: "auto", marginRight: "5px" }}>
-            <IconStyled
-              bg={theme.colors.surface}
-              color={theme.colors.primary.light}
-            >
-              {checked ? (
-                <MdCheckBox
-                  size={"2em"}
-                  onClick={(event) => logUnCheckHandler(element._id, event)}
-                />
-              ) : (
-                <MdCheckBoxOutlineBlank
-                  size={"2em"}
-                  onClick={(event) => logCheckedHandler(element._id, event)}
-                />
-              )}
-            </IconStyled>
-          </div>
+          <CheckBox
+            isChecked={checked}
+            id={element._id}
+            checkedHandler={logCheckedHandler}
+            unCheckHandler={logUnCheckHandler}
+          />
         ) : null}
 
         <ListElem
           key={uniqid()}
-          onClick={(event) => props.onClick(element, event)}
-        >
+          onClick={(event) => props.onClick(element, event)}>
           {ru ? <p>Тема: {element.quiz.title}</p> : null}
           {en ? <p>Quiz: {element.quiz.title}</p> : null}
           {ru ? (
             <p style={score >= 80 ? succes : fail}>
-              Тест {score >= 80 ? "пройден успешно" : "провален"} с результатом{" "}
-              {score}%, правильных ответов: {element.result} из{" "}
+              Тест {score >= 80 ? 'пройден успешно' : 'провален'} с результатом{' '}
+              {score}%, правильных ответов: {element.result} из{' '}
               {element.quiz.questions.length}
             </p>
           ) : null}
           {en ? (
             <p style={score >= 80 ? succes : fail}>
-              {score >= 80 ? "You have succeeded" : "You have failed"} with{" "}
-              {score}%, correct answers: {element.result} out of{" "}
+              {score >= 80 ? 'You have succeeded' : 'You have failed'} with{' '}
+              {score}%, correct answers: {element.result} out of{' '}
               {element.quiz.questions.length}
             </p>
           ) : null}

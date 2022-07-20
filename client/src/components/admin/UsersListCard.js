@@ -1,11 +1,10 @@
-import { StyledListCard } from "../styles/ListCard.styled";
-import { ListElem } from "../styles/ListElem.styled";
-import { IconStyled } from "../styles/Icon.styled";
-import { StyledSeparator } from "../styles/Separator.styled";
-import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
-import SettingPanel from "./SettingsPanel";
-import uniqid from "uniqid";
-import theme from "../../theme/index.js";
+import { StyledListCard } from '../styles/ListCard.styled';
+import { ListElem } from '../styles/ListElem.styled';
+import { StyledSeparator } from '../styles/Separator.styled';
+import CheckBox from './CheckBox';
+import SettingPanel from './SettingsPanel';
+import uniqid from 'uniqid';
+import theme from '../../theme/index.js';
 const UsersListCard = (props) => {
   const {
     ru,
@@ -24,26 +23,14 @@ const UsersListCard = (props) => {
     }
 
     return (
-      <div style={{ display: "flex" }} key={uniqid()}>
+      <div style={{ display: 'flex' }} key={uniqid()}>
         {isEditUsersList ? (
-          <div style={{ margin: "auto", marginRight: "5px" }}>
-            <IconStyled
-              bg={theme.colors.surface}
-              color={theme.colors.primary.light}
-            >
-              {checked ? (
-                <MdCheckBox
-                  size={"2em"}
-                  onClick={(event) => userUnCheckHandler(element._id, event)}
-                />
-              ) : (
-                <MdCheckBoxOutlineBlank
-                  size={"2em"}
-                  onClick={(event) => userCheckedHandler(element._id, event)}
-                />
-              )}
-            </IconStyled>
-          </div>
+          <CheckBox
+            isChecked={checked}
+            id={element._id}
+            checkedHandler={userCheckedHandler}
+            unCheckHandler={userUnCheckHandler}
+          />
         ) : null}
         <ListElem
           key={uniqid()}
@@ -55,8 +42,7 @@ const UsersListCard = (props) => {
                 }
               : null
           }
-          onClick={(event) => props.onClick([element._id, index], event)}
-        >
+          onClick={(event) => props.onClick([element._id, index], event)}>
           <p>
             {element.username} / {element.name}
           </p>
@@ -66,7 +52,7 @@ const UsersListCard = (props) => {
   });
 
   const styled = {
-    textAlign: "right",
+    textAlign: 'right',
     margin: 0,
   };
   return (

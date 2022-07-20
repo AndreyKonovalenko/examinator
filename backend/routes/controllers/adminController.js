@@ -16,10 +16,8 @@ export const getLogs = asyncHandler(async (req, res) => {
     })
     .exec();
   if (data) {
+    console.log(data);
     res.status(200).json(data);
-  } else {
-    res.status(400);
-    throw new Error('Log not found');
   }
 });
 
@@ -37,12 +35,39 @@ export const getUsers = asyncHandler(async (req, res) => {
 // @access Private Admin
 
 export const deleteLog = asyncHandler(async (req, res) => {
-  const log = await Log.findOne({ _id: req.params.id });
-
+  const log = await Log.find({ _id: req.params.id });
   if (!log) {
     res.status(400);
     throw new Error('Log not found');
   }
   await log.remove();
   res.status(200).json({ id: req.params.id });
+});
+
+// @desc Delete user by id
+// @route Delete /api/admin/users:id
+// @access Private Adimin
+
+export const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findOne({ _id: req.params.id });
+  if (!user) {
+    res.status(400);
+    throw new Error(`There is no user with such id: ${rep.params.id}`);
+  }
+  if (user) {
+    const logs = await Log.find(user._id);
+    if (logs) {
+      if (logs.length > 0) {
+        res.status(200).json({ logs: true });
+        // need add to admin slice logic for handling logs:true
+        throw new Error(
+          "User has logs, consider cleaning user's log before deleting user"
+        );
+      }
+      if (logs.length === 0) {
+        await user.remove();
+        res.status(200).json({ id: req.params.id });
+      }
+    }
+  }
 });
