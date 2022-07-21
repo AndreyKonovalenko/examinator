@@ -15,6 +15,7 @@ import {
   getUserLogs,
   deleteLog,
   resetAdminState,
+  deleteUser,
 } from "../features/admin/adminSlice";
 import { createNewUser } from "../features/admin/adminSlice";
 import { setAddNewUserOn } from "../features/ui/uiSlice";
@@ -133,14 +134,24 @@ const Admin = () => {
 
   // ----------------------------- USER LIST HANDLERS ---------------------------- //
   const onUserClickHundler = (args, event) => {
+    console.log("onClick", args);
     event.preventDefault();
     setIsSelected(args[1]);
     dispatch(getUserLogs(args[0]));
   };
 
-  // Settings icon handler on Log Card
+  // Settings icon handler on User list Card
   const isEditHandlerUsers = () => {
     setIsEditUsersList(!isEditUsersList);
+  };
+
+  // Delete icon handle on User list Card
+  const deleteUserHandler = () => {
+    if (userChecked.length > 0) {
+      userChecked.forEach((element) => dispatch(deleteUser(element)));
+    } else {
+      toast.error("User for deleting is not selected!");
+    }
   };
 
   const userCheckedHandler = (userId, event) => {
@@ -185,11 +196,12 @@ const Admin = () => {
             userUnCheckHandler={userUnCheckHandler}
             isEditUsersList={isEditUsersList}
             isEditHandlerUsers={isEditHandlerUsers}
+            deleteUserHandler={deleteUserHandler}
             en={en}
             ru={ru}
             selected={isSelected}
             item={adminState.users}
-            onClick={onUserClickHundler}
+            onUserClickHundler={onUserClickHundler}
           />
         ) : null}
         {adminState.userLogs ? (

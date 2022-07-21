@@ -1,22 +1,21 @@
-import asyncHandler from 'express-async-handler';
-import { Log } from '../../models/logModel.js';
-import { User } from '../../models/userModel.js';
-import { Quiz } from '../../models/quizModel.js';
+import asyncHandler from "express-async-handler";
+import { Log } from "../../models/logModel.js";
+import { User } from "../../models/userModel.js";
+import { Quiz } from "../../models/quizModel.js";
 
 // @desc Get user logs by userId
-// @route GET /api/admin/logs/user:id
+// @route GET /api/admin/logs/user/:id
 // @access Private Admin
 
 export const getLogs = asyncHandler(async (req, res) => {
   const data = await Log.find({ user: req.params.id })
-    .sort('-updatedAt')
+    .sort("-updatedAt")
     .populate({
-      path: 'quiz',
-      select: ['title', 'questions'],
+      path: "quiz",
+      select: ["title", "questions"],
     })
     .exec();
   if (data) {
-    console.log(data);
     res.status(200).json(data);
   }
 });
@@ -31,21 +30,21 @@ export const getUsers = asyncHandler(async (req, res) => {
 });
 
 // @desc Delete user log by id
-// @router Delete /api/admin/logs:id
+// @router Delete /api/admin/logs/:id
 // @access Private Admin
 
 export const deleteLog = asyncHandler(async (req, res) => {
-  const log = await Log.find({ _id: req.params.id });
+  const log = await Log.findOne({ _id: req.params.id });
   if (!log) {
     res.status(400);
-    throw new Error('Log not found');
+    throw new Error("Log not found");
   }
   await log.remove();
   res.status(200).json({ id: req.params.id });
 });
 
 // @desc Delete user by id
-// @route Delete /api/admin/users:id
+// @route Delete /api/admin/users/:id
 // @access Private Adimin
 
 export const deleteUser = asyncHandler(async (req, res) => {
@@ -55,18 +54,20 @@ export const deleteUser = asyncHandler(async (req, res) => {
     throw new Error(`There is no user with such id: ${rep.params.id}`);
   }
   if (user) {
-    const logs = await Log.find(user._id);
+    console.log(user._id);
+    const logs = await Log.find({ user: user._id });
+    console.log(logs);
     if (logs) {
       if (logs.length > 0) {
-        res.status(200).json({ logs: true });
-        // need add to admin slice logic for handling logs:true
+        res.status(400);
         throw new Error(
           "User has logs, consider cleaning user's log before deleting user"
         );
       }
       if (logs.length === 0) {
-        await user.remove();
-        res.status(200).json({ id: req.params.id });
+        console.log("will be deleted");
+        //  await user.remove();
+        // res.status(200).json({ id: req.params.id });
       }
     }
   }
