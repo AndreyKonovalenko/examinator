@@ -10,22 +10,30 @@ import UsersListCard from "../components/admin/UsersListCard";
 import LogListCardAdmin from "../components/admin/LogListCardAdmin";
 import Spinner from "../components/Spinner";
 import RegisterForm from "../components/login/RegisterForm";
+import QuizListCardAdmin from "../components/admin/QuizListCardAdmin";
 import {
   getUsers,
   getUserLogs,
   deleteLog,
   resetAdminState,
   deleteUser,
+  getQuizzes,
 } from "../features/admin/adminSlice";
 import { createNewUser } from "../features/admin/adminSlice";
-import { setAddNewUserOn } from "../features/ui/uiSlice";
+import {
+  setRegisterUserTabOn,
+  setUsersTabOn,
+  setQuizzesTabOn,
+} from "../features/ui/uiSlice";
 
 const Admin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.auth);
-  const { ru, en, addNewUserOn } = useSelector((state) => state.ui);
+  const { ru, en, registerUserTab, usersTab, quizzesTab } = useSelector(
+    (state) => state.ui
+  );
   const adminState = useSelector((state) => state.admin);
 
   // local register form state
@@ -56,21 +64,24 @@ const Admin = () => {
         navigate("/");
       } else {
         dispatch(getUsers());
+        dispatch(getQuizzes());
       }
     }
   }, [user, navigate, dispatch]);
 
-  // ------------------------ REGISTER FORM HADLERS ------------------------------- //
+  // ------------------------ COCKPIT HADLERS ------------------------------- //
   const addNewUserSwitch = () => {
-    dispatch(setAddNewUserOn());
+    dispatch(setRegisterUserTabOn());
   };
 
   const usersSwitch = () => {
     setIsSelected(null);
-    dispatch(resetAdminState());
+    dispatch(setUsersTabOn());
     dispatch(getUsers());
   };
-
+  const quizzesSwitch = () => {
+    dispatch(setQuizzesTabOn());
+  };
   // ------------------------------------- || ------------------------------------- //
 
   // ------------------------ REGISTER FORM HADLERS ------------------------------- //
@@ -134,7 +145,6 @@ const Admin = () => {
 
   // ----------------------------- USER LIST HANDLERS ---------------------------- //
   const onUserClickHundler = (args, event) => {
-    console.log("onClick", args);
     event.preventDefault();
     setIsSelected(args[1]);
     dispatch(getUserLogs(args[0]));
@@ -175,9 +185,13 @@ const Admin = () => {
         <title>Admin | Examinator</title>
       </Helmet>
       {adminState.isLoading ? <Spinner /> : null}
-      <Cockpit addNewUserSwitch={addNewUserSwitch} usersSwitch={usersSwitch} />
+      <Cockpit
+        addNewUserSwitch={addNewUserSwitch}
+        usersSwitch={usersSwitch}
+        quizzesSwitch={quizzesSwitch}
+      />
       <Flex>
-        {addNewUserOn ? (
+        {registerUserTab ? (
           <RegisterForm
             ru={ru}
             en={en}
@@ -189,7 +203,7 @@ const Admin = () => {
             onSubmit={onSubmit}
           />
         ) : null}
-        {adminState.users ? (
+        {adminState.users && usersTab ? (
           <UsersListCard
             userChecked={userChecked}
             userCheckedHandler={userCheckedHandler}
@@ -204,7 +218,7 @@ const Admin = () => {
             onUserClickHundler={onUserClickHundler}
           />
         ) : null}
-        {adminState.userLogs ? (
+        {adminState.userLogs && usersTab ? (
           <LogListCardAdmin
             logChecked={logChecked}
             logCheckedHandler={logCheckedHandler}
@@ -216,6 +230,9 @@ const Admin = () => {
             ru={ru}
             item={adminState.userLogs}
           />
+        ) : null}
+        {adminState.quizzes && quizzesTab ? (
+          <QuizListCardAdmin item={adminState.quizzes} />
         ) : null}
       </Flex>
     </>

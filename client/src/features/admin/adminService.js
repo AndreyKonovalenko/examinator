@@ -53,11 +53,24 @@ const deleteLog = async (id, token) => {
   return response.data;
 };
 
+// QUIZ SERVICE
+
+const getQuizzes = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.get("/api/admin/quizzes", config);
+  return response.data;
+};
+
 const quizService = {
   getUsers,
   getUserLogs,
   createNewUser,
   deleteLog,
   deleteUser,
+  getQuizzes,
 };
 export default quizService;

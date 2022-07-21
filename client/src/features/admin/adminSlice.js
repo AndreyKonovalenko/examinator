@@ -4,6 +4,7 @@ import adminService from "./adminService";
 const initialState = {
   users: null,
   userLogs: null,
+  quizzes: null,
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -107,6 +108,26 @@ export const deleteLog = createAsyncThunk(
     }
   }
 );
+// QUIZ ACTIONS
+
+// Get all Quizzes
+export const getQuizzes = createAsyncThunk(
+  "admin/getQuizzes",
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await adminService.getQuizzes(token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 export const adminSlice = createSlice({
   name: "admin",
@@ -180,6 +201,19 @@ export const adminSlice = createSlice({
         );
       })
       .addCase(deleteUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getQuizzes.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getQuizzes.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.quizzes = action.payload;
+      })
+      .addCase(getQuizzes.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

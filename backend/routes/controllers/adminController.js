@@ -54,9 +54,7 @@ export const deleteUser = asyncHandler(async (req, res) => {
     throw new Error(`There is no user with such id: ${rep.params.id}`);
   }
   if (user) {
-    console.log(user._id);
     const logs = await Log.find({ user: user._id });
-    console.log(logs);
     if (logs) {
       if (logs.length > 0) {
         res.status(400);
@@ -65,10 +63,18 @@ export const deleteUser = asyncHandler(async (req, res) => {
         );
       }
       if (logs.length === 0) {
-        console.log("will be deleted");
-        //  await user.remove();
-        // res.status(200).json({ id: req.params.id });
+        await user.remove();
+        res.status(200).json({ id: req.params.id });
       }
     }
   }
+});
+
+// @desc Get Quizzes
+// @route GET /api/adim/quizzes
+// @access Private Admin
+
+export const getQuizzes = asyncHandler(async (req, res) => {
+  const quiz = await Quiz.find();
+  res.status(200).json(quiz);
 });

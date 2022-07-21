@@ -1,6 +1,6 @@
-import asyncHandler from 'express-async-handler';
-import { Log } from '../../models/logModel.js';
-import { Quiz } from '../../models/quizModel.js';
+import asyncHandler from "express-async-handler";
+import { Log } from "../../models/logModel.js";
+import { Quiz } from "../../models/quizModel.js";
 
 // @desc Get user logs
 // @route GET /api/log
@@ -8,22 +8,22 @@ import { Quiz } from '../../models/quizModel.js';
 
 export const getLogs = asyncHandler(async (req, res) => {
   const data = await Log.find({ user: req.user.id })
-    .sort('-updatedAt')
+    .sort("-updatedAt")
     .populate({
-      path: 'quiz',
-      select: ['title', 'questions'],
+      path: "quiz",
+      select: ["title", "questions"],
     })
     .exec();
   if (data) {
     res.status(200).json(data);
   } else {
     res.status(400);
-    throw new Error('Log not found');
+    throw new Error("Log not found");
   }
 });
 
 // @desc Get Log by id
-// @route GET /api/log/id
+// @route GET /api/log/:id
 // @access Private
 
 export const getLog = asyncHandler(async (req, res) => {
@@ -32,7 +32,7 @@ export const getLog = asyncHandler(async (req, res) => {
     res.status(200).json(log);
   } else {
     res.status(400);
-    throw new Error('Invalid log id');
+    throw new Error("Invalid log id");
   }
 });
 
@@ -43,7 +43,7 @@ export const getLog = asyncHandler(async (req, res) => {
 export const setLog = asyncHandler(async (req, res) => {
   const { quizId, answers } = req.body;
   const currentQuiz = await Quiz.findOne({ _id: quizId })
-    .populate('questions')
+    .populate("questions")
     .exec();
   if (currentQuiz) {
     const { questions } = currentQuiz;
@@ -58,11 +58,11 @@ export const setLog = asyncHandler(async (req, res) => {
       res.status(200).json(newLog);
     } else {
       res.status(400);
-      throw new Error('New Log has not been created');
+      throw new Error("New Log has not been created");
     }
   } else {
     res.status(400);
-    throw new Error('Quiz not found');
+    throw new Error("Quiz not found");
   }
 });
 

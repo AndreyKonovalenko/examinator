@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { startSession } from "mongoose";
 const initialState = {
   ru: true,
   en: false,
-  addNewUserOn: false,
+  registerUserTab: false,
+  usersTab: true,
+  quizzesTab: false,
 };
 
 export const uiSlice = createSlice({
@@ -18,11 +21,25 @@ export const uiSlice = createSlice({
       state.ru = false;
       state.en = true;
     },
-    setAddNewUserOn: (state) => {
-      state.addNewUserOn = !state.addNewUserOn;
+    setRegisterUserTabOn: (state) => {
+      state.registerUserTab = !state.registerUserTab;
+    },
+    setUsersTabOn: (state) => {
+      state.usersTab = true;
+    },
+    setQuizzesTabOn: (state) => {
+      state.quizzesTab = !state.quizzesTab;
+      state.usersTab = !state.usersTab;
     },
   },
 });
 
-export const { setRu, setEn, resetUiState, setAddNewUserOn } = uiSlice.actions;
+export const {
+  setRu,
+  setEn,
+  resetUiState,
+  setRegisterUserTabOn,
+  setUsersTabOn,
+  setQuizzesTabOn,
+} = uiSlice.actions;
 export default uiSlice.reducer;
