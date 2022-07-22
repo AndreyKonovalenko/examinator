@@ -5,6 +5,7 @@ import {
   deleteLog,
   deleteUser,
   getQuizzes,
+  getFullQuiz,
 } from "./controllers/adminController.js";
 import protect from "../middleware/authMiddleware.js";
 import isAdmin from "../middleware/adminMiddleware.js";
@@ -20,5 +21,7 @@ router.delete("/users/:id", protect, isAdmin, deleteUser);
 router.delete("/logs/:id", protect, isAdmin, deleteLog);
 // get all quizzes
 router.get("/quizzes", protect, isAdmin, getQuizzes);
+// git full quiz date
+router.get("/quizzes/:id", protect, isAdmin, getFullQuiz);
 
 export default router;

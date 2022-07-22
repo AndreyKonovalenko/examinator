@@ -59,7 +59,7 @@ export const deleteUser = asyncHandler(async (req, res) => {
       if (logs.length > 0) {
         res.status(400);
         throw new Error(
-          "User has logs, consider cleaning user's log before deleting user"
+          "User has logs, consider cleaning user's log before deleting it"
         );
       }
       if (logs.length === 0) {
@@ -77,4 +77,20 @@ export const deleteUser = asyncHandler(async (req, res) => {
 export const getQuizzes = asyncHandler(async (req, res) => {
   const quiz = await Quiz.find();
   res.status(200).json(quiz);
+});
+
+// @desc Get Full Quiz by id
+// @route GET /api/adim/quizzes/:id
+// @access Private Admin
+
+export const getFullQuiz = asyncHandler(async (req, res) => {
+  const quiz = await Quiz.findOne({ _id: req.params.id }).populate({
+    path: "questions",
+  });
+  if (quiz) {
+    res.status(200).json(quiz);
+  } else {
+    res.status(400);
+    throw new Error("Invalid quiz id");
+  }
 });

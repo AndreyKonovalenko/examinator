@@ -54,10 +54,6 @@ const UsersListCard = (props) => {
     );
   });
 
-  const styled = {
-    textAlign: "right",
-    margin: 0,
-  };
   return (
     <StyledListCard>
       <SettingPanel
@@ -68,7 +64,6 @@ const UsersListCard = (props) => {
       <StyledSeparator />
       {ru ? <h2>Пользователи:</h2> : null}
       {en ? <h2>Users:</h2> : null}
-      <div style={styled}></div>
       {list}
     </StyledListCard>
   );

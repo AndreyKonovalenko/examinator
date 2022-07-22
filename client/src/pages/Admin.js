@@ -18,6 +18,7 @@ import {
   resetAdminState,
   deleteUser,
   getQuizzes,
+  getFullQuiz,
 } from "../features/admin/adminSlice";
 import { createNewUser } from "../features/admin/adminSlice";
 import {
@@ -46,7 +47,7 @@ const Admin = () => {
   const { username, name, password, password2 } = formData;
 
   // local user state
-  const [isSelected, setIsSelected] = useState(null);
+  const [isSelectedUser, setIsSelectedUser] = useState(null);
   const [userChecked, setUserChecked] = useState([]);
   const [isEditUsersList, setIsEditUsersList] = useState(false);
 
@@ -69,13 +70,16 @@ const Admin = () => {
     }
   }, [user, navigate, dispatch]);
 
+  // local quizzes state
+  const [isSelectedQuiz, setIsSelectedQuiz] = useState(null);
+
   // ------------------------ COCKPIT HADLERS ------------------------------- //
   const addNewUserSwitch = () => {
     dispatch(setRegisterUserTabOn());
   };
 
   const usersSwitch = () => {
-    setIsSelected(null);
+    setIsSelectedUser(null);
     dispatch(setUsersTabOn());
     dispatch(getUsers());
   };
@@ -109,7 +113,7 @@ const Admin = () => {
   };
   // ------------------------------------- || ------------------------------------- //
 
-  // ----------------------------- LOG LIST HANDLERS -------------------------------- //
+  // ----------------------------- LOG LIST HANDLERS ------------------------------ //
 
   // Settings icon handler on Log Card
   const isEditHandlerLogs = () => {
@@ -141,12 +145,12 @@ const Admin = () => {
     setLogChecked(logChecked.filter((element) => element !== logId));
   };
 
-  // ------------------------------------- || ------------------------------------- //
+  // ------------------------------------- || ------------------------------------ //
 
   // ----------------------------- USER LIST HANDLERS ---------------------------- //
   const onUserClickHundler = (args, event) => {
     event.preventDefault();
-    setIsSelected(args[1]);
+    setIsSelectedUser(args[1]);
     dispatch(getUserLogs(args[0]));
   };
 
@@ -171,6 +175,16 @@ const Admin = () => {
   const userUnCheckHandler = (userId, event) => {
     event.preventDefault();
     setUserChecked(userChecked.filter((element) => element !== userId));
+  };
+  // ------------------------------------- || ------------------------------------ //
+
+  // ----------------------------- QUIZZES LIST HANDELRS ------------------------- //
+
+  const onQuizClickHundler = (args, event) => {
+    event.preventDefault();
+    console.log(args);
+    setIsSelectedQuiz(args[1]);
+    dispatch(getFullQuiz(args[0]));
   };
   // ------------------------------------- || ------------------------------------ //
 
@@ -213,7 +227,7 @@ const Admin = () => {
             deleteUserHandler={deleteUserHandler}
             en={en}
             ru={ru}
-            selected={isSelected}
+            selected={isSelectedUser}
             item={adminState.users}
             onUserClickHundler={onUserClickHundler}
           />
@@ -232,7 +246,13 @@ const Admin = () => {
           />
         ) : null}
         {adminState.quizzes && quizzesTab ? (
-          <QuizListCardAdmin item={adminState.quizzes} />
+          <QuizListCardAdmin
+            item={adminState.quizzes}
+            onQuizClickHundler={onQuizClickHundler}
+            selected={isSelectedQuiz}
+            en={en}
+            ru={ru}
+          />
         ) : null}
       </Flex>
     </>

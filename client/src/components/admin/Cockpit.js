@@ -11,7 +11,7 @@ const Cockpit = (props) => {
     <StyledCockpit>
       <Flex>
         <Button onClick={usersSwitch}>Users</Button>
-        <Button onClick={quizzesSwitch}>Availible Quizes</Button>
+        <Button onClick={quizzesSwitch}>Availible Quizzes</Button>
         <Button>Create New Quiz</Button>
         <Button onClick={addNewUserSwitch}>Add New User</Button>
       </Flex>

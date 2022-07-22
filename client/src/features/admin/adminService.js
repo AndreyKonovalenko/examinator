@@ -65,6 +65,16 @@ const getQuizzes = async (token) => {
   return response.data;
 };
 
+const getFullQuiz = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.get("/api/admin/quizzes/" + id, config);
+  return response.data;
+};
+
 const quizService = {
   getUsers,
   getUserLogs,
@@ -72,5 +82,6 @@ const quizService = {
   deleteLog,
   deleteUser,
   getQuizzes,
+  getFullQuiz,
 };
 export default quizService;
