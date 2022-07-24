@@ -1,7 +1,13 @@
 import { Container } from './styles/Container.styled';
 import { StyledHeader, StyledNav } from './styles/Header.styled';
 import { IconStyled } from './styles/Icon.styled';
-import { MdLogout, MdMenu, MdAdminPanelSettings } from 'react-icons/md';
+import {
+  MdLogout,
+  MdMenu,
+  MdAdminPanelSettings,
+  MdPeopleAlt,
+  MdQuiz,
+} from 'react-icons/md';
 
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -41,14 +47,25 @@ const Header = () => {
   const onEn = () => {
     dispatch(setEn());
   };
-  let adimnIcon = null;
+  let adimnPanel = null;
   if (user) {
     if (user.admin) {
-      adimnIcon = (
+      adimnPanel = (
         <>
           <IconStyled onClick={onAdmin}>
             <MdAdminPanelSettings size={'3em'} />
           </IconStyled>
+
+          {location.pathname === '/admin' ? (
+            <>
+              <IconStyled>
+                <MdPeopleAlt size={'3em'} />
+              </IconStyled>
+              <IconStyled>
+                <MdQuiz size={'3em'} />
+              </IconStyled>{' '}
+            </>
+          ) : null}
         </>
       );
     }
@@ -69,8 +86,7 @@ const Header = () => {
               </IconStyled>
             </>
           ) : null}
-          {adimnIcon}
-
+          {adimnPanel}
           <div style={{ marginLeft: 'auto' }}>
             <IconStyled onClick={onRu}>
               <span style={{ fontSize: '1.5em', fontWeight: 'bold' }}>RU</span>
