@@ -48,6 +48,8 @@ const QuizCardAdmin = (props) => {
 
   return (
     <StyledListCard>
+      {ru ? <h2>Тема: {item.title}</h2> : null}
+      {en ? <h2>Theme: {item.title}</h2> : null}
       {ru ? <p>всeго: {item.questions.length}</p> : null}
       {en ? <p>total: {item.questions.length}</p> : null}
       <StyledSeparator />
