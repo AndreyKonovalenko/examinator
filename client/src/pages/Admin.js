@@ -1,16 +1,17 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Flex } from "../components/styles/Flex.styled";
-import { Helmet } from "react-helmet";
-import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
-import Cockpit from "../components/admin/Cockpit";
-import UsersListCard from "../components/admin/UsersListCard";
-import LogListCardAdmin from "../components/admin/LogListCardAdmin";
-import Spinner from "../components/Spinner";
-import RegisterForm from "../components/login/RegisterForm";
-import QuizListCardAdmin from "../components/admin/QuizListCardAdmin";
+import React from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Flex } from '../components/styles/Flex.styled';
+import { Helmet } from 'react-helmet';
+import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
+import Cockpit from '../components/admin/Cockpit';
+import UsersListCard from '../components/admin/UsersListCard';
+import LogListCardAdmin from '../components/admin/LogListCardAdmin';
+import Spinner from '../components/Spinner';
+import RegisterForm from '../components/login/RegisterForm';
+import QuizListCardAdmin from '../components/admin/QuizListCardAdmin';
+import QuizCardAdmin from '../components/admin/QuizCardAdmin';
 import {
   getUsers,
   getUserLogs,
@@ -19,13 +20,13 @@ import {
   deleteUser,
   getQuizzes,
   getFullQuiz,
-} from "../features/admin/adminSlice";
-import { createNewUser } from "../features/admin/adminSlice";
+} from '../features/admin/adminSlice';
+import { createNewUser } from '../features/admin/adminSlice';
 import {
   setRegisterUserTabOn,
   setUsersTabOn,
   setQuizzesTabOn,
-} from "../features/ui/uiSlice";
+} from '../features/ui/uiSlice';
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -39,10 +40,10 @@ const Admin = () => {
 
   // local register form state
   const [formData, setFormData] = useState({
-    username: "",
-    name: "",
-    password: "",
-    password2: "",
+    username: '',
+    name: '',
+    password: '',
+    password2: '',
   });
   const { username, name, password, password2 } = formData;
 
@@ -57,12 +58,12 @@ const Admin = () => {
 
   useEffect(() => {
     if (!user) {
-      navigate("/login");
+      navigate('/login');
     }
     if (user) {
       if (!user.admin) {
-        toast.error("You do not have administrator access!");
-        navigate("/");
+        toast.error('You do not have administrator access!');
+        navigate('/');
       } else {
         dispatch(getUsers());
         dispatch(getQuizzes());
@@ -100,7 +101,7 @@ const Admin = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     if (password !== password2) {
-      toast.error("Passwords do not match");
+      toast.error('Passwords do not match');
     } else {
       const userData = {
         name,
@@ -118,7 +119,7 @@ const Admin = () => {
   // Settings icon handler on Log Card
   const isEditHandlerLogs = () => {
     if (adminState.userLogs.length === 0) {
-      toast.error("Nothing to edit");
+      toast.error('Nothing to edit');
     }
     if (adminState.userLogs.length > 0) {
       setLogChecked([]);
@@ -131,7 +132,7 @@ const Admin = () => {
     if (logChecked.length > 0) {
       logChecked.forEach((element) => dispatch(deleteLog(element)));
     } else {
-      toast.error("You try to delete empty or not selected logs");
+      toast.error('You try to delete empty or not selected logs');
     }
   };
 
@@ -164,7 +165,7 @@ const Admin = () => {
     if (userChecked.length > 0) {
       userChecked.forEach((element) => dispatch(deleteUser(element)));
     } else {
-      toast.error("User for deleting is not selected!");
+      toast.error('User for deleting is not selected!');
     }
   };
 
@@ -195,7 +196,7 @@ const Admin = () => {
   return (
     <>
       <Helmet>
-        <meta charSet="utf-8" />
+        <meta charSet='utf-8' />
         <title>Admin | Examinator</title>
       </Helmet>
       {adminState.isLoading ? <Spinner /> : null}
@@ -253,6 +254,9 @@ const Admin = () => {
             en={en}
             ru={ru}
           />
+        ) : null}
+        {adminState.quiz ? (
+          <QuizCardAdmin item={adminState.quiz} en={en} ru={ru} />
         ) : null}
       </Flex>
     </>
