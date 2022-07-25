@@ -6,6 +6,7 @@ const initialState = {
   registerUserTab: false,
   usersTab: true,
   quizzesTab: false,
+  logsTab: false,
 };
 
 export const uiSlice = createSlice({
@@ -22,14 +23,28 @@ export const uiSlice = createSlice({
       state.en = true;
     },
     setRegisterUserTabOn: (state) => {
-      state.registerUserTab = !state.registerUserTab;
+      state.registerUserTab = true;
+    },
+    setRegisterUserTabOff: (state) => {
+      state.registerUserTab = false;
     },
     setUsersTabOn: (state) => {
       state.usersTab = true;
     },
+    setUsersTabOff: (state) => {
+      state.usersTab = false;
+    },
     setQuizzesTabOn: (state) => {
-      state.quizzesTab = !state.quizzesTab;
-      state.usersTab = !state.usersTab;
+      state.quizzesTab = true;
+    },
+    setQuizzesTabOff: (state) => {
+      state.quizzesTab = false;
+    },
+    setLogsTabOn: (state) => {
+      state.logsTab = true;
+    },
+    setLogsTabOff: (state) => {
+      state.logsTab = false;
     },
   },
 });
@@ -39,7 +54,10 @@ export const {
   setEn,
   resetUiState,
   setRegisterUserTabOn,
+  setRegisterUserTabOff,
   setUsersTabOn,
+  setUsersTabOff,
   setQuizzesTabOn,
+  setQuizzesTabOff,
 } = uiSlice.actions;
 export default uiSlice.reducer;

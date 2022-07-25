@@ -17,6 +17,7 @@ const UsersListCard = (props) => {
     userCheckedHandler,
     userUnCheckHandler,
     deleteUserHandler,
+    onClose,
   } = props;
   const list = props.item.map((element, index) => {
     let checked = false;
@@ -60,6 +61,7 @@ const UsersListCard = (props) => {
         onSettings={isEditHandlerUsers}
         isEdit={isEditUsersList}
         onDelete={deleteUserHandler}
+        onClose={onClose}
       />
       <StyledSeparator />
       {ru ? <h2>Пользователи:</h2> : null}
