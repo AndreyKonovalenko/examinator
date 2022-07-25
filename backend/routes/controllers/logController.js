@@ -27,7 +27,10 @@ export const getLogs = asyncHandler(async (req, res) => {
 // @access Private
 
 export const getLog = asyncHandler(async (req, res) => {
-  const log = await Log.findOne({ _id: req.params.id });
+  const log = await Log.findOne({ _id: req.params.id }).populate({
+    path: "user",
+    select: ["name"],
+  });
   if (log) {
     res.status(200).json(log);
   } else {

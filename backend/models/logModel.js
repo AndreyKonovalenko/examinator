@@ -1,15 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const logSchema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
-      ref: 'user',
+      ref: "user",
     },
     quiz: {
       type: Schema.Types.ObjectId,
-      ref: 'quiz',
+      ref: "quiz",
     },
     answers: Array,
     result: String,
@@ -18,4 +18,4 @@ const logSchema = new Schema(
     timestamps: true,
   }
 );
-export const Log = mongoose.model('log', logSchema);
+export const Log = mongoose.model("log", logSchema);

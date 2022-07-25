@@ -3,7 +3,7 @@ import { MdSettings, MdDelete, MdClose, MdAdd } from "react-icons/md";
 import theme from "../../theme";
 
 const SettingPanel = (props) => {
-  const { onSettings, isEdit, onDelete, onClose } = props;
+  const { onSettings, isEdit, onAdd, onDelete, onClose, hideAdd } = props;
   return (
     <div style={{ textAlign: "right" }}>
       <IconStyled
@@ -16,12 +16,14 @@ const SettingPanel = (props) => {
 
       {isEdit ? (
         <>
-          <IconStyled
-            bg={theme.colors.surface}
-            color={theme.colors.primary.light}
-          >
-            <MdAdd size={"2em"} />
-          </IconStyled>{" "}
+          {!hideAdd ? (
+            <IconStyled
+              bg={theme.colors.surface}
+              color={theme.colors.primary.light}
+            >
+              <MdAdd size={"2em"} onClick={onAdd} />
+            </IconStyled>
+          ) : null}
           <IconStyled
             bg={theme.colors.surface}
             color={theme.colors.primary.light}

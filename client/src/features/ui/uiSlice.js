@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { startSession } from "mongoose";
 const initialState = {
   ru: true,
   en: false,
@@ -59,5 +58,7 @@ export const {
   setUsersTabOff,
   setQuizzesTabOn,
   setQuizzesTabOff,
+  setLogsTabOff,
+  setLogsTabOn,
 } = uiSlice.actions;
 export default uiSlice.reducer;

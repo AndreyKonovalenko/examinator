@@ -1,38 +1,40 @@
-import { StyledListCard } from "../styles/ListCard.styled";
 import { ListElem } from "../styles/ListElem.styled";
+import { StyledListCard } from "../styles/ListCard.styled";
 import { StyledSeparator } from "../styles/Separator.styled";
 import CheckBox from "./CheckBox";
 import SettingPanel from "./SettingsPanel";
-import uniqid from "uniqid";
 import theme from "../../theme/index.js";
+import uniqid from "uniqid";
 const UsersListCard = (props) => {
   const {
-    ru,
+    сheckedHandler,
+    checked,
+    deleteHandler,
     en,
-    onUserClickHundler,
-    userChecked,
+    isEdit,
+    item,
+    onAddHandler,
+    onClickHandler,
+    onCloseHandler,
+    onSettingsHandler,
+    ru,
     selected,
-    isEditHandlerUsers,
-    isEditUsersList,
-    userCheckedHandler,
-    userUnCheckHandler,
-    deleteUserHandler,
-    onClose,
+    unCheckHandler,
   } = props;
-  const list = props.item.map((element, index) => {
-    let checked = false;
-    if (userChecked.includes(element._id)) {
-      checked = true;
+  const list = item.map((element, index) => {
+    let isChecked = false;
+    if (checked.includes(element._id)) {
+      isChecked = true;
     }
 
     return (
       <div style={{ display: "flex" }} key={uniqid()}>
-        {isEditUsersList ? (
+        {isEdit ? (
           <CheckBox
-            isChecked={checked}
+            checkedHandler={сheckedHandler}
             id={element._id}
-            checkedHandler={userCheckedHandler}
-            unCheckHandler={userUnCheckHandler}
+            isChecked={isChecked}
+            unCheckHandler={unCheckHandler}
           />
         ) : null}
         <ListElem
@@ -45,7 +47,7 @@ const UsersListCard = (props) => {
                 }
               : null
           }
-          onClick={(event) => onUserClickHundler([element._id, index], event)}
+          onClick={(event) => onClickHandler([element._id, index], event)}
         >
           <p>
             {element.username} / {element.name}
@@ -58,10 +60,11 @@ const UsersListCard = (props) => {
   return (
     <StyledListCard>
       <SettingPanel
-        onSettings={isEditHandlerUsers}
-        isEdit={isEditUsersList}
-        onDelete={deleteUserHandler}
-        onClose={onClose}
+        isEdit={isEdit}
+        onAdd={onAddHandler}
+        onClose={onCloseHandler}
+        onDelete={deleteHandler}
+        onSettings={onSettingsHandler}
       />
       <StyledSeparator />
       {ru ? <h2>Пользователи:</h2> : null}

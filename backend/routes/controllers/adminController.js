@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import { Log } from "../../models/logModel.js";
-import { User } from "../../models/userModel.js";
 import { Quiz } from "../../models/quizModel.js";
+import { User } from "../../models/userModel.js";
 
 // @desc Get user logs by userId
 // @route GET /api/admin/logs/user/:id

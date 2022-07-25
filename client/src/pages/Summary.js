@@ -55,7 +55,9 @@ const Summary = () => {
         html2canvas(document.querySelector("#pdfToPrint1")).then((canvas) => {
           const imgData = canvas.toDataURL("image/png");
           doc.addImage(imgData, "JEPEG", 0, 155);
-          doc.save(`${user.name} ${quizState.quiz.title}.pdf`);
+          doc.save(
+            `${logState.log.user.name || user.name} ${quizState.quiz.title}.pdf`
+          );
         });
       });
     }
@@ -133,7 +135,7 @@ const Summary = () => {
           <h1>проверки знаний работников</h1>
           <Flex id={"pdfToPrint"}>{images(3)}</Flex>
           <h2>Тема: {etemptQuizeTitle}</h2>
-          <h3>ФИО: {user.name}</h3>
+          <h3>ФИО: {logState.log.user.name || user.name}</h3>
           <h3>Дата/время проведения: {etemptTime} </h3>
           <br />
           <h2>Результат:</h2>

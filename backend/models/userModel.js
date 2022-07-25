@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-const { Schema } = mongoose
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
 const userSchema = new Schema({
   name: {
@@ -17,7 +17,5 @@ const userSchema = new Schema({
   admin: {
     type: Boolean,
   },
-})
-export const User = mongoose.model('user', userSchema)
-
-
+});
+export const User = mongoose.model("user", userSchema);

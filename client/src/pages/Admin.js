@@ -1,32 +1,37 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { Flex } from "../components/styles/Flex.styled";
 import { Helmet } from "react-helmet";
-import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
 
-import UsersListCard from "../components/admin/UsersListCard";
+import AdminRegisterForm from "../components/admin/AdminRegisterFrom";
 import LogListCardAdmin from "../components/admin/LogListCardAdmin";
-import Spinner from "../components/Spinner";
-import RegisterForm from "../components/login/RegisterForm";
-import QuizListCardAdmin from "../components/admin/QuizListCardAdmin";
 import QuizCardAdmin from "../components/admin/QuizCardAdmin";
+import QuizListCardAdmin from "../components/admin/QuizListCardAdmin";
+import Spinner from "../components/Spinner";
+import UsersListCard from "../components/admin/UsersListCard";
+
 import {
-  getUsers,
-  getUserLogs,
   deleteLog,
-  resetAdminState,
   deleteUser,
-  getQuizzes,
   getFullQuiz,
+  getQuizzes,
+  getUserLogs,
+  getUsers,
+  resetAdminState,
 } from "../features/admin/adminSlice";
 import { createNewUser } from "../features/admin/adminSlice";
+import { getLogById } from "../features/log/logSlice";
 import {
   setRegisterUserTabOn,
+  setRegisterUserTabOff,
   setUsersTabOn,
   setUsersTabOff,
   setQuizzesTabOff,
+  setLogsTabOn,
+  setLogsTabOff,
 } from "../features/ui/uiSlice";
 
 const Admin = () => {
@@ -34,9 +39,8 @@ const Admin = () => {
   const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.auth);
-  const { ru, en, registerUserTab, usersTab, quizzesTab } = useSelector(
-    (state) => state.ui
-  );
+  const { ru, en, registerUserTab, usersTab, quizzesTab, logsTab } =
+    useSelector((state) => state.ui);
   const adminState = useSelector((state) => state.admin);
 
   // local register form state
@@ -74,7 +78,6 @@ const Admin = () => {
 
   // local quizzes state
   const [isSelectedQuiz, setIsSelectedQuiz] = useState(null);
-  //------------------------------------- || ------------------------------------- //
 
   // ------------------------ REGISTER FORM HADLERS ------------------------------- //
   const onChange = (event) => {
@@ -98,6 +101,9 @@ const Admin = () => {
       dispatch(createNewUser(userData));
       dispatch(getUsers());
     }
+  };
+  const onCloserRegisterTabHandler = () => {
+    dispatch(setRegisterUserTabOff());
   };
   // ----------------------------- LOG LIST HANDLERS ------------------------------ //
 
@@ -131,11 +137,22 @@ const Admin = () => {
     setLogChecked(logChecked.filter((element) => element !== logId));
   };
 
+  const onCloserLogsTabHandler = () => {
+    dispatch(setLogsTabOff());
+  };
+
+  const onLogsClickHandler = (logId, event) => {
+    event.preventDefault();
+    dispatch(getLogById(logId));
+    navigate("/summary");
+  };
+
   // ----------------------------- USER LIST HANDLERS ---------------------------- //
-  const onUserClickHundler = (args, event) => {
+  const onUserClickHandler = (args, event) => {
     event.preventDefault();
     setIsSelectedUser(args[1]);
     dispatch(getUserLogs(args[0]));
+    dispatch(setLogsTabOn());
   };
 
   // Settings icon handler on User list Card
@@ -150,6 +167,10 @@ const Admin = () => {
     } else {
       toast.error("User for deleting is not selected!");
     }
+  };
+
+  const onAddNewUserHandler = () => {
+    dispatch(setRegisterUserTabOn());
   };
 
   const userCheckedHandler = (userId, event) => {
@@ -169,7 +190,6 @@ const Admin = () => {
 
   const onQuizClickHundler = (args, event) => {
     event.preventDefault();
-    console.log(args);
     setIsSelectedQuiz(args[1]);
     dispatch(getFullQuiz(args[0]));
   };
@@ -192,44 +212,48 @@ const Admin = () => {
 
       <Flex>
         {registerUserTab ? (
-          <RegisterForm
-            ru={ru}
+          <AdminRegisterForm
             en={en}
-            username={username}
             name={name}
-            password={password}
-            password2={password2}
             onChange={onChange}
             onSubmit={onSubmit}
+            password={password}
+            password2={password2}
+            ru={ru}
+            username={username}
+            onCloseHandler={onCloserRegisterTabHandler}
           />
         ) : null}
         {adminState.users && usersTab ? (
           <UsersListCard
+            сheckedHandler={userCheckedHandler}
             checked={userChecked}
             deleteHandler={deleteUserHandler}
             en={en}
             isEdit={isEditUsersList}
-            isEditHandler={isEditHandlerUsers}
             item={adminState.users}
-            onClickHundler={onUserClickHundler}
+            onAddHandler={onAddNewUserHandler}
+            onClickHandler={onUserClickHandler}
             onCloseHandler={onCloserUsersTabHandler}
+            onSettingsHandler={isEditHandlerUsers}
             ru={ru}
             selected={isSelectedUser}
             unCheckHandler={userUnCheckHandler}
-            сheckedHandler={userCheckedHandler}
           />
         ) : null}
-        {adminState.userLogs ? (
+        {adminState.userLogs && logsTab ? (
           <LogListCardAdmin
-            logChecked={logChecked}
-            logCheckedHandler={logCheckedHandler}
-            logUnCheckHandler={logUnCheckHandler}
-            isEditHandlerLogs={isEditHandlerLogs}
-            deleteLogsHandler={deleteLogsHandler}
-            isEditLogsList={isEditLogsList}
+            сheckedHandler={logCheckedHandler}
+            checked={logChecked}
+            deleteHandler={deleteLogsHandler}
             en={en}
-            ru={ru}
+            isEdit={isEditLogsList}
             item={adminState.userLogs}
+            onClickHandler={onLogsClickHandler}
+            onCloseHandler={onCloserLogsTabHandler}
+            onSettingsHandler={isEditHandlerLogs}
+            ru={ru}
+            unCheckHandler={logUnCheckHandler}
           />
         ) : null}
         {adminState.quizzes && quizzesTab ? (
