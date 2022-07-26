@@ -2,10 +2,11 @@ import { Container } from "./styles/Container.styled";
 import { StyledHeader, StyledNav } from "./styles/Header.styled";
 import { IconStyled } from "./styles/Icon.styled";
 import {
+  MdAdminPanelSettings,
   MdLogout,
   MdMenu,
-  MdAdminPanelSettings,
   MdPeopleAlt,
+  MdPersonOutline,
   MdQuiz,
 } from "react-icons/md";
 
@@ -108,9 +109,14 @@ const Header = () => {
               <span style={{ fontSize: "1.5em", fontWeight: "bold" }}>EN</span>
             </IconStyled>
             {user ? (
-              <IconStyled onClick={onLogout}>
-                <MdLogout size={"3em"} />
-              </IconStyled>
+              <>
+                <IconStyled>
+                  <MdPersonOutline size={"3em"} />
+                </IconStyled>
+                <IconStyled onClick={onLogout}>
+                  <MdLogout size={"3em"} />
+                </IconStyled>
+              </>
             ) : null}{" "}
           </div>
         </StyledNav>
