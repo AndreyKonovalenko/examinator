@@ -1,13 +1,12 @@
-import moment from "moment";
-import { StyledListCard } from "../styles/ListCard.styled";
 import { ListElem } from "../styles/ListElem.styled";
+import { StyledListCard } from "../styles/ListCard.styled";
 import { StyledSeparator } from "../styles/Separator.styled";
 import CheckBox from "./CheckBox";
 import SettingPanel from "./SettingsPanel";
-import theme from "../../theme/index.js";
+import theme from "../../theme";
 import uniqid from "uniqid";
 
-const QuizCardAdmin = (props) => {
+const QuizzesListCardAdmin = (props) => {
   const {
     сheckedHandler,
     checked,
@@ -20,21 +19,10 @@ const QuizCardAdmin = (props) => {
     onCloseHandler,
     onSettingsHandler,
     ru,
+    selected,
     unCheckHandler,
   } = props;
-  const list = item.questions.map((element, index) => {
-    const optionList = element.options.map((el, index) => (
-      <li
-        key={uniqid()}
-        style={
-          index === element.currect - 1
-            ? { color: theme.colors.primary.light }
-            : null
-        }
-      >
-        {el}
-      </li>
-    ));
+  const list = item.map((element, index) => {
     return (
       <div style={{ display: "flex" }} key={uniqid()}>
         {isEdit ? (
@@ -45,13 +33,19 @@ const QuizCardAdmin = (props) => {
             unCheckHandler={unCheckHandler}
           />
         ) : null}
-
         <ListElem
           key={uniqid()}
+          style={
+            index === selected
+              ? {
+                  backgroundColor: theme.colors.primary.main,
+                  color: theme.colors.text.onPrimary,
+                }
+              : null
+          }
           onClick={(event) => onClickHandler([element._id, index], event)}
         >
-          <h3>{element.question}</h3>
-          <ul>{optionList}</ul>
+          <h2>{element.title}</h2>
         </ListElem>
       </div>
     );
@@ -67,15 +61,11 @@ const QuizCardAdmin = (props) => {
         onSettings={onSettingsHandler}
       />
       <StyledSeparator />
-
-      {ru ? <h2>Тема: {item.title}</h2> : null}
-      {en ? <h2>Theme: {item.title}</h2> : null}
-      {ru ? <h3>всeго: {item.questions.length}</h3> : null}
-      {en ? <h3>total: {item.questions.length}</h3> : null}
-      <StyledSeparator />
+      {ru ? <h2>Tемы тестирования: </h2> : null}
+      {en ? <h2> Quizzes: </h2> : null}
       {list}
     </StyledListCard>
   );
 };
 
-export default QuizCardAdmin;
+export default QuizzesListCardAdmin;

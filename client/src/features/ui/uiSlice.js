@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  ru: true,
   en: false,
-  registerUserTab: false,
-  usersTab: true,
-  quizzesTab: false,
   logsTab: false,
+  questionsTab: false,
+  quizzesTab: false,
+  registerUserTab: false,
+  ru: true,
+  usersTab: true,
 };
 
 export const uiSlice = createSlice({
@@ -45,20 +46,28 @@ export const uiSlice = createSlice({
     setLogsTabOff: (state) => {
       state.logsTab = false;
     },
+    setQuestionsTabOn: (state) => {
+      state.questionsTab = true;
+    },
+    setQuestionsTabOff: (state) => {
+      state.questionsTab = false;
+    },
   },
 });
 
 export const {
-  setRu,
-  setEn,
   resetUiState,
-  setRegisterUserTabOn,
-  setRegisterUserTabOff,
-  setUsersTabOn,
-  setUsersTabOff,
-  setQuizzesTabOn,
-  setQuizzesTabOff,
+  setEn,
   setLogsTabOff,
   setLogsTabOn,
+  setQuestionsTabOff,
+  setQuestionsTabOn,
+  setQuizzesTabOff,
+  setQuizzesTabOn,
+  setRegisterUserTabOff,
+  setRegisterUserTabOn,
+  setRu,
+  setUsersTabOff,
+  setUsersTabOn,
 } = uiSlice.actions;
 export default uiSlice.reducer;

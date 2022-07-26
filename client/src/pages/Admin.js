@@ -7,9 +7,9 @@ import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 
 import AdminRegisterForm from "../components/admin/AdminRegisterFrom";
-import LogListCardAdmin from "../components/admin/LogListCardAdmin";
+import LogsListCardAdmin from "../components/admin/LogsListCardAdmin";
 import QuizCardAdmin from "../components/admin/QuizCardAdmin";
-import QuizListCardAdmin from "../components/admin/QuizListCardAdmin";
+import QuizzesListCardAdmin from "../components/admin/QuizzesListCardAdmin";
 import Spinner from "../components/Spinner";
 import UsersListCard from "../components/admin/UsersListCard";
 
@@ -32,6 +32,8 @@ import {
   setQuizzesTabOff,
   setLogsTabOn,
   setLogsTabOff,
+  setQuestionsTabOff,
+  setQuestionsTabOn,
 } from "../features/ui/uiSlice";
 
 const Admin = () => {
@@ -39,8 +41,15 @@ const Admin = () => {
   const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.auth);
-  const { ru, en, registerUserTab, usersTab, quizzesTab, logsTab } =
-    useSelector((state) => state.ui);
+  const {
+    ru,
+    en,
+    registerUserTab,
+    usersTab,
+    quizzesTab,
+    logsTab,
+    questionsTab,
+  } = useSelector((state) => state.ui);
   const adminState = useSelector((state) => state.admin);
 
   // local register form state
@@ -61,6 +70,16 @@ const Admin = () => {
   const [logChecked, setLogChecked] = useState([]);
   const [isEditLogsList, setIsEditLogsList] = useState(false);
 
+  // local quiz state
+  const [isSelectedQuiz, setIsSelectedQuiz] = useState(null);
+  const [quizChecked, setQuizChecked] = useState([]);
+  const [isEditQuizzesList, setIsEditQuizzesList] = useState(false);
+
+  // local question state
+  const [isSelectedQuestion, setIsSelectedQuestion] = useState(null);
+  const [questionChecked, setQuestionChecked] = useState([]);
+  const [isEditQuestionsList, setIsEditQuestionsList] = useState(false);
+
   useEffect(() => {
     if (!user) {
       navigate("/login");
@@ -75,9 +94,6 @@ const Admin = () => {
       }
     }
   }, [user, navigate, dispatch]);
-
-  // local quizzes state
-  const [isSelectedQuiz, setIsSelectedQuiz] = useState(null);
 
   // ------------------------ REGISTER FORM HADLERS ------------------------------- //
   const onChange = (event) => {
@@ -102,12 +118,12 @@ const Admin = () => {
       dispatch(getUsers());
     }
   };
+
   const onCloserRegisterTabHandler = () => {
     dispatch(setRegisterUserTabOff());
   };
   // ----------------------------- LOG LIST HANDLERS ------------------------------ //
 
-  // Settings icon handler on Log Card
   const isEditHandlerLogs = () => {
     if (adminState.userLogs.length === 0) {
       toast.error("Nothing to edit");
@@ -118,7 +134,6 @@ const Admin = () => {
     }
   };
 
-  // Delete icon handle on Log Card
   const deleteLogsHandler = () => {
     if (logChecked.length > 0) {
       logChecked.forEach((element) => dispatch(deleteLog(element)));
@@ -127,23 +142,23 @@ const Admin = () => {
     }
   };
 
-  // Log list handlers
-  const logCheckedHandler = (logId, event) => {
+  const logCheckedHandler = (id, event) => {
     event.preventDefault();
-    setLogChecked([...logChecked, logId]);
+    setLogChecked([...logChecked, id]);
   };
-  const logUnCheckHandler = (logId, event) => {
+
+  const logUnCheckHandler = (id, event) => {
     event.preventDefault();
-    setLogChecked(logChecked.filter((element) => element !== logId));
+    setLogChecked(logChecked.filter((element) => element !== id));
   };
 
   const onCloserLogsTabHandler = () => {
     dispatch(setLogsTabOff());
   };
 
-  const onLogsClickHandler = (logId, event) => {
+  const onLogsClickHandler = (id, event) => {
     event.preventDefault();
-    dispatch(getLogById(logId));
+    dispatch(getLogById(id));
     navigate("/summary");
   };
 
@@ -155,12 +170,10 @@ const Admin = () => {
     dispatch(setLogsTabOn());
   };
 
-  // Settings icon handler on User list Card
   const isEditHandlerUsers = () => {
     setIsEditUsersList(!isEditUsersList);
   };
 
-  // Delete icon handle on User list Card
   const deleteUserHandler = () => {
     if (userChecked.length > 0) {
       userChecked.forEach((element) => dispatch(deleteUser(element)));
@@ -173,13 +186,14 @@ const Admin = () => {
     dispatch(setRegisterUserTabOn());
   };
 
-  const userCheckedHandler = (userId, event) => {
+  const userCheckedHandler = (id, event) => {
     event.preventDefault();
-    setUserChecked([...userChecked, userId]);
+    setUserChecked([...userChecked, id]);
   };
-  const userUnCheckHandler = (userId, event) => {
+
+  const userUnCheckHandler = (id, event) => {
     event.preventDefault();
-    setUserChecked(userChecked.filter((element) => element !== userId));
+    setUserChecked(userChecked.filter((element) => element !== id));
   };
 
   const onCloserUsersTabHandler = () => {
@@ -192,9 +206,73 @@ const Admin = () => {
     event.preventDefault();
     setIsSelectedQuiz(args[1]);
     dispatch(getFullQuiz(args[0]));
+    dispatch(setQuestionsTabOn());
   };
+
+  const isEditHandlerQuizzes = () => {
+    setIsEditQuizzesList(!isEditQuizzesList);
+  };
+
+  const deleteQuizHandler = () => {
+    if (quizChecked.length > 0) {
+      console.log("Quiz will be deleted");
+    } else {
+      toast.error("Quiz for deleting is not selected!");
+    }
+  };
+  const onAddNewQuizHandler = () => {
+    console.log("new Quiz added");
+  };
+
+  const quizCheckedHandler = (id, event) => {
+    event.preventDefault();
+    setQuizChecked([...quizChecked, id]);
+  };
+
+  const quizUnCheckHandler = (id, event) => {
+    event.preventDefault();
+    setQuizChecked(quizChecked.filter((element) => element !== id));
+  };
+
   const onCloseQuizzesTabHandler = () => {
     dispatch(setQuizzesTabOff());
+  };
+
+  //-------------------------- QUESTIONS LIST HANDELRS ------------------------- //
+
+  const onQuestionClickHundler = (args, event) => {
+    event.preventDefault();
+    setIsSelectedQuestion(args[1]);
+    //    dispatch(getFullQuiz(args[0]));
+  };
+
+  const isEditHandlerQuestions = () => {
+    setIsEditQuestionsList(!isEditQuestionsList);
+  };
+
+  const deleteQuestionHandler = () => {
+    if (questionChecked.length > 0) {
+      console.log("Question will be deleted");
+    } else {
+      toast.error("Question for deleting is not selected!");
+    }
+  };
+  const onAddNewQuestionHandler = () => {
+    console.log("new question added");
+  };
+
+  const questionCheckedHandler = (id, event) => {
+    event.preventDefault();
+    setQuestionChecked([...questionChecked, id]);
+  };
+
+  const questionUnCheckHandler = (id, event) => {
+    event.preventDefault();
+    setQuestionChecked(questionChecked.filter((element) => element !== id));
+  };
+
+  const onCloseQuestionsTabHandler = () => {
+    dispatch(setQuestionsTabOff());
   };
   // ------------------------------------- || ------------------------------------ //
 
@@ -242,7 +320,7 @@ const Admin = () => {
           />
         ) : null}
         {adminState.userLogs && logsTab ? (
-          <LogListCardAdmin
+          <LogsListCardAdmin
             сheckedHandler={logCheckedHandler}
             checked={logChecked}
             deleteHandler={deleteLogsHandler}
@@ -257,17 +335,38 @@ const Admin = () => {
           />
         ) : null}
         {adminState.quizzes && quizzesTab ? (
-          <QuizListCardAdmin
-            item={adminState.quizzes}
-            onQuizClickHundler={onQuizClickHundler}
-            selected={isSelectedQuiz}
-            onClose={onCloseQuizzesTabHandler}
+          <QuizzesListCardAdmin
+            сheckedHandler={quizCheckedHandler}
+            checked={quizChecked}
+            deleteHandler={deleteQuizHandler}
             en={en}
+            isEdit={isEditQuizzesList}
+            item={adminState.quizzes}
+            onAddHandler={onAddNewQuizHandler}
+            onClickHandler={onQuizClickHundler}
+            onCloseHandler={onCloseQuizzesTabHandler}
+            onSettingsHandler={isEditHandlerQuizzes}
             ru={ru}
+            selected={isSelectedQuiz}
+            unCheckHandler={quizUnCheckHandler}
           />
         ) : null}
-        {adminState.quiz ? (
-          <QuizCardAdmin item={adminState.quiz} en={en} ru={ru} />
+        {adminState.quiz && questionsTab ? (
+          <QuizCardAdmin
+            сheckedHandler={questionCheckedHandler}
+            checked={questionChecked}
+            deleteHandler={deleteQuestionHandler}
+            en={en}
+            isEdit={isEditQuestionsList}
+            item={adminState.quiz}
+            onAddHandler={onAddNewQuestionHandler}
+            onClickHandler={onQuestionClickHundler}
+            onCloseHandler={onCloseQuestionsTabHandler}
+            onSettingsHandler={isEditHandlerQuestions}
+            ru={ru}
+            selected={isSelectedQuestion}
+            unCheckHandler={questionUnCheckHandler}
+          />
         ) : null}
       </Flex>
     </>

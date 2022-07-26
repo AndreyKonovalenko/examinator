@@ -7,7 +7,7 @@ import SettingPanel from "./SettingsPanel";
 import theme from "../../theme/index.js";
 import uniqid from "uniqid";
 
-const LogListCardAdmin = (props) => {
+const LogsListCardAdmin = (props) => {
   const {
     сheckedHandler,
     checked,
@@ -22,10 +22,6 @@ const LogListCardAdmin = (props) => {
     unCheckHandler,
   } = props;
   const list = item.map((element) => {
-    let isChecked = false;
-    if (checked.includes(element._id)) {
-      isChecked = true;
-    }
     const score = (
       (Number.parseInt(element.result) /
         Number.parseInt(element.quiz.questions.length)) *
@@ -44,9 +40,9 @@ const LogListCardAdmin = (props) => {
       <div style={{ display: "flex" }} key={uniqid()}>
         {isEdit ? (
           <CheckBox
-            checked={isChecked}
-            id={element._id}
             checkedHandler={сheckedHandler}
+            id={element._id}
+            isChecked={checked.includes(element._id) ? true : false}
             unCheckHandler={unCheckHandler}
           />
         ) : null}
@@ -94,4 +90,4 @@ const LogListCardAdmin = (props) => {
   );
 };
 
-export default LogListCardAdmin;
+export default LogsListCardAdmin;

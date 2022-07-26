@@ -1,20 +1,21 @@
 import React from "react";
-import moment from "moment";
-import html2canvas from "html2canvas";
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
 import { Button } from "../components/styles/Button.styled.js";
+import { Flex } from "../components/styles/Flex.styled.js";
 import { Helmet } from "react-helmet";
-import { useSelector, useDispatch } from "react-redux";
+import { resetLogState, resetAnswersLogState } from "../features/log/logSlice";
+import { resetQuizState, getQuizById } from "../features/quiz/quizSlice";
 import { StyledCertificate } from "../components/styles/Certificate.styled.js";
 import { StyledImage } from "../components/styles/Image.styled";
-import { resetQuizState, getQuizById } from "../features/quiz/quizSlice";
-import { resetLogState, resetAnswersLogState } from "../features/log/logSlice";
-import { Flex } from "../components/styles/Flex.styled.js";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
+
+import html2canvas from "html2canvas";
 import logService from "../features/log/logService";
+import moment from "moment";
+import Spinner from "../components/Spinner";
 import theme from "../theme/index.js";
 import uniqid from "uniqid";
-import Spinner from "../components/Spinner";
 
 const Summary = () => {
   const navigate = useNavigate();
@@ -135,7 +136,9 @@ const Summary = () => {
           <h1>проверки знаний работников</h1>
           <Flex id={"pdfToPrint"}>{images(3)}</Flex>
           <h2>Тема: {etemptQuizeTitle}</h2>
-          <h3>ФИО: {logState.log.user.name || user.name}</h3>
+          <h3>
+            ФИО: {(logState.log ? logState.log.user.name : null) || user.name}
+          </h3>
           <h3>Дата/время проведения: {etemptTime} </h3>
           <br />
           <h2>Результат:</h2>

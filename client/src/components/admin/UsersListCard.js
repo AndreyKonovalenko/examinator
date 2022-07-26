@@ -22,18 +22,13 @@ const UsersListCard = (props) => {
     unCheckHandler,
   } = props;
   const list = item.map((element, index) => {
-    let isChecked = false;
-    if (checked.includes(element._id)) {
-      isChecked = true;
-    }
-
     return (
       <div style={{ display: "flex" }} key={uniqid()}>
         {isEdit ? (
           <CheckBox
             checkedHandler={сheckedHandler}
             id={element._id}
-            isChecked={isChecked}
+            isChecked={checked.includes(element._id) ? true : false}
             unCheckHandler={unCheckHandler}
           />
         ) : null}
