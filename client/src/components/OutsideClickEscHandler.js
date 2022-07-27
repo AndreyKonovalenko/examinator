@@ -8,7 +8,7 @@ const useOutsideEvent = (ref, func) => {
         func();
       }
     };
-    const handleHideDropdown = (event: KeyboardEvent) => {
+    const handleHideDropdown = (event) => {
       if (event.key === "Escape") {
         func();
       }
@@ -34,4 +34,4 @@ const OutsideClickEscHandler = (props) => {
   return <div ref={wrapperRef}>{children}</div>;
 };
 
-export default OutsideClickEscHandler;
+export default OutsideClicEsckHandler;
