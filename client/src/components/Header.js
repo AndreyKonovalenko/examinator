@@ -1,6 +1,5 @@
-import { Container } from "./styles/Container.styled";
-import { StyledHeader, StyledNav } from "./styles/Header.styled";
-import { IconStyled } from "./styles/Icon.styled";
+import { StyledHeader, StyledNav } from './styles/Header.styled';
+import { IconStyled } from './styles/Icon.styled';
 import {
   MdAdminPanelSettings,
   MdLogout,
@@ -8,22 +7,22 @@ import {
   MdPeopleAlt,
   MdPersonOutline,
   MdQuiz,
-} from "react-icons/md";
+} from 'react-icons/md';
 
-import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { logout, reset } from "../features/auth/authSlice";
-import { resetLogState } from "../features/log/logSlice";
-import { resetQuizState } from "../features/quiz/quizSlice";
-import { resetAdminState } from "../features/admin/adminSlice";
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout, reset } from '../features/auth/authSlice';
+import { resetLogState } from '../features/log/logSlice';
+import { resetQuizState } from '../features/quiz/quizSlice';
+import { resetAdminState } from '../features/admin/adminSlice';
 import {
   setRu,
   setEn,
   setUsersTabOn,
   setQuizzesTabOn,
-} from "../features/ui/uiSlice";
+} from '../features/ui/uiSlice';
 
-import DropdownMenu from "./DropdownMenu";
+import DropdownMenu from './DropdownMenu';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -37,17 +36,17 @@ const Header = () => {
     dispatch(resetQuizState());
     dispatch(resetAdminState());
     dispatch(reset());
-    navigate("/login");
+    navigate('/login');
   };
 
   const onDashboard = () => {
     dispatch(resetLogState());
     dispatch(resetQuizState());
     dispatch(resetAdminState());
-    navigate("/");
+    navigate('/');
   };
   const onAdmin = () => {
-    navigate("/admin");
+    navigate('/admin');
   };
   const onRu = () => {
     dispatch(setRu());
@@ -68,18 +67,23 @@ const Header = () => {
     if (user.admin) {
       adimnPanel = (
         <>
-          <IconStyled onClick={onAdmin}>
-            <MdAdminPanelSettings size={"3em"} />
-          </IconStyled>
-
-          {location.pathname === "/admin" ? (
+          <li>
+            <IconStyled onClick={onAdmin}>
+              <MdAdminPanelSettings size={'3em'} />
+            </IconStyled>
+          </li>
+          {location.pathname === '/admin' ? (
             <>
-              <IconStyled onClick={onUserTab}>
-                <MdPeopleAlt size={"3em"} />
-              </IconStyled>
-              <IconStyled onClick={onQuizzesTab}>
-                <MdQuiz size={"3em"} />
-              </IconStyled>{" "}
+              <li>
+                <IconStyled onClick={onUserTab}>
+                  <MdPeopleAlt size={'3em'} />
+                </IconStyled>
+              </li>
+              <li>
+                <IconStyled onClick={onQuizzesTab}>
+                  <MdQuiz size={'3em'} />
+                </IconStyled>{' '}
+              </li>
             </>
           ) : null}
         </>
@@ -88,41 +92,60 @@ const Header = () => {
   }
   const header = (
     <StyledHeader>
-      <IconStyled onClick={location.pathname !== "/" ? onDashboard : null}>
-        <span style={{ fontSize: "2em", fontWeight: "bold" }}>Examinator</span>
-      </IconStyled>
-      <StyledNav>
-        <ul>
-          {location.pathname !== "/" && location.pathname !== "/login" ? (
-            <>
+      <div style={{ flexGrow: 1 }}>
+        <IconStyled onClick={location.pathname !== '/' ? onDashboard : null}>
+          <span style={{ fontSize: '2em', fontWeight: 'bold' }}>
+            Examinator
+          </span>
+        </IconStyled>
+      </div>
+      <nav style={{ flexGrow: 4 }}>
+        <ul style={{ justifyContent: 'flex-start' }}>
+          {location.pathname !== '/' && location.pathname !== '/login' ? (
+            <li>
               <IconStyled onClick={onDashboard}>
-                <MdMenu size={"3em"} />
+                <MdMenu size={'3em'} />
               </IconStyled>
-            </>
+            </li>
           ) : null}
           {adimnPanel}
-          <div style={{ marginLeft: "auto" }}>
-            <IconStyled onClick={onRu}>
-              <span style={{ fontSize: "1.5em", fontWeight: "bold" }}>RU</span>
-            </IconStyled>
-            /
-            <IconStyled onClick={onEn}>
-              <span style={{ fontSize: "1.5em", fontWeight: "bold" }}>EN</span>
-            </IconStyled>
-            {user ? (
-              <>
-                <IconStyled>
-                  <MdPersonOutline size={"3em"} />
-                  <DropdownMenu />
-                </IconStyled>
-                <IconStyled onClick={onLogout}>
-                  <MdLogout size={"3em"} />
-                </IconStyled>
-              </>
-            ) : null}{" "}
-          </div>
         </ul>
-      </StyledNav>
+        <ul>
+          <li>
+            <div style={{ margin: 'auto' }}>
+              <IconStyled onClick={onRu}>
+                <span
+                  style={{
+                    fontSize: '1.5em',
+                    fontWeight: 'bold',
+                  }}>
+                  RU
+                </span>
+              </IconStyled>
+            </div>
+          </li>
+          <li>
+            <IconStyled onClick={onEn}>
+              <span style={{ fontSize: '1.5em', fontWeight: 'bold' }}>EN</span>
+            </IconStyled>
+          </li>
+          {user ? (
+            <>
+              <li>
+                <IconStyled>
+                  <MdPersonOutline size={'3em'} />
+                </IconStyled>
+                <DropdownMenu />
+              </li>
+              <li>
+                <IconStyled onClick={onLogout}>
+                  <MdLogout size={'3em'} />
+                </IconStyled>
+              </li>
+            </>
+          ) : null}
+        </ul>
+      </nav>
     </StyledHeader>
   );
   return header;
