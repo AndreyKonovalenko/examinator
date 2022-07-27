@@ -9,7 +9,7 @@ import {
   getQuizById,
 } from "../features/quiz/quizSlice";
 import { getLogs, resetLogState, getLogById } from "../features/log/logSlice";
-import OutsideClickHandler from "../components/OutsideClickHandler";
+import OutsideClickEscHandler from "../components/OutsideClickEscHandler";
 import QuizListCard from "../components/dashboard/QuizListCard";
 import LogListCard from "../components/dashboard/LogListCard";
 import Spinner from "../components/Spinner";
@@ -66,13 +66,13 @@ const Dashboard = () => {
         <meta charSet="utf-8" />
         <title>Dashboard | Examinator</title>
       </Helmet>
-      <OutsideClickHandler
+      <OutsideClickEscHandler
         clickHandler={() => console.log("Outside clicked!!!")}
       >
         <div>
           <p>Ouside Click</p>
         </div>
-      </OutsideClickHandler>
+      </OutsideClickEscHandler>
       {quizState.quizzes.length > 0 && user ? (
         <QuizListCard
           ru={ru}

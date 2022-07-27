@@ -27,11 +27,11 @@ const useOutsideEvent = (ref, func) => {
   }, [ref]);
 };
 
-const OutsideClickHandler = (props) => {
+const OutsideClickEscHandler = (props) => {
   const wrapperRef = useRef(null);
   const { clickHandler, children } = props;
   useOutsideEvent(wrapperRef, clickHandler);
   return <div ref={wrapperRef}>{children}</div>;
 };
 
-export default OutsideClickHandler;
+export default OutsideClicEsckHandler;
