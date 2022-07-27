@@ -60,6 +60,7 @@ const Header = () => {
     dispatch(setQuizzesTabOn());
   };
 
+  const onProfile = () => {};
   let adimnPanel = null;
   if (user) {
     if (user.admin) {
