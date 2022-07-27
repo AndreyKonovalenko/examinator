@@ -23,6 +23,8 @@ import {
   setQuizzesTabOn,
 } from "../features/ui/uiSlice";
 
+import DropdownMenu from "./DropdownMenu";
+
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -86,13 +88,11 @@ const Header = () => {
   }
   const header = (
     <StyledHeader>
-      <Container>
-        <StyledNav>
-          <IconStyled onClick={location.pathname !== "/" ? onDashboard : null}>
-            <span style={{ fontSize: "2em", fontWeight: "bold" }}>
-              Examinator
-            </span>
-          </IconStyled>
+      <IconStyled onClick={location.pathname !== "/" ? onDashboard : null}>
+        <span style={{ fontSize: "2em", fontWeight: "bold" }}>Examinator</span>
+      </IconStyled>
+      <StyledNav>
+        <ul>
           {location.pathname !== "/" && location.pathname !== "/login" ? (
             <>
               <IconStyled onClick={onDashboard}>
@@ -113,6 +113,7 @@ const Header = () => {
               <>
                 <IconStyled>
                   <MdPersonOutline size={"3em"} />
+                  <DropdownMenu />
                 </IconStyled>
                 <IconStyled onClick={onLogout}>
                   <MdLogout size={"3em"} />
@@ -120,8 +121,8 @@ const Header = () => {
               </>
             ) : null}{" "}
           </div>
-        </StyledNav>
-      </Container>
+        </ul>
+      </StyledNav>
     </StyledHeader>
   );
   return header;

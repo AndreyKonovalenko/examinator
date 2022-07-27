@@ -34,4 +34,4 @@ const OutsideClickEscHandler = (props) => {
   return <div ref={wrapperRef}>{children}</div>;
 };
 
-export default OutsideClicEsckHandler;
+export default OutsideClickEscHandler;
