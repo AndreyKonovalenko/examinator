@@ -7,6 +7,7 @@ const initialState = {
   registerUserTab: false,
   ru: true,
   usersTab: true,
+  dropDown: false,
 };
 
 export const uiSlice = createSlice({
@@ -52,6 +53,12 @@ export const uiSlice = createSlice({
     setQuestionsTabOff: (state) => {
       state.questionsTab = false;
     },
+    setDropDownOn: (state) => {
+      state.dropDown = true;
+    },
+    setDropDownOff: (state) => {
+      state.dropDown = false;
+    },
   },
 });
 
@@ -69,5 +76,7 @@ export const {
   setRu,
   setUsersTabOff,
   setUsersTabOn,
+  setDropDownOn,
+  setDropDownOff,
 } = uiSlice.actions;
 export default uiSlice.reducer;
