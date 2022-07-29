@@ -3,7 +3,7 @@ import { Li, NavButton } from "../styles/Header.styled";
 const NavItem = (porps) => {
   const { children, onClickHandler, outside } = porps;
   return (
-    <Li style={outside ? { position: "relative" } : null}>
+    <Li>
       <NavButton
         onClick={() => {
           onClickHandler();

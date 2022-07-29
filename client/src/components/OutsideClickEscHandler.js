@@ -30,11 +30,7 @@ const OutsideClickEscHandler = (props) => {
   const wrapperRef = useRef(null);
   const { clickHandler, children } = props;
   useOutsideEvent(wrapperRef, clickHandler);
-  return (
-    <div style={{ display: "flex", justifyContent: "center" }} ref={wrapperRef}>
-      {children}
-    </div>
-  );
+  return <div ref={wrapperRef}>{children}</div>;
 };
 
 export default OutsideClickEscHandler;

@@ -65,26 +65,18 @@ const Header = () => {
     dispatch(setQuizzesTabOn());
   };
   const onProfile = () => {
-    console.log("onProfile clicked");
-    if (!dropDown) {
-      console.log("on");
-      dispatch(setDropDownOn());
-    }
     if (dropDown) {
-      console.log("off");
       dispatch(setDropDownOff());
     }
+    if (!dropDown) {
+      dispatch(setDropDownOn());
+    }
   };
-  const onOutsideClickHandler = () => {
+  const onOutSideClick = () => {
     dispatch(setDropDownOff());
   };
-  let adimnPanel = null;
 
-  const mq = {
-    "@media (max-width: 500px)": {
-      display: "none",
-    },
-  };
+  let adimnPanel = null;
 
   if (user) {
     if (user.admin) {
@@ -143,14 +135,24 @@ const Header = () => {
           {user ? (
             <>
               {dropDown ? (
-                <OutsideClickEscHandler clickHandler={onOutsideClickHandler}>
+                <>
+                  <div
+                    style={{
+                      position: "relative",
+                    }}
+                  ></div>
+
                   <NavItem
                     onClickHandler={onProfile}
-                    outside={<DropdownMenu />}
+                    outside={
+                      <OutsideClickEscHandler clickHandler={onOutSideClick}>
+                        <DropdownMenu />
+                      </OutsideClickEscHandler>
+                    }
                   >
                     <MdPersonOutline size={"3em"} />
                   </NavItem>
-                </OutsideClickEscHandler>
+                </>
               ) : (
                 <NavItem onClickHandler={onProfile}>
                   <MdPersonOutline size={"3em"} />
