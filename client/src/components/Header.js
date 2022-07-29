@@ -135,24 +135,16 @@ const Header = () => {
           {user ? (
             <>
               {dropDown ? (
-                <>
-                  <div
-                    style={{
-                      position: "relative",
-                    }}
-                  ></div>
-
-                  <NavItem
-                    onClickHandler={onProfile}
-                    outside={
-                      <OutsideClickEscHandler clickHandler={onOutSideClick}>
-                        <DropdownMenu />
-                      </OutsideClickEscHandler>
-                    }
-                  >
-                    <MdPersonOutline size={"3em"} />
-                  </NavItem>
-                </>
+                <NavItem
+                  onClickHandler={onProfile}
+                  outside={
+                    <OutsideClickEscHandler clickHandler={onOutSideClick}>
+                      <DropdownMenu />
+                    </OutsideClickEscHandler>
+                  }
+                >
+                  <MdPersonOutline size={"3em"} />
+                </NavItem>
               ) : (
                 <NavItem onClickHandler={onProfile}>
                   <MdPersonOutline size={"3em"} />
