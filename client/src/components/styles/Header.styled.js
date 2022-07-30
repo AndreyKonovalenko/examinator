@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const nav_size = 60;
 
@@ -10,11 +10,13 @@ export const StyledHeader = styled.header`
 `;
 
 export const Nav = styled.nav`
-  height: ${nav_size}px;
-  padding: 0 1rem;
-  display: flex;
   align-items: center;
+  display: flex;
+  height: ${nav_size}px;
   justify-content: space-between;
+  margin: auto;
+  max-width: 90%;
+  padding: 0 1rem;
 `;
 
 export const UL = styled.ul`
