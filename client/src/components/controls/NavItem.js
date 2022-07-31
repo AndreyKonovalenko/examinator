@@ -1,4 +1,4 @@
-import { Li, NavButton } from "../styles/Header.styled";
+import { Li, NavButton } from '../styles/Header.styled';
 
 const NavItem = (porps) => {
   const { children, onClickHandler, outside } = porps;
@@ -8,8 +8,7 @@ const NavItem = (porps) => {
       <NavButton
         onClick={() => {
           onClickHandler();
-        }}
-      >
+        }}>
         {children}
       </NavButton>
     </Li>
@@ -17,12 +16,11 @@ const NavItem = (porps) => {
 
   const loaded = (
     <Li>
-      <div style={{ position: "relative" }}>
+      <div style={{ position: 'relative' }}>
         <NavButton
           onClick={() => {
             onClickHandler();
-          }}
-        >
+          }}>
           {children}
         </NavButton>
         {outside}
