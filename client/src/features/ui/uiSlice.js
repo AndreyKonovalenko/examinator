@@ -8,7 +8,7 @@ const initialState = {
   ru: true,
   usersTab: true,
   dropDown: false,
-  modal: false,
+  changePasswordModal: false,
 };
 
 export const uiSlice = createSlice({
@@ -60,11 +60,11 @@ export const uiSlice = createSlice({
     setDropDownOff: (state) => {
       state.dropDown = false;
     },
-    setModalOn: (state) => {
-      state.modal = true;
+    setChangePasswordModalOn: (state) => {
+      state.changePasswordModal = true;
     },
-    setModalOff: (state) => {
-      state.modal = false;
+    setChangePasswordModalOff: (state) => {
+      state.changePasswordModal = false;
     },
   },
 });
@@ -85,7 +85,7 @@ export const {
   setUsersTabOn,
   setDropDownOn,
   setDropDownOff,
-  setModalOn,
-  setModalOff,
+  setChangePasswordModalOn,
+  setChangePasswordModalOff,
 } = uiSlice.actions;
 export default uiSlice.reducer;

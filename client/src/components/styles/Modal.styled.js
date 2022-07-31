@@ -4,25 +4,23 @@ export const Overlay = styled.div`
   background-color: ${({ theme }) => theme.colors.modal};
   display: flex;
   height: 100%;
+  justify-content: center;
   left: 0;
   overflow-y: auto;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 20;
-  justify-content: center;
-  @media (max-width: ${({ theme }) => theme.mobile}) {
-    padding: 1em;
-  }
 `;
 
 export const MContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
   border-radius: 15px;
-  overflow: hidden;
   margin: auto;
-  width: 768px;
+  overflow: hidden;
+  padding: 1em 0;
   position: relative;
+  width: 768px;
 `;
 
 export const MIcon = styled.button`

@@ -21,7 +21,7 @@ import {
   setDropDownOn,
   setDropDownOff,
   resetUiState,
-  setModalOn,
+  setChangePasswordModalOn,
 } from '../features/ui/uiSlice';
 
 import DropdownMenu from './controls/DropdownMenu';
@@ -80,7 +80,7 @@ const Header = () => {
   };
 
   const onChangePassword = () => {
-    dispatch(setModalOn());
+    dispatch(setChangePasswordModalOn());
   };
 
   let adimnPanel = null;
@@ -161,10 +161,6 @@ const Header = () => {
                   <MdPersonOutline size={'3em'} />
                 </NavItem>
               )}
-              {/* 
-              <NavItem onClickHandler={onLogout}>
-                <MdLogout size={'3em'} />
-              </NavItem> */}
             </>
           ) : null}
         </UL>
