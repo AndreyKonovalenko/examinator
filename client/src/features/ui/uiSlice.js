@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   en: false,
   logsTab: false,
@@ -8,10 +8,11 @@ const initialState = {
   ru: true,
   usersTab: true,
   dropDown: false,
+  modal: false,
 };
 
 export const uiSlice = createSlice({
-  name: "ui",
+  name: 'ui',
   initialState,
   reducers: {
     resetUiState: (state) => initialState,
@@ -59,6 +60,12 @@ export const uiSlice = createSlice({
     setDropDownOff: (state) => {
       state.dropDown = false;
     },
+    setModalOn: (state) => {
+      state.modal = true;
+    },
+    setModalOff: (state) => {
+      state.modal = false;
+    },
   },
 });
 
@@ -78,5 +85,7 @@ export const {
   setUsersTabOn,
   setDropDownOn,
   setDropDownOff,
+  setModalOn,
+  setModalOff,
 } = uiSlice.actions;
 export default uiSlice.reducer;

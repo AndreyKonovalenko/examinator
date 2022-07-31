@@ -1,7 +1,6 @@
 import { StyledHeader, Nav, UL, Logo } from './styles/Header.styled';
 import {
   MdAdminPanelSettings,
-  MdLogout,
   MdMenu,
   MdPeopleAlt,
   MdPersonOutline,
@@ -22,10 +21,11 @@ import {
   setDropDownOn,
   setDropDownOff,
   resetUiState,
+  setModalOn,
 } from '../features/ui/uiSlice';
 
-import DropdownMenu from './controllers/DropdownMenu';
-import NavItem from './controllers/NavItem';
+import DropdownMenu from './controls/DropdownMenu';
+import NavItem from './controls/NavItem';
 import OutsideClickEscHandler from './OutsideClickEscHandler';
 
 const Header = () => {
@@ -77,6 +77,10 @@ const Header = () => {
   };
   const onOutSideClick = () => {
     dispatch(setDropDownOff());
+  };
+
+  const onChangePassword = () => {
+    dispatch(setModalOn());
   };
 
   let adimnPanel = null;
@@ -142,6 +146,7 @@ const Header = () => {
                       <DropdownMenu
                         en={en}
                         ru={ru}
+                        onCP={onChangePassword}
                         onLogout={onLogout}
                         username={user.username}
                         name={user.name}
