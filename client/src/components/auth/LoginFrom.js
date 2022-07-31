@@ -1,14 +1,29 @@
-import { Form, Input, Title, Wrapper } from '../styles/Form.Styled';
+import { useState } from 'react';
+import {
+  Form,
+  Input,
+  Title,
+  Wrapper,
+  InsideInputIconWrapper,
+} from '../styles/Form.Styled';
+import { IconStyled } from '../styles/Icon.styled';
 import { Button } from '../styles/Button.styled';
+import { MdRemoveRedEye } from 'react-icons/md';
 import theme from '../../theme/index';
 
 const LoginForm = (props) => {
   const { ru, en, username, password, onChange, onSubmit } = props;
+  const [passwordShown, setPasswordShown] = useState(false);
+
+  const togglePassword = (event) => {
+    event.preventDefault();
+    setPasswordShown(!passwordShown);
+  };
 
   return (
     <Wrapper>
       <Form onSubmit={onSubmit}>
-        {ru ? <Title>Идентификация пользователя</Title> : null}
+        {ru ? <Title>Вход</Title> : null}
         {en ? <Title>Login</Title> : null}
         <Input
           placeholder='Username'
@@ -17,13 +32,24 @@ const LoginForm = (props) => {
           value={username}
           onChange={onChange}
         />
-        <Input
-          placeholder='Password'
-          type='password'
-          name='password'
-          value={password}
-          onChange={onChange}
-        />
+        <div style={{ width: '100%', position: 'relative' }}>
+          <Input
+            style={{ width: '100%', position: 'relative' }}
+            placeholder='password'
+            type={passwordShown ? 'text' : 'password'}
+            name='password'
+            value={password}
+            onChange={onChange}
+          />
+          <InsideInputIconWrapper>
+            <IconStyled
+              onClick={(event) => togglePassword(event)}
+              bg={theme.colors.background}
+              color={theme.colors.primary.light}>
+              <MdRemoveRedEye size={'1.5rem'} />
+            </IconStyled>
+          </InsideInputIconWrapper>
+        </div>
         <Button
           bg={theme.colors.primary.light}
           color={theme.colors.text.onPrimary}>
