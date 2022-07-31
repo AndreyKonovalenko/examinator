@@ -14,10 +14,10 @@ const ChangePassModal = () => {
   const [formData, setFormData] = useState({
     currentPassword: '',
     password: '',
-    password2: '',
+    password1: '',
   });
 
-  const { currentPassword, password, password2 } = formData;
+  const { currentPassword, password, password1 } = formData;
 
   const onModalClose = () => {
     dispatch(setChangePasswordModalOff());
@@ -33,7 +33,7 @@ const ChangePassModal = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const userData = { currentPassword, password, password2 };
+    const userData = { currentPassword, password, password1 };
     console.log(userData);
 
     // dispatch(login(userData));
@@ -55,7 +55,7 @@ const ChangePassModal = () => {
         en={en}
         currentPassword={currentPassword}
         password={password}
-        password2={password2}
+        password1={password1}
       />
       {isSuccess ? success : null}
     </Modal>

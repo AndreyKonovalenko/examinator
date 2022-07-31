@@ -5,8 +5,6 @@ export const IconStyled = styled.button`
   border: none;
   cursor: pointer;
   font-family: 'Podkova', serif;
-  margin-top: 10px;
-  margin-bottom: 10px;
   background-color: ${({ bg }) =>
     bg || (({ theme }) => theme.colors.primary.light)};
   color: ${({ color }) =>
