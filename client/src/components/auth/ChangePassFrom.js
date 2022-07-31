@@ -1,6 +1,7 @@
 import { Form, Input, Title, Wrapper } from '../styles/Form.Styled';
 import { Button } from '../styles/Button.styled';
 import { MdPassword } from 'react-icons/md';
+
 import theme from '../../theme/index';
 
 const ChangePassForm = (props) => {
@@ -19,7 +20,7 @@ const ChangePassForm = (props) => {
           value={currentPassword}
           onChange={onChange}
         />
-        <MdPassword style={{ position: 'absolute' }} />
+
         <Input
           placeholder='New password'
           type='password'
@@ -27,14 +28,16 @@ const ChangePassForm = (props) => {
           value={password}
           onChange={onChange}
         />
-        <div sytle={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={{ width: '80%', position: 'relative' }}>
           <Input
+            style={{ width: '100%' }}
             placeholder='Confirm new password'
             type='password'
             name='password2'
             value={password2}
             onChange={onChange}
           />
+          <MdPassword style={{ position: 'absolute' }} />
         </div>
         <Button
           bg={theme.colors.primary.light}
