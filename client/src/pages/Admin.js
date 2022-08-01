@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 
 import AdminRegisterForm from "../components/admin/AdminRegisterFrom";
+import AddQuizModal from "../components/admin/AddQuizModal";
 import LogsListCardAdmin from "../components/admin/LogsListCardAdmin";
 import QuizCardAdmin from "../components/admin/QuizCardAdmin";
 import QuizzesListCardAdmin from "../components/admin/QuizzesListCardAdmin";
@@ -27,13 +28,14 @@ import { getLogById } from "../features/log/logSlice";
 import {
   setRegisterUserTabOn,
   setRegisterUserTabOff,
-  setUsersTabOn,
   setUsersTabOff,
   setQuizzesTabOff,
   setLogsTabOn,
   setLogsTabOff,
   setQuestionsTabOff,
   setQuestionsTabOn,
+  setAddQuizModalOn,
+  setAddQuizModalOff,
 } from "../features/ui/uiSlice";
 
 const Admin = () => {
@@ -49,6 +51,7 @@ const Admin = () => {
     quizzesTab,
     logsTab,
     questionsTab,
+    addQuizModal,
   } = useSelector((state) => state.ui);
   const adminState = useSelector((state) => state.admin);
 
@@ -221,7 +224,11 @@ const Admin = () => {
     }
   };
   const onAddNewQuizHandler = () => {
-    console.log("new Quiz added");
+    dispatch(setAddQuizModalOn());
+  };
+
+  const onCloseAddQuizModal = () => {
+    dispatch(setAddQuizModalOff());
   };
 
   const quizCheckedHandler = (id, event) => {
@@ -287,6 +294,9 @@ const Admin = () => {
         <title>Admin | Examinator</title>
       </Helmet>
       {adminState.isLoading ? <Spinner /> : null}
+      {addQuizModal ? (
+        <AddQuizModal onClose={onCloseAddQuizModal} ru={ru} en={en} />
+      ) : null}
 
       <Flex>
         {registerUserTab ? (

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   en: false,
   logsTab: false,
@@ -9,10 +9,11 @@ const initialState = {
   usersTab: true,
   dropDown: false,
   changePasswordModal: false,
+  addQuizModal: false,
 };
 
 export const uiSlice = createSlice({
-  name: 'ui',
+  name: "ui",
   initialState,
   reducers: {
     resetUiState: (state) => initialState,
@@ -66,6 +67,12 @@ export const uiSlice = createSlice({
     setChangePasswordModalOff: (state) => {
       state.changePasswordModal = false;
     },
+    setAddQuizModalOn: (state) => {
+      state.addQuizModal = true;
+    },
+    setAddQuizModalOff: (state) => {
+      state.addQuizModal = false;
+    },
   },
 });
 
@@ -87,5 +94,7 @@ export const {
   setDropDownOff,
   setChangePasswordModalOn,
   setChangePasswordModalOff,
+  setAddQuizModalOn,
+  setAddQuizModalOff,
 } = uiSlice.actions;
 export default uiSlice.reducer;

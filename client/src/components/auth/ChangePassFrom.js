@@ -9,6 +9,7 @@ import {
 import { Button } from "../styles/Button.styled";
 import { IconStyled } from "../styles/Icon.styled";
 import { MdRemoveRedEye } from "react-icons/md";
+import theme from "../../theme/index";
 
 const ChangePassForm = (props) => {
   const { ru, en, currentPassword, onChange, password, onSubmit, password1 } =
