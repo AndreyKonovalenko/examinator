@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledDropdownMenu = styled.div`
   background-color: ${({ bg }) => bg || (({ theme }) => theme.colors.surface)};
@@ -10,7 +10,7 @@ export const StyledDropdownMenu = styled.div`
   position: absolute;
   right: 0;
   top: 58px;
-  width: 250px;
+  width: 300px;
   z-index: 1;
 `;
 
@@ -34,4 +34,18 @@ export const DMButton = styled.button`
 
 export const Menu = styled.menu`
   width: 100%;
+`;
+
+export const IconConteiner = styled.div`
+  display: flex;
+  align-items: center;
+  color: ${({ theme }) => theme.colors.primary.light};
+`;
+
+export const TextConteiner = styled.div`
+  display: flex;
+  align-items: center;
+  p {
+    margin: 10px;
+  }
 `;

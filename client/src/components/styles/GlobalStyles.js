@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 
@@ -15,7 +15,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
   }
   p {
-    line-height: 1.5;
+    line-height: normal;
   }
 
   button { font-family: inherit }

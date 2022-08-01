@@ -1,33 +1,64 @@
-import { StyledDropdownMenu, DMButton } from '../styles/DropdownMenu.styled';
+import {
+  StyledDropdownMenu,
+  DMButton,
+  IconConteiner,
+  TextConteiner,
+} from "../styles/DropdownMenu.styled";
 import {
   MdLogout,
   MdDoneOutline,
   MdOutlineAccountCircle,
-} from 'react-icons/md';
+  MdOutlineLogin,
+} from "react-icons/md";
+import theme from "../../theme/index";
 
 const DropdownMenu = (props) => {
   const { ru, en, name, username, stats, onCP, onLogout } = props;
   return (
     <StyledDropdownMenu>
-      <p>
-        <MdOutlineAccountCircle /> {username}
-      </p>
-      <p> {name}</p>
-      {ru ? (
-        <p>
-          {' '}
-          <MdDoneOutline />
-          попыток: {stats}
-        </p>
-      ) : null}
-      {en ? (
-        <p>
-          {' '}
-          <MdDoneOutline />
-          stats: {stats}
-        </p>
-      ) : null}
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <IconConteiner>
+          <MdOutlineLogin size={"1em"} />
+        </IconConteiner>
+        <TextConteiner>
+          {" "}
+          <p>{username}</p>
+        </TextConteiner>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <IconConteiner>
+          <MdOutlineAccountCircle size={"1em"} />
+        </IconConteiner>
+        <TextConteiner>
+          <p> {name}</p>
+        </TextConteiner>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <IconConteiner>
+          <MdDoneOutline size={"1em"} />
+        </IconConteiner>
+        <TextConteiner>
+          {ru ? <p> попыток: {stats}</p> : null}
+          {en ? <p>stats: {stats}</p> : null}
+        </TextConteiner>
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         <>
           {ru ? (
             <DMButton onClick={() => onCP()}>изменить пароль</DMButton>
@@ -37,7 +68,7 @@ const DropdownMenu = (props) => {
           ) : null}
 
           <DMButton onClick={() => onLogout()}>
-            <MdLogout size={'1.5em'} />
+            <MdLogout size={"1.5em"} />
           </DMButton>
         </>
       </div>
