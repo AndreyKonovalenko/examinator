@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Conteiner = styled.div`
   background-color: ${({ theme }) => theme.colors.surface};
