@@ -1,4 +1,5 @@
-import { Button } from "../styles/Button.styled";
+import { Button } from "../styles/Textarea.styled";
+
 const Textarea = (props) => {
   const { onSave, en, ru } = props;
   return (
