@@ -41,14 +41,8 @@ const LoginForm = (props) => {
             value={password}
             onChange={onChange}
           />
-          <InsideInputIconWrapper>
-            <IconStyled
-              onClick={(event) => togglePassword(event)}
-              bg={theme.colors.background}
-              color={theme.colors.primary.light}
-            >
-              <MdRemoveRedEye size={"1.5rem"} />
-            </IconStyled>
+          <InsideInputIconWrapper onClick={(event) => togglePassword(event)}>
+            <MdRemoveRedEye size={"1.5rem"} />
           </InsideInputIconWrapper>
         </div>
         <Button

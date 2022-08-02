@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const inputFontSize = 16;
 
@@ -40,7 +40,7 @@ export const Input = styled.input`
   border-radius: 4px;
   outline: 0;
   border: 1px solid rgba(245, 245, 245, 0.7);
-  font-size: ${inputFontSize + 'px'};
+  font-size: ${inputFontSize + "px"};
   transition: all 0.3s ease-out;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.1);
   :focus,
@@ -69,9 +69,16 @@ export const Input = styled.input`
 export const InsideInputIconWrapper = styled.div`
   position: absolute;
   top: 0;
-  right: 0;
+  right: 2px;
   padding: 0 2px;
   display: flex;
   align-items: center;
-  height: ${inputFontSize + 2 + 11 * 2 + 2 + 'px'};
+  cursor: pointer;
+  height: ${inputFontSize + 2 + 11 * 2 + 2 + "px"};
+  color: ${({ theme }) => theme.colors.primary.light};
+  background-color: ${({ theme }) => theme.colors.background};
+  &:hover {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
 `;

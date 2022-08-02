@@ -10,7 +10,7 @@ export const StyledDropdownMenu = styled.div`
   position: absolute;
   right: 0;
   top: 58px;
-  width: 300px;
+  width: 250px;
   z-index: 1;
 `;
 
@@ -32,20 +32,22 @@ export const DMButton = styled.button`
     color: ${({ hcolor }) => hcolor}
 `;
 
-export const Menu = styled.menu`
-  width: 100%;
-`;
-
 export const IconConteiner = styled.div`
   display: flex;
   align-items: center;
+  margin-right: 10px;
   color: ${({ theme }) => theme.colors.primary.light};
 `;
 
 export const TextConteiner = styled.div`
   display: flex;
   align-items: center;
-  p {
-    margin: 10px;
-  }
+  font-size: 16px;
+  font-weight: 500;
+`;
+
+export const LiElem = styled.li`
+  display: flex;
+  padding-bottom: 10px;
+  justify-content: flex-start;
 `;

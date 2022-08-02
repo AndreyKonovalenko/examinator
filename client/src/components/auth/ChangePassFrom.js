@@ -7,7 +7,6 @@ import {
   InsideInputIconWrapper,
 } from "../styles/Form.Styled";
 import { Button } from "../styles/Button.styled";
-import { IconStyled } from "../styles/Icon.styled";
 import { MdRemoveRedEye } from "react-icons/md";
 import theme from "../../theme/index";
 
@@ -47,14 +46,10 @@ const ChangePassForm = (props) => {
             value={currentPassword}
             onChange={onChange}
           />
-          <InsideInputIconWrapper>
-            <IconStyled
-              onClick={(event) => toggleCurrentPassword(event)}
-              bg={theme.colors.background}
-              color={theme.colors.primary.light}
-            >
-              <MdRemoveRedEye size={"1.5rem"} />
-            </IconStyled>
+          <InsideInputIconWrapper
+            onClick={(event) => toggleCurrentPassword(event)}
+          >
+            <MdRemoveRedEye size={"1.5rem"} />
           </InsideInputIconWrapper>
         </div>
 
@@ -67,14 +62,8 @@ const ChangePassForm = (props) => {
             value={password}
             onChange={onChange}
           />
-          <InsideInputIconWrapper>
-            <IconStyled
-              onClick={(event) => togglePassword(event)}
-              bg={theme.colors.background}
-              color={theme.colors.primary.light}
-            >
-              <MdRemoveRedEye size={"1.5rem"} />
-            </IconStyled>
+          <InsideInputIconWrapper onClick={(event) => togglePassword(event)}>
+            <MdRemoveRedEye size={"1.5rem"} />
           </InsideInputIconWrapper>
         </div>
 
@@ -87,14 +76,8 @@ const ChangePassForm = (props) => {
             value={password1}
             onChange={onChange}
           />
-          <InsideInputIconWrapper>
-            <IconStyled
-              onClick={(event) => togglePassword1(event)}
-              bg={theme.colors.background}
-              color={theme.colors.primary.light}
-            >
-              <MdRemoveRedEye size={"1.5rem"} />
-            </IconStyled>
+          <InsideInputIconWrapper onClick={(event) => togglePassword1(event)}>
+            <MdRemoveRedEye size={"1.5rem"} />
           </InsideInputIconWrapper>
         </div>
         <Button

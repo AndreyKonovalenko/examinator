@@ -3,6 +3,7 @@ import {
   DMButton,
   IconConteiner,
   TextConteiner,
+  LiElem,
 } from "../styles/DropdownMenu.styled";
 import {
   MdLogout,
@@ -10,56 +11,38 @@ import {
   MdOutlineAccountCircle,
   MdOutlineLogin,
 } from "react-icons/md";
-import theme from "../../theme/index";
 
 const DropdownMenu = (props) => {
   const { ru, en, name, username, stats, onCP, onLogout } = props;
   return (
     <StyledDropdownMenu>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
-        <IconConteiner>
-          <MdOutlineLogin size={"1em"} />
-        </IconConteiner>
-        <TextConteiner>
-          {" "}
-          <p>{username}</p>
-        </TextConteiner>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
-        <IconConteiner>
-          <MdOutlineAccountCircle size={"1em"} />
-        </IconConteiner>
-        <TextConteiner>
-          <p> {name}</p>
-        </TextConteiner>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
-        <IconConteiner>
-          <MdDoneOutline size={"1em"} />
-        </IconConteiner>
-        <TextConteiner>
-          {ru ? <p> попыток: {stats}</p> : null}
-          {en ? <p>stats: {stats}</p> : null}
-        </TextConteiner>
-      </div>
-
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <>
+      <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+        <LiElem>
+          <IconConteiner>
+            <MdOutlineLogin size={"1em"} />
+          </IconConteiner>
+          <TextConteiner>
+            <span>{username}</span>
+          </TextConteiner>
+        </LiElem>
+        <LiElem>
+          <IconConteiner>
+            <MdOutlineAccountCircle size={"1em"} />
+          </IconConteiner>
+          <TextConteiner>
+            <span> {name}</span>
+          </TextConteiner>
+        </LiElem>
+        <LiElem>
+          <IconConteiner>
+            <MdDoneOutline size={"1em"} />
+          </IconConteiner>
+          <TextConteiner>
+            {ru ? <span> попыток: {stats}</span> : null}
+            {en ? <span>stats: {stats}</span> : null}
+          </TextConteiner>
+        </LiElem>
+        <LiElem style={{ justifyContent: "space-between", padding: 0 }}>
           {ru ? (
             <DMButton onClick={() => onCP()}>изменить пароль</DMButton>
           ) : null}
@@ -70,8 +53,8 @@ const DropdownMenu = (props) => {
           <DMButton onClick={() => onLogout()}>
             <MdLogout size={"1.5em"} />
           </DMButton>
-        </>
-      </div>
+        </LiElem>
+      </ul>
     </StyledDropdownMenu>
   );
 };
