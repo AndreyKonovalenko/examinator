@@ -11,7 +11,7 @@ export const Button = styled.button`
   background-color: ${({ theme }) => theme.colors.surface};
   color: ${({ theme }) => theme.colors.primary.light};
   &:hover {
-    opacity: 0.9;
+    opacity: 0.5;
     transform: scale(0.98);
-    color: ${({ hcolor }) => hcolor}
+    background-color: ${({ theme }) => theme.colors.primary.main};
 `;
