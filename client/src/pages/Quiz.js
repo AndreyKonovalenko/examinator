@@ -1,19 +1,19 @@
-import React from 'react';
-import Spinner from '../components/Spinner.js';
-import Card from '../components/quiz/Card';
-import { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
-import { toast } from 'react-toastify';
-import { useSelector, useDispatch } from 'react-redux';
-import quizService from '../features/quiz/quizService';
+import React from "react";
+import Spinner from "../components/Spinner.js";
+import Card from "../components/quiz/Card";
+import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
+import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import quizService from "../features/quiz/quizService";
 
 import {
   resetQuizState,
   setUserAnswer,
   finishQuiz,
-} from '../features/quiz/quizSlice';
-import { setLog } from '../features/log/logSlice.js';
-import { useNavigate } from 'react-router';
+} from "../features/quiz/quizSlice";
+import { setLog } from "../features/log/logSlice.js";
+import { useNavigate } from "react-router";
 
 const Quiz = () => {
   const navigate = useNavigate();
@@ -27,21 +27,31 @@ const Quiz = () => {
   useEffect(() => {
     if (!user) {
       dispatch(resetQuizState());
-      navigate('/login');
+      navigate("/login");
     }
-    if (quizState.quiz !== null && quesitonsShuffled === null) {
+    if (quizState.quiz && quizState.quiz.questions.length === 0) {
+      toast.error("В тесте отсутвуют вопросы");
+      navigate("/");
+    }
+
+    if (
+      quizState.quiz &&
+      quesitonsShuffled === null &&
+      quizState.quiz.questions.length > 0
+    ) {
       const data = quizService.shuffle(quizState.quiz.questions);
       setQuestionsShuffled(data);
     }
+
     if (user && quizState.quiz === null && !quizState.isLoading) {
-      toast.error('Вы прервали тест, начните заново!');
-      navigate('/');
+      toast.error("Вы прервали тест, начните заново!");
+      navigate("/");
     }
     if (quizState.isCompleted) {
       dispatch(
         setLog({ quizId: quizState.quiz._id, answers: quizState.userAnswers })
       );
-      navigate('/summary');
+      navigate("/summary");
     }
   }, [
     user,
@@ -74,7 +84,7 @@ const Quiz = () => {
   return (
     <>
       <Helmet>
-        <meta charSet='utf-8' />
+        <meta charSet="utf-8" />
         <title>Quiz | Examinator </title>
       </Helmet>
       {quizState.quiz && quesitonsShuffled ? (

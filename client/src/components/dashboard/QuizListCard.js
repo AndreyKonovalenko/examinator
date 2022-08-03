@@ -4,13 +4,11 @@ import { StatusBage } from "../styles/StatusBage.styled";
 import uniqid from "uniqid";
 
 const QuizListCard = (props) => {
-  const { user, en, ru } = props;
+  const { user, en, ru, item, onClick } = props;
   const name = user.split(" ").slice(1);
-  const list = props.item.map((element) => (
-    <ListElem
-      key={uniqid()}
-      onClick={(event) => props.onClick(element._id, event)}
-    >
+
+  const list = item.map((element) => (
+    <ListElem key={uniqid()} onClick={(event) => onClick(element._id, event)}>
       <h2>{element.title}</h2>
     </ListElem>
   ));
