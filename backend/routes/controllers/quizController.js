@@ -1,5 +1,5 @@
-import asyncHandler from 'express-async-handler';
-import { Quiz } from '../../models/quizModel.js';
+import asyncHandler from "express-async-handler";
+import { Quiz } from "../../models/quizModel.js";
 
 // @desc Get Quizzes
 // @route GET /api/quiz
@@ -11,7 +11,9 @@ export const getQuizzes = asyncHandler(async (req, res) => {
   res.status(200).json(quiz);
 });
 
-// set quiz for testing
+// @desc add new Quiz
+// @route POST /api/quiz
+// @access Private
 export const setQuiz = asyncHandler(async (req, res) => {
   const quiz = await Quiz.create({
     title: req.body.title,
@@ -34,11 +36,11 @@ export const addQuestionToQuiz = asyncHandler(async (req, res) => {
       res.status(200).json(upadtaedQuiz);
     } else {
       res.status(400);
-      throw new Error('during updating quiz something goes wrong');
+      throw new Error("during updating quiz something goes wrong");
     }
   } else {
     res.status(400);
-    throw new Error('Ivalid quiz id');
+    throw new Error("Ivalid quiz id");
   }
 });
 
@@ -48,12 +50,12 @@ export const addQuestionToQuiz = asyncHandler(async (req, res) => {
 
 export const getQuiz = asyncHandler(async (req, res) => {
   const currentQuiz = await Quiz.findOne({ _id: req.params.id })
-    .populate({ path: 'questions', select: ['question', 'options'] })
+    .populate({ path: "questions", select: ["question", "options"] })
     .exec();
   if (currentQuiz) {
     res.status(200).json(currentQuiz);
   } else {
     res.status(400);
-    throw new Error('Invalid quiz id');
+    throw new Error("Invalid quiz id");
   }
 });

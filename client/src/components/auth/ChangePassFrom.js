@@ -34,7 +34,7 @@ const ChangePassForm = (props) => {
 
   return (
     <Wrapper>
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit} style={{ boxShadow: "none" }}>
         {ru ? <Title>Изменение пороля</Title> : null}
         {en ? <Title>Change password</Title> : null}
         <div style={{ width: "100%", position: "relative" }}>

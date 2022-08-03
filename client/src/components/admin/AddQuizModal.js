@@ -1,11 +1,21 @@
+import { useDispatch } from "react-redux";
 import Modal from "../controls/Modal";
 import Textarea from "../controls/Textarea";
 
+import { addQuiz } from "../../features/admin/adminSlice";
+
 const AddQuizModal = (props) => {
-  const { onClose, onSave, en, ru } = props;
+  const dispatch = useDispatch();
+
+  const { onClose, en, ru } = props;
+
+  const onSave = (data) => {
+    dispatch(addQuiz(data));
+  };
+
   return (
     <Modal onClose={onClose}>
-      <Textarea en={en} ru={ru} onSave={onSave} />
+      <Textarea en={en} ru={ru} onSave={onSave} maxLength={100} />
     </Modal>
   );
 };

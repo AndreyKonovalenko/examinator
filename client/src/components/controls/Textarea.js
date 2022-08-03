@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { Button, Conteiner, STextarea, Flex } from "../styles/Textarea.styled";
 
 const Textarea = (props) => {
-  const { onSave, en, ru } = props;
+  const { onSave, en, ru, maxLength } = props;
   const [data, setData] = useState("");
   const textAreaRef = useRef(null);
 
@@ -22,8 +22,7 @@ const Textarea = (props) => {
 
   const onSaveHandler = () => {
     if (data !== "") {
-      console.log(data);
-      // onSave(data);
+      onSave({ title: data });
     }
   };
 
@@ -38,7 +37,12 @@ const Textarea = (props) => {
         {en ? "Choose new quiz titel" : null}
       </h3>
 
-      <STextarea ref={textAreaRef} value={data} onChange={onChange} row={1} />
+      <STextarea
+        ref={textAreaRef}
+        value={data}
+        onChange={onChange}
+        maxLength={maxLength}
+      />
       <Flex style={{ justifyContent: "flex-end" }}>
         <Button onClick={onSaveHandler}>
           {ru ? "Сохранить" : null} {en ? "Save" : null}

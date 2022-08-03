@@ -94,3 +94,15 @@ export const getFullQuiz = asyncHandler(async (req, res) => {
     throw new Error("Invalid quiz id");
   }
 });
+
+// @desc add  new Quizz
+// @route GET /api/adim/quizzes
+// @access Private Admin
+
+export const addQuiz = asyncHandler(async (req, res) => {
+  const quiz = await Quiz.create({
+    title: req.body.title,
+  });
+
+  res.status(200).json(quiz);
+});

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Overlay = styled.div`
   background-color: ${({ theme }) => theme.colors.modal};
@@ -14,17 +14,16 @@ export const Overlay = styled.div`
 `;
 
 export const MContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.surface};
   border-radius: 15px;
   margin: auto;
   overflow: hidden;
-  padding: 1em 0;
+  padding: 30px;
   position: relative;
-  width: 768px;
 `;
 
 export const MIcon = styled.button`
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.surface};
   border-radius: 50%;
   border: none;
   color: ${({ theme }) => theme.colors.primary.main};

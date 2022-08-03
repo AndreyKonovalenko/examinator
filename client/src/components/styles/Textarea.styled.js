@@ -5,13 +5,13 @@ export const Conteiner = styled.div`
   color: ${({ theme }) => theme.colors.text.onSurface};
   border-radius: 15px;
   margin: 15px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+
   display: flex;
   flex-direction: column;
   align-items: center;
   h3 {
     color: ${({ theme }) => theme.colors.primary.main};
-    margin: 15px 0 0 0;
+    margin: 15px 0;
   }
 `;
 export const STextarea = styled.textarea`
@@ -30,6 +30,7 @@ export const STextarea = styled.textarea`
   resize: none;
   padding: 2px;
   overflow-y: hidden;
+  maxlength: 5;
   &:hover {
     opacity: 1;
     border-color: ${({ theme }) => theme.colors.primary.main};
