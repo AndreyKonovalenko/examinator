@@ -1,7 +1,36 @@
+import { useEffect, useState, useRef } from "react";
 import { Button, Conteiner, STextarea, Flex } from "../styles/Textarea.styled";
 
 const Textarea = (props) => {
   const { onSave, en, ru } = props;
+  const [data, setData] = useState("");
+  const textAreaRef = useRef(null);
+
+  const onChange = (event) => {
+    event.preventDefault();
+    setData(event.target.value);
+  };
+
+  const resizeTextArea = () => {
+    textAreaRef.current.style.height = "auto";
+    textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
+  };
+
+  const onClear = () => {
+    setData("");
+  };
+
+  const onSaveHandler = () => {
+    if (data !== "") {
+      console.log(data);
+      // onSave(data);
+    }
+  };
+
+  useEffect(() => {
+    resizeTextArea();
+  }, [data]);
+
   return (
     <Conteiner>
       <h3>
@@ -9,12 +38,12 @@ const Textarea = (props) => {
         {en ? "Choose new quiz titel" : null}
       </h3>
 
-      <STextarea />
+      <STextarea ref={textAreaRef} value={data} onChange={onChange} row={1} />
       <Flex style={{ justifyContent: "flex-end" }}>
-        <Button onClick={() => onSave()}>
+        <Button onClick={onSaveHandler}>
           {ru ? "Сохранить" : null} {en ? "Save" : null}
         </Button>
-        <Button>
+        <Button onClick={onClear}>
           {ru ? "Очистить" : null} {en ? "Clear" : null}
         </Button>
       </Flex>

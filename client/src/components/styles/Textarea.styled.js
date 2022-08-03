@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Conteiner = styled.div`
   background-color: ${({ theme }) => theme.colors.surface};
@@ -15,21 +15,27 @@ export const Conteiner = styled.div`
   }
 `;
 export const STextarea = styled.textarea`
-  width: 95%;
-  max-width: 95%;
-  margin: 10px 0;
-  height: 5em;
+  background-color: ${({ theme }) => theme.colors.surface};
+  border-color: ${({ theme }) => theme.colors.primary.light};
+  border-radius: 3px;
+  border-style: solid;
+  border-width: 2px;
+  color: ${({ theme }) => theme.colors.text.onBackground};
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 10px;
-  background-color: ${({ theme }) => theme.colors.surface};
-  opacity: 0.5;
-  color: ${({ theme }) => theme.colors.primary.light};
+  margin: 10px 0;
+  max-width: 95%;
+  width: 95%;
+  resize: none;
+  padding: 2px;
+  overflow-y: hidden;
   &:hover {
     opacity: 1;
+    border-color: ${({ theme }) => theme.colors.primary.main};
   }
-  &:active {
-    border-color: red;
+  &:focus-visible {
+    outline: none;
   }
 `;
 export const Flex = styled.div`
