@@ -40,7 +40,7 @@ const LogsListCardAdmin = (props) => {
       <div style={{ display: "flex" }} key={uniqid()}>
         {isEdit ? (
           <CheckBox
-            checkedHandler={сheckedHandler}
+            onCheckHandler={сheckedHandler}
             id={element._id}
             isChecked={checked.includes(element._id) ? true : false}
             unCheckHandler={unCheckHandler}

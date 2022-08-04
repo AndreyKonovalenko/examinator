@@ -65,9 +65,6 @@ const Admin = () => {
   const { username, name, password, password2 } = formData;
 
   // local user state
-  const [isSelectedUser, setIsSelectedUser] = useState(null);
-  const [userChecked, setUserChecked] = useState([]);
-  const [isEditUsersList, setIsEditUsersList] = useState(false);
 
   // local log state
   const [logChecked, setLogChecked] = useState([]);
@@ -166,42 +163,6 @@ const Admin = () => {
   };
 
   // ----------------------------- USER LIST HANDLERS ---------------------------- //
-  const onUserClickHandler = (args, event) => {
-    event.preventDefault();
-    setIsSelectedUser(args[1]);
-    dispatch(getUserLogs(args[0]));
-    dispatch(setLogsTabOn());
-  };
-
-  const isEditHandlerUsers = () => {
-    setIsEditUsersList(!isEditUsersList);
-  };
-
-  const deleteUserHandler = () => {
-    if (userChecked.length > 0) {
-      userChecked.forEach((element) => dispatch(deleteUser(element)));
-    } else {
-      toast.error("User for deleting is not selected!");
-    }
-  };
-
-  const onAddNewUserHandler = () => {
-    dispatch(setRegisterUserTabOn());
-  };
-
-  const userCheckedHandler = (id, event) => {
-    event.preventDefault();
-    setUserChecked([...userChecked, id]);
-  };
-
-  const userUnCheckHandler = (id, event) => {
-    event.preventDefault();
-    setUserChecked(userChecked.filter((element) => element !== id));
-  };
-
-  const onCloserUsersTabHandler = () => {
-    dispatch(setUsersTabOff());
-  };
 
   // ----------------------------- QUIZZES LIST HANDELRS ------------------------- //
 
@@ -313,21 +274,7 @@ const Admin = () => {
           />
         ) : null}
         {adminState.users && usersTab ? (
-          <UsersListCard
-            сheckedHandler={userCheckedHandler}
-            checked={userChecked}
-            deleteHandler={deleteUserHandler}
-            en={en}
-            isEdit={isEditUsersList}
-            item={adminState.users}
-            onAddHandler={onAddNewUserHandler}
-            onClickHandler={onUserClickHandler}
-            onCloseHandler={onCloserUsersTabHandler}
-            onSettingsHandler={isEditHandlerUsers}
-            ru={ru}
-            selected={isSelectedUser}
-            unCheckHandler={userUnCheckHandler}
-          />
+          <UsersListCard en={en} item={adminState.users} ru={ru} />
         ) : null}
         {adminState.userLogs && logsTab ? (
           <LogsListCardAdmin

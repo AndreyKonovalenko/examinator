@@ -1,41 +1,85 @@
 import { ListElem } from "../styles/ListElem.styled";
 import { StyledListCard } from "../styles/ListCard.styled";
 import { StyledSeparator } from "../styles/Separator.styled";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { getUserLogs, deleteUser } from "../../features/admin/adminSlice";
+import {
+  setLogsTabOn,
+  setRegisterUserTabOn,
+  setUsersTabOff,
+} from "../../features/ui/uiSlice";
+
 import CheckBox from "./CheckBox";
 import SettingPanel from "./SettingsPanel";
 import theme from "../../theme/index.js";
 import uniqid from "uniqid";
+
 const UsersListCard = (props) => {
-  const {
-    сheckedHandler,
-    checked,
-    deleteHandler,
-    en,
-    isEdit,
-    item,
-    onAddHandler,
-    onClickHandler,
-    onCloseHandler,
-    onSettingsHandler,
-    ru,
-    selected,
-    unCheckHandler,
-  } = props;
+  const dispatch = useDispatch();
+  const { en, item, ru } = props;
+
+  const [isSelected, setIsSelected] = useState(null);
+  const [isChecked, setIsChecked] = useState([]);
+  const [isEdit, setIsEdit] = useState(false);
+
+  // List Hadlers
+
+  const onClickHandler = (args, event) => {
+    event.preventDefault();
+    setIsSelected(args[1]);
+    dispatch(getUserLogs(args[0]));
+    dispatch(setLogsTabOn());
+  };
+
+  const onCheckHandler = (id, event) => {
+    event.preventDefault();
+    setIsChecked([...isChecked, id]);
+  };
+
+  const unCheckHandler = (id, event) => {
+    event.preventDefault();
+    setIsChecked(isChecked.filter((element) => element !== id));
+  };
+
+  // Settings Panel Handlers
+
+  const onAddHandler = () => {
+    dispatch(setRegisterUserTabOn());
+  };
+
+  const onCloseHandler = () => {
+    dispatch(setUsersTabOff());
+  };
+
+  const onGearHandler = () => {
+    setIsEdit(!isEdit);
+  };
+
+  const onDeleteHandler = () => {
+    if (isChecked.length > 0) {
+      isChecked.forEach((element) => dispatch(deleteUser(element)));
+    } else {
+      toast.error("User for deleting is not selected!");
+    }
+  };
+
   const list = item.map((element, index) => {
     return (
       <div style={{ display: "flex" }} key={uniqid()}>
         {isEdit ? (
           <CheckBox
-            checkedHandler={сheckedHandler}
+            onCheckHandler={onCheckHandler}
             id={element._id}
-            isChecked={checked.includes(element._id) ? true : false}
+            isChecked={isChecked.includes(element._id) ? true : false}
             unCheckHandler={unCheckHandler}
           />
         ) : null}
         <ListElem
           key={uniqid()}
           style={
-            index === selected
+            index === isSelected
               ? {
                   backgroundColor: theme.colors.primary.main,
                   color: theme.colors.text.onPrimary,
@@ -58,8 +102,8 @@ const UsersListCard = (props) => {
         isEdit={isEdit}
         onAdd={onAddHandler}
         onClose={onCloseHandler}
-        onDelete={deleteHandler}
-        onSettings={onSettingsHandler}
+        onDelete={onDeleteHandler}
+        onSettings={onGearHandler}
       />
       <StyledSeparator />
       {ru ? <h2>Пользователи:</h2> : null}
