@@ -11,10 +11,10 @@ import {
   setUsersTabOff,
 } from "../../features/ui/uiSlice";
 
+import uniqid from "uniqid";
 import CheckBox from "./CheckBox";
 import SettingPanel from "./SettingsPanel";
 import theme from "../../theme/index.js";
-import uniqid from "uniqid";
 
 const UsersListCard = (props) => {
   const dispatch = useDispatch();
