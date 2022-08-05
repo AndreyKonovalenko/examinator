@@ -1,19 +1,24 @@
-import { useDispatch } from "react-redux";
-import { StyledListCard } from "../styles/ListCard.styled";
+import { deleteLog } from "../../features/admin/adminSlice";
+import { getLogById } from "../../features/log/logSlice";
 import { ListElem } from "../styles/ListElem.styled";
+import { setLogsTabOff } from "../../features/ui/uiSlice";
+import { StyledListCard } from "../styles/ListCard.styled";
 import { StyledSeparator } from "../styles/Separator.styled";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { useState } from "react";
 
-import moment from "moment";
 import CheckBox from "./CheckBox";
+import moment from "moment";
 import SettingPanel from "./SettingsPanel";
 import theme from "../../theme/index.js";
 import uniqid from "uniqid";
-import { toast } from "react-toastify";
 
 const LogsListCardAdmin = (props) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { en, item, ru } = props;
-
   const [isSelected, setIsSelected] = useState(null);
   const [isChecked, setIsChecked] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
@@ -23,8 +28,8 @@ const LogsListCardAdmin = (props) => {
   const onClickHandler = (args, event) => {
     event.preventDefault();
     setIsSelected(args[1]);
-    dispatch(getUserLogs(args[0]));
-    dispatch(setLogsTabOn());
+    dispatch(getLogById(args[0]));
+    navigate("/summary");
   };
 
   const onCheckHandler = (id, event) => {
@@ -39,12 +44,8 @@ const LogsListCardAdmin = (props) => {
 
   // Settings Panel Handlers
 
-  // const onAddHandler = () => {
-  //   dispatch(());
-  // };
-
   const onCloseHandler = () => {
-    dispatch(setUsersTabOff());
+    dispatch(setLogsTabOff());
   };
 
   const onGearHandler = () => {
@@ -58,13 +59,17 @@ const LogsListCardAdmin = (props) => {
 
   const onDeleteHandler = () => {
     if (isChecked.length > 0) {
-      isChecked.forEach((element) => dispatch(deleteUser(element)));
+      isChecked.forEach((element) => dispatch(deleteLog(element)));
     } else {
-      toast.error("User for deleting is not selected!");
+      toast.error("You try to delete empty or not selected logs!");
     }
   };
 
-  const list = item.map((element) => {
+  // const onAddHandler = () => {
+  //   dispatch(());
+  // };
+
+  const list = item.map((element, index) => {
     const score = (
       (Number.parseInt(element.result) /
         Number.parseInt(element.quiz.questions.length)) *
@@ -93,7 +98,7 @@ const LogsListCardAdmin = (props) => {
 
         <ListElem
           key={uniqid()}
-          onClick={(event) => onClickHandler(element._id, event)}
+          onClick={(event) => onClickHandler([element._id, index], event)}
           style={
             index === isSelected
               ? {
@@ -128,8 +133,9 @@ const LogsListCardAdmin = (props) => {
   return (
     <StyledListCard>
       <SettingPanel
+        hideAdd={true}
         isEdit={isEdit}
-        onAdd={hidden}
+        onAdd={() => {}}
         onClose={onCloseHandler}
         onDelete={onDeleteHandler}
         onSettings={onGearHandler}

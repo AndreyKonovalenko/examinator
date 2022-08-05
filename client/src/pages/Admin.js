@@ -66,10 +66,6 @@ const Admin = () => {
 
   // local user state
 
-  // local log state
-  const [logChecked, setLogChecked] = useState([]);
-  const [isEditLogsList, setIsEditLogsList] = useState(false);
-
   // local quiz state
   const [isSelectedQuiz, setIsSelectedQuiz] = useState(null);
   const [quizChecked, setQuizChecked] = useState([]);
@@ -123,44 +119,6 @@ const Admin = () => {
     dispatch(setRegisterUserTabOff());
   };
   // ----------------------------- LOG LIST HANDLERS ------------------------------ //
-
-  const isEditHandlerLogs = () => {
-    if (adminState.userLogs.length === 0) {
-      toast.error("Nothing to edit");
-    }
-    if (adminState.userLogs.length > 0) {
-      setLogChecked([]);
-      setIsEditLogsList(!isEditLogsList);
-    }
-  };
-
-  const deleteLogsHandler = () => {
-    if (logChecked.length > 0) {
-      logChecked.forEach((element) => dispatch(deleteLog(element)));
-    } else {
-      toast.error("You try to delete empty or not selected logs");
-    }
-  };
-
-  const logCheckedHandler = (id, event) => {
-    event.preventDefault();
-    setLogChecked([...logChecked, id]);
-  };
-
-  const logUnCheckHandler = (id, event) => {
-    event.preventDefault();
-    setLogChecked(logChecked.filter((element) => element !== id));
-  };
-
-  const onCloserLogsTabHandler = () => {
-    dispatch(setLogsTabOff());
-  };
-
-  const onLogsClickHandler = (id, event) => {
-    event.preventDefault();
-    dispatch(getLogById(id));
-    navigate("/summary");
-  };
 
   // ----------------------------- USER LIST HANDLERS ---------------------------- //
 
@@ -277,19 +235,7 @@ const Admin = () => {
           <UsersListCard en={en} item={adminState.users} ru={ru} />
         ) : null}
         {adminState.userLogs && logsTab ? (
-          <LogsListCardAdmin
-            сheckedHandler={logCheckedHandler}
-            checked={logChecked}
-            deleteHandler={deleteLogsHandler}
-            en={en}
-            isEdit={isEditLogsList}
-            item={adminState.userLogs}
-            onClickHandler={onLogsClickHandler}
-            onCloseHandler={onCloserLogsTabHandler}
-            onSettingsHandler={isEditHandlerLogs}
-            ru={ru}
-            unCheckHandler={logUnCheckHandler}
-          />
+          <LogsListCardAdmin en={en} item={adminState.userLogs} ru={ru} />
         ) : null}
         {adminState.quizzes && quizzesTab ? (
           <QuizzesListCardAdmin
