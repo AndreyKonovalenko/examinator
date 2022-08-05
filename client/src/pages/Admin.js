@@ -67,9 +67,6 @@ const Admin = () => {
   // local user state
 
   // local quiz state
-  const [isSelectedQuiz, setIsSelectedQuiz] = useState(null);
-  const [quizChecked, setQuizChecked] = useState([]);
-  const [isEditQuizzesList, setIsEditQuizzesList] = useState(false);
 
   // local question state
   const [isSelectedQuestion, setIsSelectedQuestion] = useState(null);
@@ -124,47 +121,11 @@ const Admin = () => {
 
   // ----------------------------- QUIZZES LIST HANDELRS ------------------------- //
 
-  const onQuizClickHundler = (args, event) => {
-    event.preventDefault();
-    setIsSelectedQuiz(args[1]);
-    dispatch(getFullQuiz(args[0]));
-    dispatch(setQuestionsTabOn());
-  };
-
-  const isEditHandlerQuizzes = () => {
-    setIsEditQuizzesList(!isEditQuizzesList);
-  };
-
-  const deleteQuizHandler = () => {
-    if (quizChecked.length > 0) {
-      console.log("Quiz will be deleted");
-    } else {
-      toast.error("Quiz for deleting is not selected!");
-    }
-  };
-  const onAddNewQuizHandler = () => {
-    dispatch(setAddQuizModalOn());
-  };
-
   const onCloseAddQuizModal = () => {
     dispatch(setAddQuizModalOff());
   };
 
-  const quizCheckedHandler = (id, event) => {
-    event.preventDefault();
-    setQuizChecked([...quizChecked, id]);
-  };
-
-  const quizUnCheckHandler = (id, event) => {
-    event.preventDefault();
-    setQuizChecked(quizChecked.filter((element) => element !== id));
-  };
-
-  const onCloseQuizzesTabHandler = () => {
-    dispatch(setQuizzesTabOff());
-  };
-
-  //-------------------------- QUESTIONS LIST HANDELRS ------------------------- //
+  //---------------------- QUESTIONS LIST HANDELRS ------------------------- //
 
   const onQuestionClickHundler = (args, event) => {
     event.preventDefault();
@@ -238,21 +199,7 @@ const Admin = () => {
           <LogsListCardAdmin en={en} item={adminState.userLogs} ru={ru} />
         ) : null}
         {adminState.quizzes && quizzesTab ? (
-          <QuizzesListCardAdmin
-            сheckedHandler={quizCheckedHandler}
-            checked={quizChecked}
-            deleteHandler={deleteQuizHandler}
-            en={en}
-            isEdit={isEditQuizzesList}
-            item={adminState.quizzes}
-            onAddHandler={onAddNewQuizHandler}
-            onClickHandler={onQuizClickHundler}
-            onCloseHandler={onCloseQuizzesTabHandler}
-            onSettingsHandler={isEditHandlerQuizzes}
-            ru={ru}
-            selected={isSelectedQuiz}
-            unCheckHandler={quizUnCheckHandler}
-          />
+          <QuizzesListCardAdmin en={en} item={adminState.quizzes} ru={ru} />
         ) : null}
         {adminState.quiz && questionsTab ? (
           <QuizCardAdmin
