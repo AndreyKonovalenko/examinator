@@ -1,16 +1,20 @@
-import { useDispatch } from "react-redux";
-import Modal from "../controls/Modal";
-import Textarea from "../controls/Textarea";
+import { useDispatch } from 'react-redux';
+import Modal from '../controls/Modal';
+import Textarea from '../controls/Textarea';
 
-import { addQuiz } from "../../features/admin/adminSlice";
+import { addQuiz } from '../../features/admin/adminSlice';
+import { setAddQuizModalOff } from '../../features/ui/uiSlice';
 
 const AddQuizModal = (props) => {
   const dispatch = useDispatch();
 
-  const { onClose, en, ru } = props;
+  const { en, ru } = props;
 
   const onSave = (data) => {
     dispatch(addQuiz(data));
+  };
+  const onClose = () => {
+    dispatch(setAddQuizModalOff());
   };
 
   return (
