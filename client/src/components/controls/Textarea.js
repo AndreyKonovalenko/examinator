@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Button, Conteiner, STextarea, Flex } from '../styles/Textarea.styled';
 
 const Textarea = (props) => {
-  const { onSave, en, ru, maxLength } = props;
+  const { onSave, en, ru, maxLength, id } = props;
   const [data, setData] = useState('');
   const textAreaRef = useRef(null);
 
@@ -37,6 +37,7 @@ const Textarea = (props) => {
         {en ? 'choese net quize theme' : null}
       </h3>
       <STextarea
+        id={id}
         ref={textAreaRef}
         value={data}
         onChange={onChange}

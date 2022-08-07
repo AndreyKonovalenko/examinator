@@ -12,38 +12,42 @@ const AddQuestionModal = (props) => {
 
   const { en, ru } = props;
 
-  const [optionslist, setOpitionList] = useState(2);
+  const [optionsList, setOpitionsList] = useState([uniqid()]);
 
-  const onSave = (data) => {
-    console.log('question added', data);
+  const onSaveQuestion = () => {
+    const result = [];
+
+    optionsList.forEach((element) => {
+      result.push(document.getElementById(element).value);
+    });
+    console.log(result);
   };
   const onClose = () => {
     dispatch(setAddQuestionModalOff());
   };
-  const list = (n) => {
-    const result = [];
-    let i = 0;
-    while (i < n) {
-      result.push(
-        <li style={{ listStyleType: 'none' }} key={uniqid()}>
-          <Textarea en={en} ru={ru} onSave={onSave} maxLength={100} />
-        </li>
-      );
+  const list = optionsList.map((element) => {
+    return (
+      <li style={{ listStyleType: 'none' }} key={uniqid()}>
+        <Textarea
+          id={element}
+          en={en}
+          ru={ru}
+          onSave={() => {}}
+          maxLength={100}
+        />
+      </li>
+    );
+  });
 
-      i++;
-    }
-    return result;
-  };
-
-  const onAdd = () => setOpitionList(optionslist + 1);
+  const onAdd = () => setOpitionsList([...optionsList, uniqid()]);
   useEffect(() => {}, []);
 
   return (
     <Modal onClose={onClose}>
       <h3>options</h3>
-      {list(optionslist)}
+      {list}
       <Button onClick={onAdd}>ADD</Button>
-      <Button onClick={onSave}>Save Question</Button>
+      <Button onClick={onSaveQuestion}>Save Question</Button>
     </Modal>
   );
 };
