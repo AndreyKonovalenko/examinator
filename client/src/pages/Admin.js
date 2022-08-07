@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import AdminRegisterForm from '../components/admin/AdminRegisterFrom';
 import AddQuizModal from '../components/admin/AddQuizModal';
+import AddQuestionModal from '../components/admin/AddQuestionModal';
 import LogsListCardAdmin from '../components/admin/LogsListCardAdmin';
 import QuizCardAdmin from '../components/admin/QuizCardAdmin';
 import QuizzesListCardAdmin from '../components/admin/QuizzesListCardAdmin';
@@ -30,6 +31,7 @@ const Admin = () => {
     logsTab,
     questionsTab,
     addQuizModal,
+    addQuestionModal,
   } = useSelector((state) => state.ui);
   const { users, userLogs, quizzes, quiz, isLoading } = useSelector(
     (state) => state.admin
@@ -62,6 +64,7 @@ const Admin = () => {
       </Helmet>
       {isLoading ? <Spinner /> : null}
       {addQuizModal ? <AddQuizModal ru={ru} en={en} /> : null}
+      {addQuestionModal ? <AddQuestionModal ru={ru} en={en} /> : null}
 
       <Flex>
         {registerUserTab ? <AdminRegisterForm en={en} ru={ru} /> : null}

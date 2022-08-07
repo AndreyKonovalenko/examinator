@@ -10,7 +10,10 @@ import SettingPanel from './SettingsPanel';
 import theme from '../../theme/index.js';
 import uniqid from 'uniqid';
 
-import { setQuestionsTabOff } from '../../features/ui/uiSlice';
+import {
+  setQuestionsTabOff,
+  setAddQuestionModalOn,
+} from '../../features/ui/uiSlice';
 
 const QuizCardAdmin = (props) => {
   const dispatch = useDispatch();
@@ -40,6 +43,7 @@ const QuizCardAdmin = (props) => {
   // Settings Panel Handlers
 
   const onAddHandler = () => {
+    dispatch(setAddQuestionModalOn());
     console.log('new questio add');
   };
 
