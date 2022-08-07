@@ -15,7 +15,7 @@ const AddQuestionModal = (props) => {
   const [optionslist, setOpitionList] = useState(2);
 
   const onSave = (data) => {
-    console.log('question added');
+    console.log('question added', data);
   };
   const onClose = () => {
     dispatch(setAddQuestionModalOff());
@@ -43,6 +43,7 @@ const AddQuestionModal = (props) => {
       <h3>options</h3>
       {list(optionslist)}
       <Button onClick={onAdd}>ADD</Button>
+      <Button onClick={onSave}>Save Question</Button>
     </Modal>
   );
 };
