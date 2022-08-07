@@ -11,7 +11,7 @@ const AddQuizModal = (props) => {
   const { en, ru } = props;
 
   const onSave = (data) => {
-    dispatch(addQuiz(data));
+    dispatch(addQuiz({ title: data }));
   };
   const onClose = () => {
     dispatch(setAddQuizModalOff());

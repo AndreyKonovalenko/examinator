@@ -19,6 +19,7 @@ const AddQuestionModal = (props) => {
   return (
     <Modal onClose={onClose}>
       <Textarea en={en} ru={ru} onSave={onSave} maxLength={100} />
+      <Textarea en={en} ru={ru} onSave={onSave} maxLength={100} />
     </Modal>
   );
 };

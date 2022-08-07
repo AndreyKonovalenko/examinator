@@ -1,9 +1,9 @@
-import { useEffect, useState, useRef } from "react";
-import { Button, Conteiner, STextarea, Flex } from "../styles/Textarea.styled";
+import { useEffect, useState, useRef } from 'react';
+import { Button, Conteiner, STextarea, Flex } from '../styles/Textarea.styled';
 
 const Textarea = (props) => {
   const { onSave, en, ru, maxLength } = props;
-  const [data, setData] = useState("");
+  const [data, setData] = useState('');
   const textAreaRef = useRef(null);
 
   const onChange = (event) => {
@@ -12,17 +12,17 @@ const Textarea = (props) => {
   };
 
   const resizeTextArea = () => {
-    textAreaRef.current.style.height = "auto";
-    textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
+    textAreaRef.current.style.height = 'auto';
+    textAreaRef.current.style.height = textAreaRef.current.scrollHeight + 'px';
   };
 
   const onClear = () => {
-    setData("");
+    setData('');
   };
 
   const onSaveHandler = () => {
-    if (data !== "") {
-      onSave({ title: data });
+    if (data !== '') {
+      onSave({ data });
     }
   };
 
@@ -33,22 +33,21 @@ const Textarea = (props) => {
   return (
     <Conteiner>
       <h3>
-        {ru ? "Придумайте тему нового тестирования" : null}
-        {en ? "Choose new quiz titel" : null}
+        {ru ? 'сформулируйте тему теста' : null}{' '}
+        {en ? 'choese net quize theme' : null}
       </h3>
-
       <STextarea
         ref={textAreaRef}
         value={data}
         onChange={onChange}
         maxLength={maxLength}
       />
-      <Flex style={{ justifyContent: "flex-end" }}>
+      <Flex style={{ justifyContent: 'flex-end' }}>
         <Button onClick={onSaveHandler}>
-          {ru ? "Сохранить" : null} {en ? "Save" : null}
+          {ru ? 'Сохранить' : null} {en ? 'Save' : null}
         </Button>
         <Button onClick={onClear}>
-          {ru ? "Очистить" : null} {en ? "Clear" : null}
+          {ru ? 'Очистить' : null} {en ? 'Clear' : null}
         </Button>
       </Flex>
     </Conteiner>
