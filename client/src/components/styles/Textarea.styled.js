@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Conteiner = styled.div`
   background-color: ${({ theme }) => theme.colors.surface};
   color: ${({ theme }) => theme.colors.text.onSurface};
   border-radius: 15px;
-  margin: 15px;
+  width: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;

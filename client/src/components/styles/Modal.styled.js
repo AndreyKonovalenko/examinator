@@ -20,6 +20,9 @@ export const MContainer = styled.div`
   overflow: hidden;
   padding: 30px;
   position: relative;
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    width: 100%;
+  }
 `;
 
 export const MIcon = styled.button`
