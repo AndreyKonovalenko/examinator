@@ -57,14 +57,14 @@ export const quizSlice = createSlice({
   initialState,
   reducers: {
     resetQuizState: (state) => initialState,
-    loadQuiz: (state, actions) => {
-      state.quiz = quizService.shuffle(actions.payload);
+    loadQuiz: (state, action) => {
+      state.quiz = quizService.shuffle(action.payload);
     },
     finishQuiz: (state) => {
       state.isCompleted = true;
     },
-    setUserAnswer: (state, actions) => {
-      state.userAnswers.push(actions.payload);
+    setUserAnswer: (state, action) => {
+      state.userAnswers.push(action.payload);
     },
   },
   extraReducers: (builder) => {

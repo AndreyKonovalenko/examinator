@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../styles/Textarea.styled";
 import { useDispatch } from "react-redux";
 import { IconStyled } from "../styles/Icon.styled";
@@ -18,6 +18,7 @@ const AddQuestionModal = (props) => {
 
   const [optionsList, setOpitionsList] = useState([uniqid()]);
   const [isChecked, setIsChecked] = useState(null);
+  const [options, setOptions] = useState([]);
   const questionId = uniqid();
 
   const onSaveQuestion = () => {
@@ -38,39 +39,15 @@ const AddQuestionModal = (props) => {
     dispatch(setAddQuestionModalOff());
   };
 
-  const onCheckHandler = useCallback(
-    (id, event) => {
-      event.preventDefault();
-      setIsChecked(id);
-    },
-    [optionsList]
-  );
+  const onCheckHandler = (id, event) => {
+    event.preventDefault();
+    setIsChecked(id);
+  };
 
-  const unCheckHandler = useCallback(
-    (id, event) => {
-      event.preventDefault();
-      setIsChecked(null);
-    },
-    [optionsList]
-  );
-
-  const list = optionsList.map((element) => {
-    return (
-      <li
-        style={{ listStyleType: "none", display: "flex", width: "95%" }}
-        key={uniqid()}
-      >
-        <CheckBox
-          style={{ marginTop: "6px" }}
-          onCheckHandler={onCheckHandler}
-          id={element}
-          isChecked={isChecked === element ? true : false}
-          unCheckHandler={unCheckHandler}
-        />
-        <Textarea id={element} en={en} ru={ru} onSave={null} maxLength={100} />
-      </li>
-    );
-  });
+  const unCheckHandler = (id, event) => {
+    event.preventDefault();
+    setIsChecked(null);
+  };
 
   const onPlus = () => setOpitionsList([...optionsList, uniqid()]);
 
@@ -82,6 +59,29 @@ const AddQuestionModal = (props) => {
     }
   };
 
+  const list = optionsList.map((element) => {
+    return (
+      <li
+        style={{ listStyleType: "none", display: "flex", width: "95%" }}
+        key={uniqid()}
+      >
+        <Textarea id={element} en={en} ru={ru} onSave={null} maxLength={100} />
+      </li>
+    );
+  });
+
+  const CheckBoxList = optionsList.map((element) => {
+    return (
+      <CheckBox
+        style={{ marginTop: "6px" }}
+        onCheckHandler={onCheckHandler}
+        id={element}
+        isChecked={isChecked === element ? true : false}
+        unCheckHandler={unCheckHandler}
+      />
+    );
+  });
+
   return (
     <Modal onClose={onClose}>
       <h2>Содерждание вопроса</h2>
@@ -89,7 +89,8 @@ const AddQuestionModal = (props) => {
       <h3>
         {en ? "options:" : null} {ru ? "Варианты ответов:" : null}
       </h3>
-      {list}
+      <ul>{list}</ul>
+      <ul>{CheckBoxList}</ul>
       <IconStyled>
         <MdAdd onClick={onPlus} />
       </IconStyled>
