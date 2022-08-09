@@ -3,9 +3,9 @@ import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import theme from "../../theme";
 
 const CheckBox = (props) => {
-  const { unCheckHandler, onCheckHandler, id, isChecked } = props;
+  const { unCheckHandler, onCheckHandler, id, isChecked, style } = props;
   return (
-    <div style={{ margin: "auto", marginRight: "5px" }}>
+    <div style={style ? style : { margin: "auto", marginRight: "5px" }}>
       <IconStyled bg={theme.colors.surface} color={theme.colors.primary.light}>
         {isChecked ? (
           <MdCheckBox
