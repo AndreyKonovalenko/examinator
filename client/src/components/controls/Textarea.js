@@ -5,53 +5,53 @@ import { addToOptions } from "../../features/ui/uiSlice";
 
 const Textarea = (props) => {
   const dispatch = useDispatch();
-  const { onSave, en, ru, maxLength, id, save } = props;
-  const [data, setData] = useState("");
+  const { onSave, en, ru, maxLength, id, save, value } = props;
+  // const [data, setData] = useState("");
   const textAreaRef = useRef(null);
 
-  const onChange = (event) => {
-    event.preventDefault();
-    //   dispatch(addToOptions({ id: id, data: event.target.value }));
-    setData(event.target.value);
-    dispatch(addToOptions({ id: id, data: event.target.value }));
-  };
+  // const onChange = (event) => {
+  //   event.preventDefault();
+  //   //   dispatch(addToOptions({ id: id, data: event.target.value }));
+  //   setData(event.target.value);
+  //   dispatch(addToOptions({ id: id, data: event.target.value }));
+  // };
 
   const resizeTextArea = () => {
     textAreaRef.current.style.height = "auto";
     textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
   };
 
-  const onClear = () => {
-    setData("");
-  };
+  // const onClear = () => {
+  //   setData("");
+  // };
 
-  const onSaveHandler = () => {
-    if (data !== "") {
-      onSave({ data });
-    }
-  };
+  // const onSaveHandler = () => {
+  //   if (data !== "") {
+  //     onSave({ data });
+  //   }
+  // };
 
   useEffect(() => {
     console.log("rerendering");
     resizeTextArea();
-  }, [data]);
+  });
 
   return (
     <Conteiner>
       <STextarea
         id={id}
         ref={textAreaRef}
-        value={data}
-        onChange={onChange}
+        value={value}
+        onChange={() => {}}
         maxLength={maxLength}
       />
       <Flex style={{ justifyContent: "flex-end" }}>
         {save ? (
-          <Button onClick={onSaveHandler}>
+          <Button onClick={() => {}}>
             {ru ? "Сохранить" : null} {en ? "Save" : null}
           </Button>
         ) : null}
-        <Button onClick={onClear}>
+        <Button onClick={() => {}}>
           {ru ? "Очистить" : null} {en ? "Clear" : null}
         </Button>
       </Flex>

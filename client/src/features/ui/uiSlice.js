@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import uniqid from "uniqid";
+
 const initialState = {
   en: false,
   logsTab: false,
@@ -11,7 +13,7 @@ const initialState = {
   changePasswordModal: false,
   addQuizModal: false,
   addQuestionModal: false,
-  optionsData: [],
+  optionsData: [{ id: uniqid(), value: "" }],
 };
 
 export const uiSlice = createSlice({
