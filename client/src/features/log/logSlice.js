@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import logService from "./logService";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import logService from './logService';
 
-const log = JSON.parse(localStorage.getItem("log"));
+const log = JSON.parse(localStorage.getItem('log'));
 
 const initialState = {
   logs: [],
@@ -9,11 +9,11 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  massage: "",
+  message: '',
 };
 
 // Get all user's logs
-export const getLogs = createAsyncThunk("log/getAll", async (_, thunkAPI) => {
+export const getLogs = createAsyncThunk('log/getAll', async (_, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.user.token;
     return await logService.getLogs(token);
@@ -28,7 +28,7 @@ export const getLogs = createAsyncThunk("log/getAll", async (_, thunkAPI) => {
 
 // Create new log
 export const setLog = createAsyncThunk(
-  "log/create",
+  'log/create',
   async (userAnswers, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -47,7 +47,7 @@ export const setLog = createAsyncThunk(
 
 // Get user log by id
 export const getLogById = createAsyncThunk(
-  "log/getLogById",
+  'log/getLogById',
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -65,7 +65,7 @@ export const getLogById = createAsyncThunk(
 );
 
 export const logSlice = createSlice({
-  name: "log",
+  name: 'log',
   initialState,
   reducers: {
     resetLogState: (state) => {
@@ -73,7 +73,7 @@ export const logSlice = createSlice({
       state.isError = false;
       state.isSuccess = false;
       state.isLoading = false;
-      state.massage = "";
+      state.message = '';
     },
     resetAnswersLogState: (state) => {
       state.log = null;

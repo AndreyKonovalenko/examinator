@@ -1,19 +1,20 @@
-import { useState, useEffect } from "react";
-import { Button } from "../styles/Textarea.styled";
-import { useDispatch, useSelector } from "react-redux";
-import { IconStyled } from "../styles/Icon.styled";
-import { MdAdd, MdHorizontalRule } from "react-icons/md";
+import { useState, useEffect } from 'react';
+import { Button } from '../styles/Textarea.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { IconStyled } from '../styles/Icon.styled';
+import { MdAdd, MdHorizontalRule } from 'react-icons/md';
 
-import Modal from "../controls/Modal";
-import Textarea from "../controls/Textarea";
-import CheckBox from "./CheckBox";
-import uniqid from "uniqid";
+import Modal from '../controls/Modal';
+import Textarea from '../controls/Textarea';
+import CheckBox from './CheckBox';
+import uniqid from 'uniqid';
 
 import {
   setAddQuestionModalOff,
   addToOptions,
   removeFromOptions,
-} from "../../features/ui/uiSlice";
+  upDateOptions,
+} from '../../features/ui/uiSlice';
 
 const AddQuestionModal = (props) => {
   const dispatch = useDispatch();
@@ -38,6 +39,12 @@ const AddQuestionModal = (props) => {
   //   console.log(result);
   // };
 
+  const onChangeHandler = (event) => {
+    event.preventDefault();
+    dispatch(upDateOptions({ id: event.target.id, value: event.target.value }));
+    console.log(event.target.id, event.target.value);
+  };
+
   const onClose = () => {
     dispatch(setAddQuestionModalOff());
   };
@@ -56,22 +63,22 @@ const AddQuestionModal = (props) => {
     dispatch(addToOptions());
   };
 
-  const onMinus = (id) => {
-    dispatch(removeFromOptions(id));
+  const onMinus = () => {
+    dispatch(removeFromOptions());
   };
 
   const list = optionsData.map((element) => {
     return (
       <li
-        style={{ listStyleType: "none", display: "flex", width: "95%" }}
-        key={uniqid()}
-      >
+        style={{ listStyleType: 'none', display: 'flex', width: '95%' }}
+        key={uniqid()}>
         <Textarea
           id={element.id}
           en={en}
           ru={ru}
           onSave={null}
           maxLength={100}
+          onChange={onChangeHandler}
           value={element.value}
         />
       </li>
@@ -95,15 +102,15 @@ const AddQuestionModal = (props) => {
       <h2>Содерждание вопроса</h2>
       <Textarea en={en} ru={ru} id={questionId} />
       <h3>
-        {en ? "options:" : null} {ru ? "Варианты ответов:" : null}
+        {en ? 'options:' : null} {ru ? 'Варианты ответов:' : null}
       </h3>
       <ul>{list}</ul>
       <ul>{}</ul>
-      <IconStyled>
-        <MdAdd onClick={onPlus} />
+      <IconStyled onClick={onPlus}>
+        <MdAdd />
       </IconStyled>
-      <IconStyled>
-        <MdHorizontalRule onClick={onMinus} />
+      <IconStyled onClick={onMinus}>
+        <MdHorizontalRule />
       </IconStyled>
       <Button onClick={() => {}}> Save Question</Button>
     </Modal>

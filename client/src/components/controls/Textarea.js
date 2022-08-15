@@ -1,11 +1,11 @@
-import { useDispatch } from "react-redux";
-import { useEffect, useState, useRef } from "react";
-import { Button, Conteiner, STextarea, Flex } from "../styles/Textarea.styled";
-import { addToOptions } from "../../features/ui/uiSlice";
+import { useDispatch } from 'react-redux';
+import { useEffect, useState, useRef } from 'react';
+import { Button, Conteiner, STextarea, Flex } from '../styles/Textarea.styled';
+import { addToOptions } from '../../features/ui/uiSlice';
 
 const Textarea = (props) => {
   const dispatch = useDispatch();
-  const { onSave, en, ru, maxLength, id, save, value } = props;
+  const { onSave, en, ru, maxLength, id, save, value, onChange } = props;
   // const [data, setData] = useState("");
   const textAreaRef = useRef(null);
 
@@ -17,8 +17,8 @@ const Textarea = (props) => {
   // };
 
   const resizeTextArea = () => {
-    textAreaRef.current.style.height = "auto";
-    textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
+    textAreaRef.current.style.height = 'auto';
+    textAreaRef.current.style.height = textAreaRef.current.scrollHeight + 'px';
   };
 
   // const onClear = () => {
@@ -32,7 +32,7 @@ const Textarea = (props) => {
   // };
 
   useEffect(() => {
-    console.log("rerendering");
+    console.log('rerendering');
     resizeTextArea();
   });
 
@@ -42,17 +42,17 @@ const Textarea = (props) => {
         id={id}
         ref={textAreaRef}
         value={value}
-        onChange={() => {}}
+        onChange={onChange}
         maxLength={maxLength}
       />
-      <Flex style={{ justifyContent: "flex-end" }}>
+      <Flex style={{ justifyContent: 'flex-end' }}>
         {save ? (
           <Button onClick={() => {}}>
-            {ru ? "Сохранить" : null} {en ? "Save" : null}
+            {ru ? 'Сохранить' : null} {en ? 'Save' : null}
           </Button>
         ) : null}
         <Button onClick={() => {}}>
-          {ru ? "Очистить" : null} {en ? "Clear" : null}
+          {ru ? 'Очистить' : null} {en ? 'Clear' : null}
         </Button>
       </Flex>
     </Conteiner>

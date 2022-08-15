@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import quizService from "./quizService";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import quizService from './quizService';
 
 const initialState = {
   quizzes: [],
@@ -9,13 +9,13 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  massage: "",
+  message: '',
 };
 
 // Get all Quizzes
 
 export const getQuizzes = createAsyncThunk(
-  "quiz/getAll",
+  'quiz/getAll',
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -35,7 +35,7 @@ export const getQuizzes = createAsyncThunk(
 // Get quiz by id
 
 export const getQuizById = createAsyncThunk(
-  "quiz/getQuizByID",
+  'quiz/getQuizByID',
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -53,7 +53,7 @@ export const getQuizById = createAsyncThunk(
 );
 
 export const quizSlice = createSlice({
-  name: "quiz",
+  name: 'quiz',
   initialState,
   reducers: {
     resetQuizState: (state) => initialState,

@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import uniqid from "uniqid";
+import { createSlice } from '@reduxjs/toolkit';
+import uniqid from 'uniqid';
 
 const initialState = {
   en: false,
@@ -13,11 +13,11 @@ const initialState = {
   changePasswordModal: false,
   addQuizModal: false,
   addQuestionModal: false,
-  optionsData: [{ id: uniqid(), value: "" }],
+  optionsData: [{ id: uniqid(), value: '' }],
 };
 
 export const uiSlice = createSlice({
-  name: "ui",
+  name: 'ui',
   initialState,
   reducers: {
     resetUiState: (state) => initialState,
@@ -83,13 +83,21 @@ export const uiSlice = createSlice({
     setAddQuestionModalOff: (state) => {
       state.addQuestionModal = false;
     },
-    addToOptions: (state, action) => {
-      state.optionsData.push(action.payload);
+    addToOptions: (state) => {
+      state.optionsData.push({ id: uniqid(), value: '' });
     },
-    removeFromOptions: (state, action) => {
-      state.optionsData = state.optionsData.filter(
-        (element) => element.id !== action.payload.id
-      );
+    removeFromOptions: (state) => {
+      if (state.optionsData.length > 1) {
+        state.optionsData = state.optionsData.slice(0, -1);
+      }
+    },
+    upDateOptions: (state, action) => {
+      state.optionsData = state.optionsData.map((element) => {
+        if (element.id === action.payload.id) {
+          element.value = action.payload.value;
+        }
+        return element;
+      });
     },
   },
 });
@@ -118,5 +126,6 @@ export const {
   setAddQuestionModalOff,
   addToOptions,
   removeFromOptions,
+  upDateOptions,
 } = uiSlice.actions;
 export default uiSlice.reducer;
