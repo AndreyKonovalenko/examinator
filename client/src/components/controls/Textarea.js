@@ -1,20 +1,19 @@
 import { useDispatch } from 'react-redux';
 import { useEffect, useState, useRef } from 'react';
 import { Button, Conteiner, STextarea, Flex } from '../styles/Textarea.styled';
-import { addToOptions } from '../../features/ui/uiSlice';
+import { addToOptions, upDateOptions } from '../../features/ui/uiSlice';
 
 const Textarea = (props) => {
   const dispatch = useDispatch();
-  const { onSave, en, ru, maxLength, id, save, value, onChange } = props;
-  // const [data, setData] = useState("");
+  const { onSave, en, ru, maxLength, id, save, value, defaultValue } = props;
+  console.log('default is:', defaultValue);
+  const [data, setData] = useState(defaultValue);
   const textAreaRef = useRef(null);
 
-  // const onChange = (event) => {
-  //   event.preventDefault();
-  //   //   dispatch(addToOptions({ id: id, data: event.target.value }));
-  //   setData(event.target.value);
-  //   dispatch(addToOptions({ id: id, data: event.target.value }));
-  // };
+  const onChange = (event) => {
+    event.preventDefault();
+    setData(event.target.value);
+  };
 
   const resizeTextArea = () => {
     textAreaRef.current.style.height = 'auto';
@@ -41,7 +40,7 @@ const Textarea = (props) => {
       <STextarea
         id={id}
         ref={textAreaRef}
-        value={value}
+        value={data}
         onChange={onChange}
         maxLength={maxLength}
       />

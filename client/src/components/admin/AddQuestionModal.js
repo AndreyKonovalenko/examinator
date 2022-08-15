@@ -23,6 +23,7 @@ const AddQuestionModal = (props) => {
   const { en, ru } = props;
 
   const [isChecked, setIsChecked] = useState(null);
+  const [defaultValues, setSetDefaultValues] = useState([]);
   const questionId = uniqid();
 
   // const onSaveQuestion = () => {
@@ -61,6 +62,15 @@ const AddQuestionModal = (props) => {
 
   const onPlus = () => {
     dispatch(addToOptions());
+    setSetDefaultValues(
+      // need to move this function to store;
+      optionsData.map((element) => {
+        return {
+          id: element.id,
+          defaultValue: document.getElementById(element.id).value,
+        };
+      })
+    );
   };
 
   const onMinus = () => {
@@ -68,6 +78,20 @@ const AddQuestionModal = (props) => {
   };
 
   const list = optionsData.map((element) => {
+    const compear = (elem) => {
+      console.log(elem.id, element.id);
+      return elem.id === element.id;
+    };
+    let defaultValue = '';
+    console.log(defaultValues);
+    if (defaultValues.length > 0) {
+      const result = defaultValues.find(compear);
+      if (result !== undefined) {
+        console.log(result);
+        defaultValue = result.defaultValue;
+      }
+    }
+    console.log(defaultValue);
     return (
       <li
         style={{ listStyleType: 'none', display: 'flex', width: '95%' }}
@@ -77,9 +101,8 @@ const AddQuestionModal = (props) => {
           en={en}
           ru={ru}
           onSave={null}
+          dafaultValue={defaultValue}
           maxLength={100}
-          onChange={onChangeHandler}
-          value={element.value}
         />
       </li>
     );
@@ -96,6 +119,11 @@ const AddQuestionModal = (props) => {
   //     />
   //   );
   // });
+
+  useEffect(() => {
+    console.log('rereddering Modal');
+    console.log(defaultValues);
+  }, [defaultValues]);
 
   return (
     <Modal onClose={onClose}>
