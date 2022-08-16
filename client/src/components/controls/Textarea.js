@@ -1,11 +1,8 @@
-import { useDispatch } from 'react-redux';
 import { useEffect, useState, useRef } from 'react';
 import { Button, Conteiner, STextarea, Flex } from '../styles/Textarea.styled';
-import { addToOptions, upDateOptions } from '../../features/ui/uiSlice';
 
 const Textarea = (props) => {
-  const dispatch = useDispatch();
-  const { onSave, en, ru, maxLength, id, save, value, defaultValue } = props;
+  const { onSave, en, ru, maxLength, id, save, defaultValue } = props;
   console.log('default is:', defaultValue);
   const [data, setData] = useState(defaultValue);
   const textAreaRef = useRef(null);
@@ -20,15 +17,9 @@ const Textarea = (props) => {
     textAreaRef.current.style.height = textAreaRef.current.scrollHeight + 'px';
   };
 
-  // const onClear = () => {
-  //   setData("");
-  // };
-
-  // const onSaveHandler = () => {
-  //   if (data !== "") {
-  //     onSave({ data });
-  //   }
-  // };
+  const onClear = () => {
+    setData('');
+  };
 
   useEffect(() => {
     console.log('rerendering');
@@ -46,11 +37,11 @@ const Textarea = (props) => {
       />
       <Flex style={{ justifyContent: 'flex-end' }}>
         {save ? (
-          <Button onClick={() => {}}>
+          <Button onClick={onSave}>
             {ru ? 'Сохранить' : null} {en ? 'Save' : null}
           </Button>
         ) : null}
-        <Button onClick={() => {}}>
+        <Button onClick={onClear}>
           {ru ? 'Очистить' : null} {en ? 'Clear' : null}
         </Button>
       </Flex>
