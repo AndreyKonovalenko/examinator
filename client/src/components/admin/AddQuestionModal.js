@@ -26,7 +26,7 @@ const AddQuestionModal = (props) => {
   const [defaultValues, setSetDefaultValues] = useState([]);
   const questionId = uniqid();
 
-  // const onSaveQuestion = () => {
+  // const onSaveQuestion = () => {\
   //   const result = {
   //     question: document.getElementById(questionId).value,
   //     options: [],
@@ -61,16 +61,17 @@ const AddQuestionModal = (props) => {
   };
 
   const onPlus = () => {
-    dispatch(addToOptions());
-    setSetDefaultValues(
-      // need to move this function to store;
-      optionsData.map((element) => {
-        return {
+    optionsData.forEach((element) => {
+      console.log(document.getElementById(element.id).value);
+      dispatch(
+        upDateOptions({
           id: element.id,
           defaultValue: document.getElementById(element.id).value,
-        };
-      })
-    );
+        })
+      );
+    });
+
+    dispatch(addToOptions());
   };
 
   const onMinus = () => {
@@ -78,20 +79,6 @@ const AddQuestionModal = (props) => {
   };
 
   const list = optionsData.map((element) => {
-    const compear = (elem) => {
-      console.log(elem.id, element.id);
-      return elem.id === element.id;
-    };
-    let defaultValue = '';
-    console.log(defaultValues);
-    if (defaultValues.length > 0) {
-      const result = defaultValues.find(compear);
-      if (result !== undefined) {
-        console.log(result);
-        defaultValue = result.defaultValue;
-      }
-    }
-    console.log(defaultValue);
     return (
       <li
         style={{ listStyleType: 'none', display: 'flex', width: '95%' }}
@@ -101,7 +88,7 @@ const AddQuestionModal = (props) => {
           en={en}
           ru={ru}
           onSave={null}
-          dafaultValue={defaultValue}
+          defaultValue={element.defaultValue}
           maxLength={100}
         />
       </li>

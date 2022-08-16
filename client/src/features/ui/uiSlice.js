@@ -13,7 +13,7 @@ const initialState = {
   changePasswordModal: false,
   addQuizModal: false,
   addQuestionModal: false,
-  optionsData: [{ id: uniqid(), value: '' }],
+  optionsData: [{ id: uniqid(), defaultValue: '' }],
 };
 
 export const uiSlice = createSlice({
@@ -84,7 +84,7 @@ export const uiSlice = createSlice({
       state.addQuestionModal = false;
     },
     addToOptions: (state) => {
-      state.optionsData.push({ id: uniqid(), value: '' });
+      state.optionsData.push({ id: uniqid(), defaultValue: '' });
     },
     removeFromOptions: (state) => {
       if (state.optionsData.length > 1) {
@@ -94,7 +94,7 @@ export const uiSlice = createSlice({
     upDateOptions: (state, action) => {
       state.optionsData = state.optionsData.map((element) => {
         if (element.id === action.payload.id) {
-          element.value = action.payload.value;
+          element.defaultValue = action.payload.defaultValue;
         }
         return element;
       });
