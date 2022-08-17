@@ -1,7 +1,8 @@
-import asyncHandler from "express-async-handler";
-import { Log } from "../../models/logModel.js";
-import { Quiz } from "../../models/quizModel.js";
-import { User } from "../../models/userModel.js";
+import asyncHandler from 'express-async-handler';
+import { Log } from '../../models/logModel.js';
+import { Quiz } from '../../models/quizModel.js';
+import { User } from '../../models/userModel.js';
+import { Question } from '../../models/questionModel.js';
 
 // @desc Get user logs by userId
 // @route GET /api/admin/logs/user/:id
@@ -9,10 +10,10 @@ import { User } from "../../models/userModel.js";
 
 export const getLogs = asyncHandler(async (req, res) => {
   const data = await Log.find({ user: req.params.id })
-    .sort("-updatedAt")
+    .sort('-updatedAt')
     .populate({
-      path: "quiz",
-      select: ["title", "questions"],
+      path: 'quiz',
+      select: ['title', 'questions'],
     })
     .exec();
   if (data) {
@@ -37,7 +38,7 @@ export const deleteLog = asyncHandler(async (req, res) => {
   const log = await Log.findOne({ _id: req.params.id });
   if (!log) {
     res.status(400);
-    throw new Error("Log not found");
+    throw new Error('Log not found');
   }
   await log.remove();
   res.status(200).json({ id: req.params.id });
@@ -85,13 +86,13 @@ export const getQuizzes = asyncHandler(async (req, res) => {
 
 export const getFullQuiz = asyncHandler(async (req, res) => {
   const quiz = await Quiz.findOne({ _id: req.params.id }).populate({
-    path: "questions",
+    path: 'questions',
   });
   if (quiz) {
     res.status(200).json(quiz);
   } else {
     res.status(400);
-    throw new Error("Invalid quiz id");
+    throw new Error('Invalid quiz id');
   }
 });
 
@@ -105,4 +106,18 @@ export const addQuiz = asyncHandler(async (req, res) => {
   });
 
   res.status(200).json(quiz);
+});
+
+// @desc Get Question by id
+// @route GET /api//questions
+// @access Private Adim
+
+export const getQuestion = asyncHandler(async (req, res) => {
+  const question = await Question.findOne({ _id: req.params.id });
+  if (question) {
+    res.status(200).json(question);
+  } else {
+    res.status(400);
+    throw new Error('Invalid quesition id');
+  }
 });

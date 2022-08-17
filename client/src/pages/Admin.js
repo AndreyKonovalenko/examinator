@@ -14,6 +14,7 @@ import QuizCardAdmin from '../components/admin/QuizCardAdmin';
 import QuizzesListCardAdmin from '../components/admin/QuizzesListCardAdmin';
 import Spinner from '../components/Spinner';
 import UsersListCard from '../components/admin/UsersListCard';
+import EditQuestionModal from '../components/admin/EditQuestionModal';
 
 import { getQuizzes, getUsers } from '../features/admin/adminSlice';
 
@@ -32,10 +33,12 @@ const Admin = () => {
     questionsTab,
     addQuizModal,
     addQuestionModal,
+    editQuestionModal,
   } = useSelector((state) => state.ui);
   const { users, userLogs, quizzes, quiz, isLoading } = useSelector(
     (state) => state.admin
   );
+  const { questionData } = useSelector((state) => state.admin);
 
   useEffect(() => {
     if (!user) {
@@ -65,6 +68,9 @@ const Admin = () => {
       {isLoading ? <Spinner /> : null}
       {addQuizModal ? <AddQuizModal ru={ru} en={en} /> : null}
       {addQuestionModal ? <AddQuestionModal ru={ru} en={en} /> : null}
+      {editQuestionModal && questionData ? (
+        <EditQuestionModal ru={ru} en={en} />
+      ) : null}
 
       <Flex>
         {registerUserTab ? <AdminRegisterForm en={en} ru={ru} /> : null}

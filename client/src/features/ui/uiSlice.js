@@ -13,6 +13,7 @@ const initialState = {
   changePasswordModal: false,
   addQuizModal: false,
   addQuestionModal: false,
+  editQuestionModal: false,
   optionsData: [{ id: uniqid(), defaultValue: '' }],
 };
 
@@ -83,8 +84,17 @@ export const uiSlice = createSlice({
     setAddQuestionModalOff: (state) => {
       state.addQuestionModal = false;
     },
+    setEditQuestionModalOn: (state) => {
+      state.editQuestionModal = true;
+    },
+    setEditQuestionModalOff: (state) => {
+      state.editQuestionModal = false;
+    },
     addToOptions: (state) => {
       state.optionsData.push({ id: uniqid(), defaultValue: '' });
+    },
+    setOptionsData: (state, action) => {
+      state.optionsData = [...action.payload];
     },
     removeFromOptions: (state) => {
       if (state.optionsData.length > 1) {
@@ -124,7 +134,10 @@ export const {
   setAddQuizModalOff,
   setAddQuestionModalOn,
   setAddQuestionModalOff,
+  setEditQuestionModalOff,
+  setEditQuestionModalOn,
   addToOptions,
+  setOptionsData,
   removeFromOptions,
   upDateOptions,
 } = uiSlice.actions;

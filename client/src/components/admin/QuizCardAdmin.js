@@ -13,7 +13,9 @@ import uniqid from 'uniqid';
 import {
   setQuestionsTabOff,
   setAddQuestionModalOn,
+  setEditQuestionModalOn,
 } from '../../features/ui/uiSlice';
+import { getQuestion } from '../../features/admin/adminSlice';
 
 const QuizCardAdmin = (props) => {
   const dispatch = useDispatch();
@@ -27,6 +29,8 @@ const QuizCardAdmin = (props) => {
 
   const onClickHandler = (args, event) => {
     event.preventDefault();
+    dispatch(setEditQuestionModalOn());
+    dispatch(getQuestion(args[0]));
     setIsSelected(args[1]);
   };
 

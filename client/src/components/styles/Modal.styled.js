@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Overlay = styled.div`
   background-color: ${({ theme }) => theme.colors.modal};
@@ -20,6 +20,11 @@ export const MContainer = styled.div`
   overflow: hidden;
   padding: 30px;
   position: relative;
+  h1,
+  h2,
+  h3 {
+    color: ${({ theme }) => theme.colors.primary.main};
+  }
   @media (max-width: ${({ theme }) => theme.mobile}) {
     width: 100%;
   }
