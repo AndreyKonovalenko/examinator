@@ -19,50 +19,32 @@ import {
 const AddQuestionModal = (props) => {
   const dispatch = useDispatch();
   const { optionsData } = useSelector((state) => state.ui);
-
   const { en, ru } = props;
-
   const [isChecked, setIsChecked] = useState(null);
-  const [defaultValues, setSetDefaultValues] = useState([]);
   const questionId = uniqid();
 
-  // const onSaveQuestion = () => {\
-  //   const result = {
-  //     question: document.getElementById(questionId).value,
-  //     options: [],
-  //     currect: [optionsList.indexOf(isChecked).toString()],
-  //   };
-
-  //   // isChecked.filter((element, index) => element !== id
-  //   optionsList.forEach((element) => {
-  //     result.options.push(document.getElementById(element).value);
-  //   });
-  //   console.log(result);
-  // };
-
-  const onChangeHandler = (event) => {
-    event.preventDefault();
-    dispatch(upDateOptions({ id: event.target.id, value: event.target.value }));
-    console.log(event.target.id, event.target.value);
-  };
-
-  const onClose = () => {
-    dispatch(setAddQuestionModalOff());
-  };
-
-  const onCheckHandler = (id, event) => {
-    event.preventDefault();
-    setIsChecked(id);
-  };
-
-  const unCheckHandler = (id, event) => {
-    event.preventDefault();
-    setIsChecked(null);
-  };
-
-  const onPlus = () => {
+  const onSaveQuestion = () => {
+    saveCurrentTextareaState();
+    const currectAnswers = [];
+    optionsData.forEach((element, index) => {
+      if (element.id === isChecked) {
+        currectAnswers.push(index.toString());
+      }
+    });
+    const result = {
+      question: document.getElementById(questionId).value,
+      options: [],
+      currect: currectAnswers,
+    };
     optionsData.forEach((element) => {
-      console.log(document.getElementById(element.id).value);
+      result.options.push(document.getElementById(element.id).value);
+    });
+    console.log(result);
+  };
+
+  // Service function
+  const saveCurrentTextareaState = () => {
+    optionsData.forEach((element) => {
       dispatch(
         upDateOptions({
           id: element.id,
@@ -70,7 +52,24 @@ const AddQuestionModal = (props) => {
         })
       );
     });
+  };
 
+  const onClose = () => {
+    dispatch(setAddQuestionModalOff());
+  };
+
+  const onCheckHandler = (id) => {
+    saveCurrentTextareaState();
+    setIsChecked(id);
+  };
+
+  const unCheckHandler = () => {
+    saveCurrentTextareaState();
+    setIsChecked(null);
+  };
+
+  const onPlus = () => {
+    saveCurrentTextareaState();
     dispatch(addToOptions());
   };
 
@@ -80,9 +79,14 @@ const AddQuestionModal = (props) => {
 
   const list = optionsData.map((element) => {
     return (
-      <li
-        style={{ listStyleType: 'none', display: 'flex', width: '95%' }}
-        key={uniqid()}>
+      <li style={{ listStyleType: 'none', display: 'flex' }} key={uniqid()}>
+        <CheckBox
+          style={{ marginTop: '15px' }}
+          onCheckHandler={onCheckHandler}
+          id={element.id}
+          isChecked={isChecked === element.id ? true : false}
+          unCheckHandler={unCheckHandler}
+        />
         <Textarea
           id={element.id}
           en={en}
@@ -94,23 +98,6 @@ const AddQuestionModal = (props) => {
       </li>
     );
   });
-
-  // const CheckBoxList = optionsList.map((element) => {
-  //   return (
-  //     <CheckBox
-  //       style={{ marginTop: "6px" }}
-  //       onCheckHandler={onCheckHandler}
-  //       id={element}
-  //       isChecked={isChecked === element ? true : false}
-  //       unCheckHandler={unCheckHandler}
-  //     />
-  //   );
-  // });
-
-  useEffect(() => {
-    console.log('rereddering Modal');
-    console.log(defaultValues);
-  }, [defaultValues]);
 
   return (
     <Modal onClose={onClose}>
@@ -127,7 +114,7 @@ const AddQuestionModal = (props) => {
       <IconStyled onClick={onMinus}>
         <MdHorizontalRule />
       </IconStyled>
-      <Button onClick={() => {}}> Save Question</Button>
+      <Button onClick={onSaveQuestion}> Save Question</Button>
     </Modal>
   );
 };

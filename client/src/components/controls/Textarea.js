@@ -3,7 +3,7 @@ import { Button, Conteiner, STextarea, Flex } from '../styles/Textarea.styled';
 
 const Textarea = (props) => {
   const { onSave, en, ru, maxLength, id, save, defaultValue } = props;
-  console.log('default is:', defaultValue);
+
   const [data, setData] = useState(defaultValue);
   const textAreaRef = useRef(null);
 
@@ -22,7 +22,6 @@ const Textarea = (props) => {
   };
 
   useEffect(() => {
-    console.log('rerendering');
     resizeTextArea();
   });
 
