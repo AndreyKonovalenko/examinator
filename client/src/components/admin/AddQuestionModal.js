@@ -23,6 +23,21 @@ const AddQuestionModal = (props) => {
   const [isChecked, setIsChecked] = useState(null);
   const questionId = uniqid();
 
+  // Service function
+
+  const saveCurrentTextareaState = () => {
+    optionsData.forEach((element) => {
+      dispatch(
+        upDateOptions({
+          id: element.id,
+          defaultValue: document.getElementById(element.id).value,
+        })
+      );
+    });
+  };
+
+  // handlers
+
   const onSaveQuestion = () => {
     saveCurrentTextareaState();
     const currectAnswers = [];
@@ -39,19 +54,7 @@ const AddQuestionModal = (props) => {
     optionsData.forEach((element) => {
       result.options.push(document.getElementById(element.id).value);
     });
-    console.log(result);
-  };
-
-  // Service function
-  const saveCurrentTextareaState = () => {
-    optionsData.forEach((element) => {
-      dispatch(
-        upDateOptions({
-          id: element.id,
-          defaultValue: document.getElementById(element.id).value,
-        })
-      );
-    });
+    console.log(result); // api request needed
   };
 
   const onClose = () => {
@@ -101,13 +104,14 @@ const AddQuestionModal = (props) => {
 
   return (
     <Modal onClose={onClose}>
-      <h2>Содерждание вопроса</h2>
+      <h2>
+        {en ? 'Question:' : null} {ru ? 'Вопрос:' : null}
+      </h2>
       <Textarea en={en} ru={ru} id={questionId} />
       <h3>
         {en ? 'options:' : null} {ru ? 'Варианты ответов:' : null}
       </h3>
       <ul>{list}</ul>
-      <ul>{}</ul>
       <IconStyled onClick={onPlus}>
         <MdAdd />
       </IconStyled>
