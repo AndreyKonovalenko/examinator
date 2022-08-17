@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '../styles/Textarea.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconStyled } from '../styles/Icon.styled';
@@ -8,6 +8,7 @@ import Modal from '../controls/Modal';
 import Textarea from '../controls/Textarea';
 import CheckBox from './CheckBox';
 import uniqid from 'uniqid';
+import theme from '../../theme';
 
 import {
   setAddQuestionModalOff,
@@ -87,7 +88,7 @@ const AddQuestionModal = (props) => {
         style={{ listStyleType: 'none', display: 'flex', widows: '800px' }}
         key={uniqid()}>
         <CheckBox
-          style={{ marginTop: '15px' }}
+          style={{ marginTop: '14px' }}
           onCheckHandler={onCheckHandler}
           id={id}
           isChecked={isChecked === id ? true : false}
@@ -116,13 +117,26 @@ const AddQuestionModal = (props) => {
         {en ? 'options:' : null} {ru ? 'Варианты ответов:' : null}
       </h3>
       {list}
-      <IconStyled onClick={onPlus}>
-        <MdAdd />
-      </IconStyled>
-      <IconStyled onClick={onMinus}>
-        <MdHorizontalRule />
-      </IconStyled>
-      <Button onClick={onSaveQuestion}> Save Question</Button>
+      <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+        <IconStyled
+          onClick={onPlus}
+          bg={theme.colors.surface}
+          color={theme.colors.primary.light}>
+          <MdAdd size={'2rem'} />
+        </IconStyled>
+        <IconStyled
+          onClick={onMinus}
+          bg={theme.colors.surface}
+          color={theme.colors.primary.light}>
+          <MdHorizontalRule size={'2rem'} />
+        </IconStyled>
+      </div>
+      <Button
+        style={{ margin: 'auto ', fontSize: '1.5rem' }}
+        onClick={onSaveQuestion}>
+        {en ? 'Save Question' : null}
+        {ru ? 'Сохранить вопрос' : null}
+      </Button>
     </Modal>
   );
 };
