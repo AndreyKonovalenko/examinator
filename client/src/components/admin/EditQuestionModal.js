@@ -17,6 +17,7 @@ import {
   setEditQuestionModalOff,
   setOptionsData,
 } from '../../features/ui/uiSlice';
+import { resetQuestinData } from '../../features/admin/adminSlice';
 
 const EditQuestionModal = (props) => {
   const dispatch = useDispatch();
@@ -65,6 +66,7 @@ const EditQuestionModal = (props) => {
 
   const onClose = () => {
     dispatch(setEditQuestionModalOff());
+    dispatch(resetQuestinData());
   };
 
   const onCheckHandler = (id) => {
@@ -124,7 +126,10 @@ const EditQuestionModal = (props) => {
 
   return (
     <Modal onClose={onClose}>
-      <h1>Режим редакирования вопроса</h1>
+      <h1>
+        {en ? 'Editing mode' : null}
+        {ru ? 'Режим редакирования' : null}
+      </h1>
       <h2>
         {en ? 'Question:' : null} {ru ? 'Вопрос:' : null}
       </h2>

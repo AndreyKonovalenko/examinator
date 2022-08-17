@@ -192,6 +192,9 @@ export const adminSlice = createSlice({
   initialState,
   reducers: {
     resetAdminState: (state) => initialState,
+    resetQuestinData: (state) => {
+      state.questionData = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -319,6 +322,6 @@ export const adminSlice = createSlice({
   },
 });
 
-export const { resetAdminState } = adminSlice.actions;
+export const { resetAdminState, resetQuestinData } = adminSlice.actions;
 
 export default adminSlice.reducer;
