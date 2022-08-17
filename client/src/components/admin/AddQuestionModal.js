@@ -81,21 +81,25 @@ const AddQuestionModal = (props) => {
   };
 
   const list = optionsData.map((element) => {
+    const { id, defaultValue } = element;
     return (
-      <li style={{ listStyleType: 'none', display: 'flex' }} key={uniqid()}>
+      <li
+        style={{ listStyleType: 'none', display: 'flex', widows: '800px' }}
+        key={uniqid()}>
         <CheckBox
           style={{ marginTop: '15px' }}
           onCheckHandler={onCheckHandler}
-          id={element.id}
-          isChecked={isChecked === element.id ? true : false}
+          id={id}
+          isChecked={isChecked === id ? true : false}
           unCheckHandler={unCheckHandler}
         />
         <Textarea
-          id={element.id}
+          id={id}
           en={en}
           ru={ru}
+          styleOption={{ width: '100%' }}
           onSave={null}
-          defaultValue={element.defaultValue}
+          defaultValue={defaultValue}
           maxLength={100}
         />
       </li>
@@ -111,7 +115,7 @@ const AddQuestionModal = (props) => {
       <h3>
         {en ? 'options:' : null} {ru ? 'Варианты ответов:' : null}
       </h3>
-      <ul>{list}</ul>
+      {list}
       <IconStyled onClick={onPlus}>
         <MdAdd />
       </IconStyled>
