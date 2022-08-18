@@ -97,7 +97,7 @@ export const getFullQuiz = asyncHandler(async (req, res) => {
 });
 
 // @desc add  new Quizz
-// @route GET /api/adim/quizzes
+// @route POST /api/adim/quizzes
 // @access Private Admin
 
 export const addQuiz = asyncHandler(async (req, res) => {
@@ -119,5 +119,60 @@ export const getQuestion = asyncHandler(async (req, res) => {
   } else {
     res.status(400);
     throw new Error('Invalid quesition id');
+  }
+});
+
+export const setQuestion = asyncHandler(async (req, res) => {
+  const { question, options, currect } = req.body;
+  const newQuestion = await Question.create({
+    question,
+    options,
+    currect,
+  });
+  if (newQuestion) {
+    res.status(200).json(newQuestion);
+  } else {
+    res.status(400);
+    throw new Error('New question has not been created');
+  }
+});
+
+// @desc Create a new Question and add it to existing Quiz
+// @route POST /api/adim/quizzes/:id
+// @access Private Admin
+
+export const createAndAddQuestionToQuiz = asyncHandler(async (req, res) => {
+  const { question, options, currect } = req.body;
+  const currentQuiz = await Quiz.findOne({ _id: req.params.id });
+  if (currentQuiz) {
+    const newQuestion = await Question.create({
+      question,
+      options,
+      currect,
+    });
+    if (newQuestion) {
+      currentQuiz.questions.push(newQuestion._id);
+      const upadatedQuiz = await currentQuiz.save();
+      if (upadatedQuiz) {
+        const quiz = await Quiz.findOne({ _id: upadatedQuiz._id }).populate({
+          path: 'questions',
+        });
+        if (quiz) {
+          res.status(200).json(quiz);
+        } else {
+          res.status(400);
+          throw new Error('Invalid quiz id');
+        }
+      } else {
+        res.status(400);
+        throw new Error('during updating quiz something goes wrong');
+      }
+    } else {
+      res.status(400);
+      throw new Error('New question has not been created');
+    }
+  } else {
+    res.status(400);
+    throw new Error('Ivalid quiz id');
   }
 });

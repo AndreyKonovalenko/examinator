@@ -20,7 +20,6 @@ import { getQuestion } from '../../features/admin/adminSlice';
 const QuizCardAdmin = (props) => {
   const dispatch = useDispatch();
   const { en, item, ru } = props;
-
   const [isSelected, setIsSelected] = useState(null);
   const [isChecked, setIsChecked] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
@@ -48,7 +47,6 @@ const QuizCardAdmin = (props) => {
 
   const onAddHandler = () => {
     dispatch(setAddQuestionModalOn());
-    console.log('new questio add');
   };
 
   const onCloseHandler = () => {
@@ -83,7 +81,7 @@ const QuizCardAdmin = (props) => {
       <div style={{ display: 'flex' }} key={uniqid()}>
         {isEdit ? (
           <CheckBox
-            checkedHandler={onCheckHandler}
+            onCheckHandler={onCheckHandler}
             id={element._id}
             isChecked={isChecked.includes(element._id) ? true : false}
             unCheckHandler={unCheckHandler}
@@ -92,6 +90,14 @@ const QuizCardAdmin = (props) => {
 
         <ListElem
           key={uniqid()}
+          style={
+            index === isSelected
+              ? {
+                  backgroundColor: theme.colors.primary.main,
+                  color: theme.colors.text.onPrimary,
+                }
+              : null
+          }
           onClick={(event) => onClickHandler([element._id, index], event)}>
           <h3>{element.question}</h3>
           <ul>{optionList}</ul>

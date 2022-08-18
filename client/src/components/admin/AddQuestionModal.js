@@ -19,10 +19,14 @@ import {
   resetOptionsData,
 } from '../../features/ui/uiSlice';
 
+import { createAndAddQuestionToQuiz } from '../../features/admin/adminSlice';
+
 const AddQuestionModal = (props) => {
   const dispatch = useDispatch();
+  const { quiz } = useSelector((state) => state.admin);
   const { optionsData } = useSelector((state) => state.ui);
   const { en, ru } = props;
+  const { _id } = quiz;
   const [isChecked, setIsChecked] = useState(null);
   const questionId = uniqid();
 
@@ -46,7 +50,7 @@ const AddQuestionModal = (props) => {
     const currectAnswers = [];
     optionsData.forEach((element, index) => {
       if (element.id === isChecked) {
-        currectAnswers.push(index.toString());
+        currectAnswers.push((index + 1).toString());
       }
     });
     const result = {
@@ -57,7 +61,7 @@ const AddQuestionModal = (props) => {
     optionsData.forEach((element) => {
       result.options.push(document.getElementById(element.id).value);
     });
-    console.log(result); // api request needed
+    dispatch(createAndAddQuestionToQuiz({ id: _id, questionData: result }));
   };
 
   const onClose = () => {

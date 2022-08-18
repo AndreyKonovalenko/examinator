@@ -51,7 +51,7 @@ const EditQuestionModal = (props) => {
     const currectAnswers = [];
     optionsData.forEach((element, index) => {
       if (element.id === isChecked) {
-        currectAnswers.push(index.toString());
+        currectAnswers.push((index + 1).toString());
       }
     });
     const result = {

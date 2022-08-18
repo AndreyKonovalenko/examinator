@@ -187,6 +187,24 @@ export const getQuestion = createAsyncThunk(
   }
 );
 
+export const createAndAddQuestionToQuiz = createAsyncThunk(
+  'admin/createQuestionAndAddToQuiz',
+  async (data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await adminService.createAndAddQuestionToQuiz(data, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const adminSlice = createSlice({
   name: 'admin',
   initialState,
@@ -318,6 +336,19 @@ export const adminSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload.options;
+      })
+      .addCase(createAndAddQuestionToQuiz.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createAndAddQuestionToQuiz.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.quiz = action.payload;
+      })
+      .addCase(createAndAddQuestionToQuiz.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       });
   },
 });

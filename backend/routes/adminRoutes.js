@@ -8,6 +8,7 @@ import {
   getFullQuiz,
   getQuestion,
   addQuiz,
+  createAndAddQuestionToQuiz,
 } from './controllers/adminController.js';
 import protect from '../middleware/authMiddleware.js';
 import isAdmin from '../middleware/adminMiddleware.js';
@@ -24,12 +25,14 @@ router.delete('/users/:id', protect, isAdmin, deleteUser);
 router.delete('/logs/:id', protect, isAdmin, deleteLog);
 // get all quizzes
 router.get('/quizzes', protect, isAdmin, getQuizzes);
-// git full quiz data
+// get full quiz data
 router.get('/quizzes/:id', protect, isAdmin, getFullQuiz);
-// git question data by id
+// get question data by id
 router.get('/questions/:id', protect, isAdmin, getQuestion);
 // create quiz
 // * this method creates only title, next you need add questions to quiz
 router.post('/quizzes', protect, isAdmin, addQuiz);
+// create a new question and add itot extisting quiz
+router.post('/quizzes/:id', protect, isAdmin, createAndAddQuestionToQuiz);
 
 export default router;
