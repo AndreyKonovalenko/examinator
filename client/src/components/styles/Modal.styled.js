@@ -30,6 +30,15 @@ export const MContainer = styled.div`
   }
 `;
 
+export const Li = styled.li`
+  display: flex;
+  list-style-type: none;
+  width: 800px;
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    width: 100%;
+  }
+`;
+
 export const MIcon = styled.button`
   background-color: ${({ theme }) => theme.colors.surface};
   border-radius: 50%;

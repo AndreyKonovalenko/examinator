@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button } from '../styles/Textarea.styled';
+import { Li } from '../styles/Modal.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconStyled } from '../styles/Icon.styled';
 import { MdAdd, MdHorizontalRule } from 'react-icons/md';
@@ -16,6 +17,7 @@ import {
   upDateOptions,
   setEditQuestionModalOff,
   setOptionsData,
+  resetOptionsData,
 } from '../../features/ui/uiSlice';
 import { resetQuestinData } from '../../features/admin/adminSlice';
 
@@ -27,7 +29,6 @@ const EditQuestionModal = (props) => {
 
   const { en, ru } = props;
   const [isChecked, setIsChecked] = useState(null);
-  const [subscribe, setUnSibscirbe] = useState(true);
   const questionId = uniqid();
 
   // Service function
@@ -67,6 +68,7 @@ const EditQuestionModal = (props) => {
   const onClose = () => {
     dispatch(setEditQuestionModalOff());
     dispatch(resetQuestinData());
+    dispatch(resetOptionsData());
   };
 
   const onCheckHandler = (id) => {
@@ -92,9 +94,7 @@ const EditQuestionModal = (props) => {
     const { id, defaultValue } = element;
 
     return (
-      <li
-        style={{ listStyleType: 'none', display: 'flex', widows: '800px' }}
-        key={uniqid()}>
+      <Li key={uniqid()}>
         <CheckBox
           style={{ marginTop: '14px' }}
           onCheckHandler={onCheckHandler}
@@ -111,22 +111,18 @@ const EditQuestionModal = (props) => {
           defaultValue={defaultValue}
           maxLength={100}
         />
-      </li>
+      </Li>
     );
   });
 
   useEffect(() => {
-    if (subscribe) {
-      console.log('subscribe');
-      dispatch(setOptionsData(options));
-      setIsChecked(options[parseInt(currect) - 1].id);
-      setUnSibscirbe(false);
-    }
-  }, [subscribe, dispatch, options, currect]);
+    dispatch(setOptionsData(options));
+    setIsChecked(options[parseInt(currect) - 1].id);
+  }, [dispatch, options, currect]);
 
   return (
     <Modal onClose={onClose}>
-      <h1>
+      <h1 style={{ textAlign: 'center' }}>
         {en ? 'Editing mode' : null}
         {ru ? 'Режим редакирования' : null}
       </h1>

@@ -3,6 +3,7 @@ import { Button } from '../styles/Textarea.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconStyled } from '../styles/Icon.styled';
 import { MdAdd, MdHorizontalRule } from 'react-icons/md';
+import { Li } from '../styles/Modal.styled';
 
 import Modal from '../controls/Modal';
 import Textarea from '../controls/Textarea';
@@ -15,6 +16,7 @@ import {
   addToOptions,
   removeFromOptions,
   upDateOptions,
+  resetOptionsData,
 } from '../../features/ui/uiSlice';
 
 const AddQuestionModal = (props) => {
@@ -60,6 +62,7 @@ const AddQuestionModal = (props) => {
 
   const onClose = () => {
     dispatch(setAddQuestionModalOff());
+    dispatch(resetOptionsData());
   };
 
   const onCheckHandler = (id) => {
@@ -84,9 +87,7 @@ const AddQuestionModal = (props) => {
   const list = optionsData.map((element) => {
     const { id, defaultValue } = element;
     return (
-      <li
-        style={{ listStyleType: 'none', display: 'flex', widows: '800px' }}
-        key={uniqid()}>
+      <Li key={uniqid()}>
         <CheckBox
           style={{ marginTop: '14px' }}
           onCheckHandler={onCheckHandler}
@@ -103,7 +104,7 @@ const AddQuestionModal = (props) => {
           defaultValue={defaultValue}
           maxLength={100}
         />
-      </li>
+      </Li>
     );
   });
 

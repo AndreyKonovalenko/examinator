@@ -109,6 +109,9 @@ export const uiSlice = createSlice({
         return element;
       });
     },
+    resetOptionsData: (state) => {
+      state.optionsData = initialState.optionsData;
+    },
   },
 });
 
@@ -140,5 +143,6 @@ export const {
   setOptionsData,
   removeFromOptions,
   upDateOptions,
+  resetOptionsData,
 } = uiSlice.actions;
 export default uiSlice.reducer;
