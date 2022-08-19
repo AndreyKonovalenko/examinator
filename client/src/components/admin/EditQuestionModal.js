@@ -24,7 +24,7 @@ import { resetQuestinData } from '../../features/admin/adminSlice';
 const EditQuestionModal = (props) => {
   const dispatch = useDispatch();
   const { questionData } = useSelector((state) => state.admin);
-  const { options, question, currect } = questionData;
+  const { options, question, currect, _id } = questionData;
   const { optionsData } = useSelector((state) => state.ui);
 
   const { en, ru } = props;
@@ -62,7 +62,7 @@ const EditQuestionModal = (props) => {
     optionsData.forEach((element) => {
       result.options.push(document.getElementById(element.id).value);
     });
-    console.log(result); // api request needed
+    console.log(result, _id); // api request needed
   }
 
   const onClose = () => {
@@ -151,8 +151,8 @@ const EditQuestionModal = (props) => {
       <Button
         style={{ margin: 'auto ', fontSize: '1.5rem' }}
         onClick={onSaveQuestion}>
-        {en ? 'Save Question' : null}
-        {ru ? 'Сохранить вопрос' : null}
+        {en ? 'Save changes' : null}
+        {ru ? 'Сохранить изменения' : null}
       </Button>
     </Modal>
   );

@@ -205,6 +205,24 @@ export const createAndAddQuestionToQuiz = createAsyncThunk(
   }
 );
 
+export const updateQuestionData = createAsyncThunk(
+  'admin/updateQuestionData',
+  async (data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await adminService.updateQuestionData(data, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const adminSlice = createSlice({
   name: 'admin',
   initialState,
@@ -344,8 +362,22 @@ export const adminSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.quiz = action.payload;
+        // need change logic only updata state do not send request to db
       })
       .addCase(createAndAddQuestionToQuiz.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(updateQuestionData.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateQuestionData.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        //   state.quiz.options.find( {...state.quiz, questions.push() action.payload}
+      })
+      .addCase(updateQuestionData.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

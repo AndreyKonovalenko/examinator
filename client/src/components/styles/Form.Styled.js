@@ -76,7 +76,7 @@ export const InsideInputIconWrapper = styled.div`
   cursor: pointer;
   height: ${inputFontSize + 2 + 11 * 2 + 2 + 'px'};
   color: ${({ theme }) => theme.colors.primary.light};
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.surface};
   &:hover {
     opacity: 0.9;
     transform: scale(0.98);

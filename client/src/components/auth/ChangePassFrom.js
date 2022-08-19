@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Form,
   Input,
   Title,
   Wrapper,
   InsideInputIconWrapper,
-} from "../styles/Form.Styled";
-import { Button } from "../styles/Button.styled";
-import { MdRemoveRedEye } from "react-icons/md";
-import theme from "../../theme/index";
+} from '../styles/Form.Styled';
+import { Button } from '../styles/Button.styled';
+import { MdRemoveRedEye } from 'react-icons/md';
+import theme from '../../theme/index';
 
 const ChangePassForm = (props) => {
   const { ru, en, currentPassword, onChange, password, onSubmit, password1 } =
@@ -34,58 +34,56 @@ const ChangePassForm = (props) => {
 
   return (
     <Wrapper>
-      <Form onSubmit={onSubmit} style={{ boxShadow: "none" }}>
-        {ru ? <Title>Изменение пороля</Title> : null}
+      <Form onSubmit={onSubmit} style={{ boxShadow: 'none' }}>
+        {ru ? <Title>Изменение пароля</Title> : null}
         {en ? <Title>Change password</Title> : null}
-        <div style={{ width: "100%", position: "relative" }}>
+        <div style={{ width: '100%', position: 'relative' }}>
           <Input
-            style={{ width: "100%", paddingRight: "40px" }}
-            placeholder="Current password"
-            type={currentPasswordShown ? "text" : "password"}
-            name="currentPassword"
+            style={{ width: '100%', paddingRight: '40px' }}
+            placeholder='Current password'
+            type={currentPasswordShown ? 'text' : 'password'}
+            name='currentPassword'
             value={currentPassword}
             onChange={onChange}
           />
           <InsideInputIconWrapper
-            onClick={(event) => toggleCurrentPassword(event)}
-          >
-            <MdRemoveRedEye size={"1.5rem"} />
+            onClick={(event) => toggleCurrentPassword(event)}>
+            <MdRemoveRedEye size={'1.5rem'} />
           </InsideInputIconWrapper>
         </div>
 
-        <div style={{ width: "100%", position: "relative" }}>
+        <div style={{ width: '100%', position: 'relative' }}>
           <Input
-            style={{ width: "100%", position: "relative" }}
-            placeholder="New password"
-            type={passwordShown ? "text" : "password"}
-            name="password"
+            style={{ width: '100%', position: 'relative' }}
+            placeholder='New password'
+            type={passwordShown ? 'text' : 'password'}
+            name='password'
             value={password}
             onChange={onChange}
           />
           <InsideInputIconWrapper onClick={(event) => togglePassword(event)}>
-            <MdRemoveRedEye size={"1.5rem"} />
+            <MdRemoveRedEye size={'1.5rem'} />
           </InsideInputIconWrapper>
         </div>
 
-        <div style={{ width: "100%", position: "relative" }}>
+        <div style={{ width: '100%', position: 'relative' }}>
           <Input
-            style={{ width: "100%", paddingRight: "40px" }}
-            placeholder="Confirm new password"
-            type={password1Shown ? "text" : "password"}
-            name="password1"
+            style={{ width: '100%', paddingRight: '40px' }}
+            placeholder='Confirm new password'
+            type={password1Shown ? 'text' : 'password'}
+            name='password1'
             value={password1}
             onChange={onChange}
           />
           <InsideInputIconWrapper onClick={(event) => togglePassword1(event)}>
-            <MdRemoveRedEye size={"1.5rem"} />
+            <MdRemoveRedEye size={'1.5rem'} />
           </InsideInputIconWrapper>
         </div>
         <Button
           bg={theme.colors.primary.light}
-          color={theme.colors.text.onPrimary}
-        >
-          {ru ? "Сохрранить" : null}
-          {en ? "Save" : null}
+          color={theme.colors.text.onPrimary}>
+          {ru ? 'Сохрранить' : null}
+          {en ? 'Save' : null}
         </Button>
       </Form>
     </Wrapper>
