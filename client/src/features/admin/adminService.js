@@ -112,6 +112,7 @@ const createAndAddQuestionToQuiz = async (data, token) => {
     data.questionData,
     config
   );
+  console.log(response.data);
   return response.data;
 };
 

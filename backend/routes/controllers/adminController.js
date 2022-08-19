@@ -154,15 +154,7 @@ export const createAndAddQuestionToQuiz = asyncHandler(async (req, res) => {
       currentQuiz.questions.push(newQuestion._id);
       const upadatedQuiz = await currentQuiz.save();
       if (upadatedQuiz) {
-        const quiz = await Quiz.findOne({ _id: upadatedQuiz._id }).populate({
-          path: 'questions',
-        });
-        if (quiz) {
-          res.status(200).json(quiz);
-        } else {
-          res.status(400);
-          throw new Error('Invalid quiz id');
-        }
+        res.status(200).json(newQuestion);
       } else {
         res.status(400);
         throw new Error('during updating quiz something went wrong');

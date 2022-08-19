@@ -361,7 +361,10 @@ export const adminSlice = createSlice({
       .addCase(createAndAddQuestionToQuiz.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.quiz = action.payload;
+        state.quiz = {
+          ...state.quiz,
+          questions: [...state.quiz.questions, action.payload],
+        };
       })
       .addCase(createAndAddQuestionToQuiz.rejected, (state, action) => {
         state.isLoading = false;
