@@ -115,6 +115,20 @@ const createAndAddQuestionToQuiz = async (data, token) => {
   return response.data;
 };
 
+const updateQuestionData = async (data, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.put(
+    '/api/admin/questions/' + data.id,
+    data.questionData,
+    config
+  );
+  return response.data;
+};
+
 const quizService = {
   getUsers,
   getUserLogs,
@@ -126,5 +140,6 @@ const quizService = {
   getQuestion,
   addQuiz,
   createAndAddQuestionToQuiz,
+  updateQuestionData,
 };
 export default quizService;

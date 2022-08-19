@@ -9,6 +9,7 @@ import {
   getQuestion,
   addQuiz,
   createAndAddQuestionToQuiz,
+  updateQuestionData,
 } from './controllers/adminController.js';
 import protect from '../middleware/authMiddleware.js';
 import isAdmin from '../middleware/adminMiddleware.js';
@@ -32,7 +33,9 @@ router.get('/questions/:id', protect, isAdmin, getQuestion);
 // create quiz
 // * this method creates only title, next you need add questions to quiz
 router.post('/quizzes', protect, isAdmin, addQuiz);
-// create a new question and add itot extisting quiz
+// create a new question and add itot existing quiz
 router.post('/quizzes/:id', protect, isAdmin, createAndAddQuestionToQuiz);
+// update existing question
+router.put('/questions/:id', protect, isAdmin, updateQuestionData);
 
 export default router;

@@ -62,6 +62,8 @@ const AddQuestionModal = (props) => {
       result.options.push(document.getElementById(element.id).value);
     });
     dispatch(createAndAddQuestionToQuiz({ id: _id, questionData: result }));
+    dispatch(setAddQuestionModalOff());
+    dispatch(resetOptionsData());
   };
 
   const onClose = () => {
@@ -106,7 +108,7 @@ const AddQuestionModal = (props) => {
           styleOption={{ width: '100%' }}
           onSave={null}
           defaultValue={defaultValue}
-          maxLength={100}
+          maxLength={1000}
         />
       </Li>
     );

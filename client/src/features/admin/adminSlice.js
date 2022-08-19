@@ -362,7 +362,6 @@ export const adminSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.quiz = action.payload;
-        // need change logic only updata state do not send request to db
       })
       .addCase(createAndAddQuestionToQuiz.rejected, (state, action) => {
         state.isLoading = false;
@@ -375,7 +374,15 @@ export const adminSlice = createSlice({
       .addCase(updateQuestionData.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        //   state.quiz.options.find( {...state.quiz, questions.push() action.payload}
+        state.quiz = {
+          ...state.quiz,
+          questions: state.quiz.questions.map((element) => {
+            if (element._id === action.payload._id) {
+              element = action.payload;
+            }
+            return element;
+          }),
+        };
       })
       .addCase(updateQuestionData.rejected, (state, action) => {
         state.isLoading = false;

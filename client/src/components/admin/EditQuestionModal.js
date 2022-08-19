@@ -19,7 +19,10 @@ import {
   setOptionsData,
   resetOptionsData,
 } from '../../features/ui/uiSlice';
-import { resetQuestinData } from '../../features/admin/adminSlice';
+import {
+  resetQuestinData,
+  updateQuestionData,
+} from '../../features/admin/adminSlice';
 
 const EditQuestionModal = (props) => {
   const dispatch = useDispatch();
@@ -62,7 +65,10 @@ const EditQuestionModal = (props) => {
     optionsData.forEach((element) => {
       result.options.push(document.getElementById(element.id).value);
     });
-    console.log(result, _id); // api request needed
+    dispatch(updateQuestionData({ id: _id, questionData: result }));
+    dispatch(setEditQuestionModalOff());
+    dispatch(resetQuestinData());
+    dispatch(resetOptionsData());
   }
 
   const onClose = () => {
@@ -109,7 +115,7 @@ const EditQuestionModal = (props) => {
           styleOption={{ width: '100%' }}
           onSave={null}
           defaultValue={defaultValue}
-          maxLength={100}
+          maxLength={1000}
         />
       </Li>
     );

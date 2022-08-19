@@ -26,11 +26,11 @@ const QuizCardAdmin = (props) => {
 
   // List Hadlers
 
-  const onClickHandler = (args, event) => {
+  const onClickHandler = (id, event) => {
     event.preventDefault();
     dispatch(setEditQuestionModalOn());
-    dispatch(getQuestion(args[0]));
-    setIsSelected(args[1]);
+    dispatch(getQuestion(id));
+    setIsSelected(id);
   };
 
   const onCheckHandler = (id, event) => {
@@ -65,7 +65,7 @@ const QuizCardAdmin = (props) => {
     }
   };
 
-  const list = item.questions.map((element, index) => {
+  const list = item.questions.map((element) => {
     const optionList = element.options.map((el, index) => (
       <li
         key={uniqid()}
@@ -91,14 +91,14 @@ const QuizCardAdmin = (props) => {
         <ListElem
           key={uniqid()}
           style={
-            index === isSelected
+            element._id === isSelected
               ? {
                   backgroundColor: theme.colors.primary.main,
                   color: theme.colors.text.onPrimary,
                 }
               : null
           }
-          onClick={(event) => onClickHandler([element._id, index], event)}>
+          onClick={(event) => onClickHandler(element._id, event)}>
           <h3>{element.question}</h3>
           <ul>{optionList}</ul>
         </ListElem>

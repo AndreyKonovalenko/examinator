@@ -165,7 +165,7 @@ export const createAndAddQuestionToQuiz = asyncHandler(async (req, res) => {
         }
       } else {
         res.status(400);
-        throw new Error('during updating quiz something goes wrong');
+        throw new Error('during updating quiz something went wrong');
       }
     } else {
       res.status(400);
@@ -174,5 +174,30 @@ export const createAndAddQuestionToQuiz = asyncHandler(async (req, res) => {
   } else {
     res.status(400);
     throw new Error('Ivalid quiz id');
+  }
+});
+
+// @desc Update Question
+// @route PUT /api/adim/questions/:id
+// @access Private Admin
+export const updateQuestionData = asyncHandler(async (req, res) => {
+  const questionData = await Question.findOne({ _id: req.params.id });
+  if (questionData) {
+    const updatedQuestion = await Question.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    if (updatedQuestion) {
+      res.status(200).json(updatedQuestion);
+    } else {
+      res.status(400);
+      throw new Error('during updating question something went wrong');
+    }
+  } else {
+    res.status(400);
+    throw new Error('Invalid quesition id');
   }
 });
