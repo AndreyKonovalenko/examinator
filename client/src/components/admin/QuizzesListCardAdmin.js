@@ -9,7 +9,12 @@ import {
   setQuestionsTabOn,
   setQuizzesTabOff,
 } from '../../features/ui/uiSlice';
-import { getFullQuiz } from '../../features/admin/adminSlice';
+import {
+  getFullQuiz,
+  deleteQuestion,
+  deleteQuiz,
+  getQuizzes,
+} from '../../features/admin/adminSlice';
 
 import CheckBox from './CheckBox';
 import SettingPanel from './SettingsPanel';
@@ -25,10 +30,10 @@ const QuizzesListCardAdmin = (props) => {
 
   // List Hadlers
 
-  const onClickHandler = (args, event) => {
+  const onClickHandler = (id, event) => {
     event.preventDefault();
-    setIsSelected(args[1]);
-    dispatch(getFullQuiz(args[0]));
+    setIsSelected(id);
+    dispatch(getFullQuiz(id));
     dispatch(setQuestionsTabOn());
   };
 
@@ -54,12 +59,31 @@ const QuizzesListCardAdmin = (props) => {
 
   const onGearHandler = () => {
     setIsEdit(!isEdit);
+    dispatch(getQuizzes());
   };
 
   const onDeleteHandler = () => {
     if (isChecked.length > 0) {
+      console.log(isChecked);
+      isChecked.forEach((quizId) => {
+        item.forEach((quiz) => {
+          console.log(quiz);
+          if (quiz._id === quizId) {
+            if (quiz.questions.length === 0) {
+              dispatch(deleteQuiz(quizId));
+            }
+            if (quiz.questions.length > 0) {
+              console.log('questions deleted');
+              quiz.questions.forEach((questionId) => {
+                dispatch(deleteQuestion(questionId));
+              });
+              dispatch(deleteQuiz(quizId));
+            }
+          }
+        });
+      });
+
       console.log('Quiz will be deleted');
-      // isChecked.forEach((element) => dispatch(deleteQuiz(element)));
     } else {
       toast.error('Quiz for deleting is not selected!');
     }
@@ -79,14 +103,14 @@ const QuizzesListCardAdmin = (props) => {
         <ListElem
           key={uniqid()}
           style={
-            index === isSelected
+            element.id === isSelected
               ? {
                   backgroundColor: theme.colors.primary.main,
                   color: theme.colors.text.onPrimary,
                 }
               : null
           }
-          onClick={(event) => onClickHandler([element._id, index], event)}>
+          onClick={(event) => onClickHandler(element._id, event)}>
           <h2>{element.title}</h2>
         </ListElem>
       </div>

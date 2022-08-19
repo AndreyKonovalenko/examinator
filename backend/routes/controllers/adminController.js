@@ -207,3 +207,17 @@ export const deleteQuestion = asyncHandler(async (req, res) => {
   await quesition.remove();
   res.status(200).json({ id: req.params.id });
 });
+
+// @desc Delete Quiz by id
+// @router Delete /api/admin/quizzes/:id
+// @access Private Admin
+
+export const deleteQuiz = asyncHandler(async (req, res) => {
+  const quiz = await Quiz.findOne({ _id: req.params.id });
+  if (!quiz) {
+    res.status(400);
+    throw new Error('Quiz not found');
+  }
+  await quiz.remove();
+  res.status(200).json({ id: req.params.id });
+});

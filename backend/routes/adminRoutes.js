@@ -11,6 +11,7 @@ import {
   createAndAddQuestionToQuiz,
   updateQuestionData,
   deleteQuestion,
+  deleteQuiz,
 } from './controllers/adminController.js';
 import protect from '../middleware/authMiddleware.js';
 import isAdmin from '../middleware/adminMiddleware.js';
@@ -39,6 +40,8 @@ router.post('/quizzes/:id', protect, isAdmin, createAndAddQuestionToQuiz);
 // update existing question
 router.put('/questions/:id', protect, isAdmin, updateQuestionData);
 // delet question
-router.delete('/questions/:id', protect, isAdmin, deleteLog);
+router.delete('/questions/:id', protect, isAdmin, deleteQuestion);
+// delet quiz
+router.delete('/quizzes/:id', protect, isAdmin, deleteQuiz);
 
 export default router;

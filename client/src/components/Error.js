@@ -10,7 +10,6 @@ const Error = () => {
   const userState = useSelector((state) => state.auth);
   const adminState = useSelector((state) => state.admin);
   useEffect(() => {
-    console.log(adminState.isError);
     if (userState.isError) {
       toast.error(userState.message);
     }

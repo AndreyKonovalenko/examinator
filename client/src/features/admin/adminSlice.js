@@ -241,6 +241,24 @@ export const deleteQuestion = createAsyncThunk(
   }
 );
 
+export const deleteQuiz = createAsyncThunk(
+  'admin/deleteQuiz',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await adminService.deleteQuiz(id, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const adminSlice = createSlice({
   name: 'admin',
   initialState,
@@ -420,7 +438,22 @@ export const adminSlice = createSlice({
           (element) => element._id !== action.payload.id
         );
       })
-      .addCase(deleteQuestion, (state, action) => {
+      .addCase(deleteQuestion.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(deleteQuiz.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteQuiz.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.quizzes = state.quizzes.filter(
+          (element) => element._id !== action.payload.id
+        );
+      })
+      .addCase(deleteQuiz.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
