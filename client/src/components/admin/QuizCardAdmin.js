@@ -15,7 +15,7 @@ import {
   setAddQuestionModalOn,
   setEditQuestionModalOn,
 } from '../../features/ui/uiSlice';
-import { getQuestion } from '../../features/admin/adminSlice';
+import { getQuestion, deleteQuestion } from '../../features/admin/adminSlice';
 
 const QuizCardAdmin = (props) => {
   const dispatch = useDispatch();
@@ -60,6 +60,7 @@ const QuizCardAdmin = (props) => {
   const onDeleteHandler = () => {
     if (isChecked.length > 0) {
       console.log('Question will be deleted');
+      isChecked.forEach((element) => dispatch(deleteQuestion(element)));
     } else {
       toast.error('Question for deleting is not selected!');
     }

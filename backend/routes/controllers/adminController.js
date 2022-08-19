@@ -193,3 +193,17 @@ export const updateQuestionData = asyncHandler(async (req, res) => {
     throw new Error('Invalid quesition id');
   }
 });
+
+// @desc Delete Qestions by id
+// @router Delete /api/admin/questions/:id
+// @access Private Admin
+
+export const deleteQuestion = asyncHandler(async (req, res) => {
+  const quesition = await Question.findOne({ _id: req.params.id });
+  if (!quesition) {
+    res.status(400);
+    throw new Error('Question not found');
+  }
+  await quesition.remove();
+  res.status(200).json({ id: req.params.id });
+});

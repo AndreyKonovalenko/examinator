@@ -223,6 +223,24 @@ export const updateQuestionData = createAsyncThunk(
   }
 );
 
+export const deleteQuestion = createAsyncThunk(
+  'admin/deleteQuestion',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await adminService.deleteQuestion(id, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const adminSlice = createSlice({
   name: 'admin',
   initialState,
@@ -388,6 +406,21 @@ export const adminSlice = createSlice({
         };
       })
       .addCase(updateQuestionData.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(deleteQuestion.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteQuestion.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.quiz.questions = state.quiz.questions.filter(
+          (element) => element._id !== action.payload.id
+        );
+      })
+      .addCase(deleteQuestion, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
