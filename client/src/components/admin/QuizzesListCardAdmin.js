@@ -89,7 +89,7 @@ const QuizzesListCardAdmin = (props) => {
     }
   };
 
-  const list = item.map((element, index) => {
+  const list = item.map((element) => {
     return (
       <div style={{ display: 'flex' }} key={uniqid()}>
         {isEdit ? (

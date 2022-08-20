@@ -4,7 +4,7 @@ import { Quiz } from '../../models/quizModel.js';
 import { User } from '../../models/userModel.js';
 import { Question } from '../../models/questionModel.js';
 
-// @desc Get user logs by userId
+// @desc get user logs by userId
 // @route GET /api/admin/logs/user/:id
 // @access Private Admin
 
@@ -21,7 +21,7 @@ export const getLogs = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc Get ALL Users
+// @desc get all users
 // @route GET /api/users
 // @access Private Admin
 
@@ -30,7 +30,7 @@ export const getUsers = asyncHandler(async (req, res) => {
   res.status(200).json(users);
 });
 
-// @desc Delete user log by id
+// @desc delete user log by id
 // @router Delete /api/admin/logs/:id
 // @access Private Admin
 
@@ -44,7 +44,7 @@ export const deleteLog = asyncHandler(async (req, res) => {
   res.status(200).json({ id: req.params.id });
 });
 
-// @desc Delete user by id
+// @desc delete user by id
 // @route Delete /api/admin/users/:id
 // @access Private Adimin
 
@@ -71,7 +71,7 @@ export const deleteUser = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc Get Quizzes
+// @desc get quizzes
 // @route GET /api/adim/quizzes
 // @access Private Admin
 
@@ -80,7 +80,7 @@ export const getQuizzes = asyncHandler(async (req, res) => {
   res.status(200).json(quiz);
 });
 
-// @desc Get Full Quiz by id
+// @desc get full quiz by id
 // @route GET /api/adim/quizzes/:id
 // @access Private Admin
 
@@ -96,7 +96,7 @@ export const getFullQuiz = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc add  new Quizz
+// @desc add new quizz
 // @route POST /api/adim/quizzes
 // @access Private Admin
 
@@ -108,7 +108,7 @@ export const addQuiz = asyncHandler(async (req, res) => {
   res.status(200).json(quiz);
 });
 
-// @desc Get Question by id
+// @desc get question by id
 // @route GET /api//questions
 // @access Private Adim
 
@@ -137,7 +137,7 @@ export const setQuestion = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc Create a new Question and add it to existing Quiz
+// @desc create a new question and add it to existing Quiz
 // @route POST /api/adim/quizzes/:id
 // @access Private Admin
 
@@ -169,7 +169,7 @@ export const createAndAddQuestionToQuiz = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc Update Question
+// @desc update question
 // @route PUT /api/adim/questions/:id
 // @access Private Admin
 export const updateQuestionData = asyncHandler(async (req, res) => {
@@ -194,7 +194,7 @@ export const updateQuestionData = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc Delete Qestions by id
+// @desc delete qestion by id
 // @router Delete /api/admin/questions/:id
 // @access Private Admin
 
@@ -208,7 +208,7 @@ export const deleteQuestion = asyncHandler(async (req, res) => {
   res.status(200).json({ id: req.params.id });
 });
 
-// @desc Delete Quiz by id
+// @desc Delete auiz by id
 // @router Delete /api/admin/quizzes/:id
 // @access Private Admin
 
