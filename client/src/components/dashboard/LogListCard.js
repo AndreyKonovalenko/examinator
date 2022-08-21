@@ -5,8 +5,20 @@ import theme from '../../theme/index.js';
 import uniqid from 'uniqid';
 
 const LogListCard = (props) => {
+  const { item, onClick } = props;
   const { en, ru } = props;
-  const list = props.item.map((element) => {
+  const list = item.map((element) => {
+    if (element.quiz === null) {
+      return (
+        <ListElem key={uniqid()} onClick={(event) => onClick(element, event)}>
+          <h2>
+            {en ? 'Quiz has been deleted' : null}
+            {ru ? 'Тест был дулаент из системы' : null}
+          </h2>
+        </ListElem>
+      );
+    }
+
     const score = (
       (Number.parseInt(element.result) /
         Number.parseInt(element.quiz.questions.length)) *
@@ -22,9 +34,7 @@ const LogListCard = (props) => {
     };
 
     return (
-      <ListElem
-        key={uniqid()}
-        onClick={(event) => props.onClick(element, event)}>
+      <ListElem key={uniqid()} onClick={(event) => onClick(element, event)}>
         {ru ? <p>Тема: {element.quiz.title}</p> : null}
         {en ? <p>Quiz: {element.quiz.title}</p> : null}
         {ru ? (

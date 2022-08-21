@@ -226,11 +226,12 @@ export const deleteQuiz = asyncHandler(async (req, res) => {
     if (quiz.questions.length > 0) {
       for (const element of quiz.questions) {
         const question = await Question.findOne({ _id: element });
-        if (!question) {
-          res.status(400);
-          throw new Error('Question not found');
-        }
+        // if (!question) {
+        //   res.status(400);
+        //   throw new Error('Question not found');
+        // }
         if (question) {
+          console.log('quesetion removed: ', question);
           await question.remove();
         }
       }
