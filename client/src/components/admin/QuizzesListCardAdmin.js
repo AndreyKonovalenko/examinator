@@ -4,7 +4,11 @@ import { toast } from 'react-toastify';
 import { ListElem } from '../styles/ListElem.styled';
 import { StyledListCard } from '../styles/ListCard.styled';
 import { StyledSeparator } from '../styles/Separator.styled';
-import { setAddQuizModalOn, setQuizzesTabOff } from '../../features/ui/uiSlice';
+import {
+  setAddQuizModalOn,
+  setQuestionsTabOn,
+  setQuizzesTabOff,
+} from '../../features/ui/uiSlice';
 import {
   getFullQuiz,
   deleteQuiz,
@@ -29,6 +33,7 @@ const QuizzesListCardAdmin = (props) => {
     event.preventDefault();
     setIsSelected(id);
     dispatch(getFullQuiz(id));
+    dispatch(setQuestionsTabOn());
   };
 
   const onCheckHandler = (id, event) => {

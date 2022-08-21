@@ -224,14 +224,13 @@ export const deleteQuiz = asyncHandler(async (req, res) => {
       res.status(200).json({ id: req.params.id });
     }
     if (quiz.questions.length > 0) {
-      for (element of quiz.questions) {
-        const question = await Question.find({ _id: element });
+      for (const element of quiz.questions) {
+        const question = await Question.findOne({ _id: element });
         if (!question) {
           res.status(400);
           throw new Error('Question not found');
         }
         if (question) {
-          console.log('deleting question:', question);
           await question.remove();
         }
       }
