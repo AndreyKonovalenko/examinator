@@ -4,14 +4,9 @@ import { toast } from 'react-toastify';
 import { ListElem } from '../styles/ListElem.styled';
 import { StyledListCard } from '../styles/ListCard.styled';
 import { StyledSeparator } from '../styles/Separator.styled';
-import {
-  setAddQuizModalOn,
-  setQuestionsTabOn,
-  setQuizzesTabOff,
-} from '../../features/ui/uiSlice';
+import { setAddQuizModalOn, setQuizzesTabOff } from '../../features/ui/uiSlice';
 import {
   getFullQuiz,
-  deleteQuestion,
   deleteQuiz,
   getQuizzes,
 } from '../../features/admin/adminSlice';
@@ -34,7 +29,6 @@ const QuizzesListCardAdmin = (props) => {
     event.preventDefault();
     setIsSelected(id);
     dispatch(getFullQuiz(id));
-    dispatch(setQuestionsTabOn());
   };
 
   const onCheckHandler = (id, event) => {
@@ -64,26 +58,7 @@ const QuizzesListCardAdmin = (props) => {
 
   const onDeleteHandler = () => {
     if (isChecked.length > 0) {
-      console.log(isChecked);
-      isChecked.forEach((quizId) => {
-        item.forEach((quiz) => {
-          console.log(quiz);
-          if (quiz._id === quizId) {
-            if (quiz.questions.length === 0) {
-              dispatch(deleteQuiz(quizId));
-            }
-            if (quiz.questions.length > 0) {
-              console.log('questions deleted');
-              quiz.questions.forEach((questionId) => {
-                dispatch(deleteQuestion(questionId));
-              });
-              dispatch(deleteQuiz(quizId));
-            }
-          }
-        });
-      });
-
-      console.log('Quiz will be deleted');
+      dispatch(deleteQuiz(isChecked));
     } else {
       toast.error('Quiz for deleting is not selected!');
     }

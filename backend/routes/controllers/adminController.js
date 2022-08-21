@@ -199,12 +199,12 @@ export const updateQuestionData = asyncHandler(async (req, res) => {
 // @access Private Admin
 
 export const deleteQuestion = asyncHandler(async (req, res) => {
-  const quesition = await Question.findOne({ _id: req.params.id });
-  if (!quesition) {
+  const question = await Question.findOne({ _id: req.params.id });
+  if (!question) {
     res.status(400);
     throw new Error('Question not found');
   }
-  await quesition.remove();
+  await question.remove();
   res.status(200).json({ id: req.params.id });
 });
 
@@ -218,6 +218,25 @@ export const deleteQuiz = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('Quiz not found');
   }
-  await quiz.remove();
-  res.status(200).json({ id: req.params.id });
+  if (quiz) {
+    if (quiz.questions.length === 0) {
+      await quiz.remove();
+      res.status(200).json({ id: req.params.id });
+    }
+    if (quiz.questions.length > 0) {
+      for (element of quiz.questions) {
+        const question = await Question.find({ _id: element });
+        if (!question) {
+          res.status(400);
+          throw new Error('Question not found');
+        }
+        if (question) {
+          console.log('deleting question:', question);
+          await question.remove();
+        }
+      }
+      await quiz.remove();
+      res.status(200).json({ id: req.params.id });
+    }
+  }
 });

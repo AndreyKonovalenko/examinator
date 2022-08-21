@@ -452,6 +452,7 @@ export const adminSlice = createSlice({
         state.quizzes = state.quizzes.filter(
           (element) => element._id !== action.payload.id
         );
+        state.quiz = null;
       })
       .addCase(deleteQuiz.rejected, (state, action) => {
         state.isLoading = false;
