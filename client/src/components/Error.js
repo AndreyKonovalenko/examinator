@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Error = () => {
   const quizState = useSelector((state) => state.quiz);
@@ -10,17 +10,24 @@ const Error = () => {
   const userState = useSelector((state) => state.auth);
   const adminState = useSelector((state) => state.admin);
   useEffect(() => {
+    const errorList = [];
     if (userState.isError) {
-      toast.error(userState.message);
+      errorList.push(userState.message);
     }
     if (quizState.isError) {
-      toast.error(quizState.message);
+      errorList.push(quizState.message);
     }
     if (logState.isError) {
-      toast.error(logState.message);
+      errorList.push(logState.message);
     }
     if (adminState.isError) {
-      toast.error(adminState.message);
+      errorList.push(adminState.message);
+    }
+    if (errorList.length > 0) {
+      const updatedErrorList = [...new Set(errorList)];
+      updatedErrorList.forEach((element) => {
+        toast.error(element);
+      });
     }
   }, [
     quizState.isError,

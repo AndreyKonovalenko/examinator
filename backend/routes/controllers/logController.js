@@ -79,13 +79,6 @@ const arrayEquals = (a, b) => {
   );
 };
 
-// answers schema must be
-// [
-// { qId:_id,
-//   answer:[String]
-// }
-// ]
-
 // calculate result function for log object data
 const culcResult = (questions, answers) => {
   let result = 0;
