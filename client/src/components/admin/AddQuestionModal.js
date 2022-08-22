@@ -50,7 +50,7 @@ const AddQuestionModal = (props) => {
     const currectAnswers = [];
     optionsData.forEach((element, index) => {
       if (element.id === isChecked) {
-        currectAnswers.push((index + 1).toString());
+        currectAnswers.push(index.toString());
       }
     });
     const result = {

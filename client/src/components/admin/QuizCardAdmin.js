@@ -71,7 +71,7 @@ const QuizCardAdmin = (props) => {
       <li
         key={uniqid()}
         style={
-          index === element.currect - 1
+          index === parseInt(element.currect)
             ? { color: theme.colors.primary.light }
             : null
         }>

@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { Button } from "../styles/Textarea.styled";
-import { Li } from "../styles/Modal.styled";
-import { useDispatch, useSelector } from "react-redux";
-import { IconStyled } from "../styles/Icon.styled";
-import { MdAdd, MdHorizontalRule } from "react-icons/md";
+import { useState, useEffect } from 'react';
+import { Button } from '../styles/Textarea.styled';
+import { Li } from '../styles/Modal.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { IconStyled } from '../styles/Icon.styled';
+import { MdAdd, MdHorizontalRule } from 'react-icons/md';
 
-import Modal from "../controls/Modal";
-import Textarea from "../controls/Textarea";
-import CheckBox from "./CheckBox";
-import uniqid from "uniqid";
-import theme from "../../theme";
+import Modal from '../controls/Modal';
+import Textarea from '../controls/Textarea';
+import CheckBox from './CheckBox';
+import uniqid from 'uniqid';
+import theme from '../../theme';
 
 import {
   addToOptions,
@@ -18,11 +18,11 @@ import {
   setEditQuestionModalOff,
   setOptionsData,
   resetOptionsData,
-} from "../../features/ui/uiSlice";
+} from '../../features/ui/uiSlice';
 import {
   resetQuestinData,
   updateQuestionData,
-} from "../../features/admin/adminSlice";
+} from '../../features/admin/adminSlice';
 
 const EditQuestionModal = (props) => {
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ const EditQuestionModal = (props) => {
     const currectAnswers = [];
     optionsData.forEach((element, index) => {
       if (element.id === isChecked) {
-        currectAnswers.push((index + 1).toString());
+        currectAnswers.push(index.toString());
       }
     });
     const result = {
@@ -102,7 +102,7 @@ const EditQuestionModal = (props) => {
     return (
       <Li key={uniqid()}>
         <CheckBox
-          style={{ marginTop: "14px" }}
+          style={{ marginTop: '14px' }}
           onCheckHandler={onCheckHandler}
           id={id}
           isChecked={isChecked === id ? true : false}
@@ -112,7 +112,7 @@ const EditQuestionModal = (props) => {
           id={id}
           en={en}
           ru={ru}
-          styleOption={{ width: "100%" }}
+          styleOption={{ width: '100%' }}
           onSave={null}
           defaultValue={defaultValue}
           maxLength={1000}
@@ -123,45 +123,42 @@ const EditQuestionModal = (props) => {
 
   useEffect(() => {
     dispatch(setOptionsData(options));
-    setIsChecked(options[parseInt(currect) - 1].id);
+    setIsChecked(options[parseInt(currect)].id);
   }, [dispatch, options, currect]);
 
   return (
     <Modal onClose={onClose}>
-      <h1 style={{ textAlign: "center" }}>
-        {en ? "Editing mode" : null}
-        {ru ? "Режим редактирования" : null}
+      <h1 style={{ textAlign: 'center' }}>
+        {en ? 'Editing mode' : null}
+        {ru ? 'Режим редактирования' : null}
       </h1>
       <h2>
-        {en ? "Question:" : null} {ru ? "Вопрос:" : null}
+        {en ? 'Question:' : null} {ru ? 'Вопрос:' : null}
       </h2>
       <Textarea en={en} ru={ru} id={questionId} defaultValue={question} />
       <h3>
-        {en ? "options:" : null} {ru ? "Варианты ответов:" : null}
+        {en ? 'options:' : null} {ru ? 'Варианты ответов:' : null}
       </h3>
       {list}
-      <div style={{ display: "flex", justifyContent: "flex-start" }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <IconStyled
           onClick={onPlus}
           bg={theme.colors.surface}
-          color={theme.colors.primary.light}
-        >
-          <MdAdd size={"2rem"} />
+          color={theme.colors.primary.light}>
+          <MdAdd size={'2rem'} />
         </IconStyled>
         <IconStyled
           onClick={onMinus}
           bg={theme.colors.surface}
-          color={theme.colors.primary.light}
-        >
-          <MdHorizontalRule size={"2rem"} />
+          color={theme.colors.primary.light}>
+          <MdHorizontalRule size={'2rem'} />
         </IconStyled>
       </div>
       <Button
-        style={{ margin: "auto ", fontSize: "1.5rem" }}
-        onClick={onSaveQuestion}
-      >
-        {en ? "Save changes" : null}
-        {ru ? "Сохранить изменения" : null}
+        style={{ margin: 'auto ', fontSize: '1.5rem' }}
+        onClick={onSaveQuestion}>
+        {en ? 'Save changes' : null}
+        {ru ? 'Сохранить изменения' : null}
       </Button>
     </Modal>
   );
