@@ -1,10 +1,10 @@
-import { useDispatch } from 'react-redux';
-import Modal from '../controls/Modal';
-import Textarea from '../controls/Textarea';
-import uniqid from 'uniqid';
+import { useDispatch } from "react-redux";
+import Modal from "../controls/Modal";
+import Textarea from "../controls/Textarea";
+import uniqid from "uniqid";
 
-import { addQuiz } from '../../features/admin/adminSlice';
-import { setAddQuizModalOff } from '../../features/ui/uiSlice';
+import { addQuiz } from "../../features/admin/adminSlice";
+import { setAddQuizModalOff } from "../../features/ui/uiSlice";
 
 const AddQuizModal = (props) => {
   const dispatch = useDispatch();
@@ -14,6 +14,7 @@ const AddQuizModal = (props) => {
 
   const onSave = () => {
     dispatch(addQuiz({ title: document.getElementById(id).value }));
+    dispatch(setAddQuizModalOff());
   };
   const onClose = () => {
     dispatch(setAddQuizModalOff());
@@ -22,8 +23,8 @@ const AddQuizModal = (props) => {
   return (
     <Modal onClose={onClose}>
       <h2>
-        {ru ? 'Задайте тему теста' : null}
-        {en ? 'Enter new quiz topic' : null}
+        {ru ? "Задайте тему теста" : null}
+        {en ? "Enter new quiz topic" : null}
       </h2>
       <Textarea
         id={id}

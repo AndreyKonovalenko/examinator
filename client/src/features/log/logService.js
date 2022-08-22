@@ -29,8 +29,8 @@ const setLog = async (userAnswers, token) => {
   localStorage.setItem("log", JSON.stringify(response.data));
   return response.data;
 };
-// Get log
 
+// Get log
 const getLog = async (logId, token) => {
   const config = {
     headers: {

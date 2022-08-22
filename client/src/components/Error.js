@@ -24,7 +24,9 @@ const Error = () => {
       errorList.push(adminState.message);
     }
     if (errorList.length > 0) {
+      console.log(errorList);
       const updatedErrorList = [...new Set(errorList)];
+      console.log(updatedErrorList);
       updatedErrorList.forEach((element) => {
         toast.error(element);
       });
