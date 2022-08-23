@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyledListCard } from "../styles/ListCard.styled";
 import { ListElem } from "../styles/ListElem.styled";
 import { StyledSeparator } from "../styles/Separator.styled";
@@ -24,6 +24,7 @@ const QuizCardAdmin = (props) => {
   const [isSelected, setIsSelected] = useState(null);
   const [showArchived, setShowArchived] = useState(false);
   const [isChecked, setIsChecked] = useState([]);
+  const [data, setData] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
 
   const onToggleHandler = () => {
@@ -71,7 +72,23 @@ const QuizCardAdmin = (props) => {
     }
   };
 
-  const list = item.questions.map((element) => {
+  // const data = [...item.question];
+  // if (!showArchived) {
+  //   data.filter((element) => element.historical === true);
+  // }
+
+  useEffect(() => {
+    if (item) {
+      if (showArchived) {
+        setData(
+          item.questions.filter((element) => element.historical === true)
+        );
+      }
+      setData(item.questions);
+    }
+  }, [data]);
+
+  const list = data.map((element) => {
     const optionList = element.options.map((el, index) => (
       <li
         key={uniqid()}
@@ -142,7 +159,7 @@ const QuizCardAdmin = (props) => {
 
       <span>
         {ru ? "всего вопросов: " : null || en ? "number of questions: " : null}
-        {item.questions.length}
+        {data.length}
       </span>
       <StyledSeparator />
 
