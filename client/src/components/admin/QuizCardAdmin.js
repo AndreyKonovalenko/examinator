@@ -1,22 +1,22 @@
-import { useEffect, useState } from "react";
-import { StyledListCard } from "../styles/ListCard.styled";
-import { ListElem } from "../styles/ListElem.styled";
-import { StyledSeparator } from "../styles/Separator.styled";
-import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
+import { useState } from 'react';
+import { StyledListCard } from '../styles/ListCard.styled';
+import { ListElem } from '../styles/ListElem.styled';
+import { StyledSeparator } from '../styles/Separator.styled';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
-import CheckBox from "./CheckBox";
-import Bage from "../controls/Bage";
-import SettingPanel from "./SettingsPanel";
-import theme from "../../theme/index.js";
-import uniqid from "uniqid";
+import CheckBox from './CheckBox';
+import Bage from '../controls/Bage';
+import SettingPanel from './SettingsPanel';
+import theme from '../../theme/index.js';
+import uniqid from 'uniqid';
 
 import {
   setQuestionsTabOff,
   setAddQuestionModalOn,
   setEditQuestionModalOn,
-} from "../../features/ui/uiSlice";
-import { getQuestion, archiveQuestion } from "../../features/admin/adminSlice";
+} from '../../features/ui/uiSlice';
+import { getQuestion, archiveQuestion } from '../../features/admin/adminSlice';
 
 const QuizCardAdmin = (props) => {
   const dispatch = useDispatch();
@@ -24,7 +24,6 @@ const QuizCardAdmin = (props) => {
   const [isSelected, setIsSelected] = useState(null);
   const [showArchived, setShowArchived] = useState(false);
   const [isChecked, setIsChecked] = useState([]);
-  const [data, setData] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
 
   const onToggleHandler = () => {
@@ -65,28 +64,17 @@ const QuizCardAdmin = (props) => {
 
   const onDeleteHandler = () => {
     if (isChecked.length > 0) {
-      console.log("Question will be deleted");
+      console.log('Question will be deleted');
       isChecked.forEach((element) => dispatch(archiveQuestion(element)));
     } else {
-      toast.error("Question for deleting is not selected!");
+      toast.error('Question for deleting is not selected!');
     }
   };
 
-  // const data = [...item.question];
-  // if (!showArchived) {
-  //   data.filter((element) => element.historical === true);
-  // }
-
-  useEffect(() => {
-    if (item) {
-      if (showArchived) {
-        setData(
-          item.questions.filter((element) => element.historical === true)
-        );
-      }
-      setData(item.questions);
-    }
-  }, [data]);
+  const filtered = item.questions.filter(
+    (element) => element.archived === false
+  );
+  const data = showArchived ? item.questions : filtered;
 
   const list = data.map((element) => {
     const optionList = element.options.map((el, index) => (
@@ -96,13 +84,12 @@ const QuizCardAdmin = (props) => {
           index === parseInt(element.currect)
             ? { color: theme.colors.primary.light }
             : null
-        }
-      >
+        }>
         {el}
       </li>
     ));
     return (
-      <div style={{ display: "flex" }} key={uniqid()}>
+      <div style={{ display: 'flex' }} key={uniqid()}>
         {isEdit ? (
           <CheckBox
             onCheckHandler={onCheckHandler}
@@ -122,10 +109,9 @@ const QuizCardAdmin = (props) => {
                 }
               : null
           }
-          onClick={(event) => onClickHandler(element._id, event)}
-        >
-          {element.historical ? (
-            <Bage text={ru ? "архивный" : null || en ? "achived" : null} />
+          onClick={(event) => onClickHandler(element._id, event)}>
+          {element.archived ? (
+            <Bage text={ru ? 'архивный' : null || en ? 'achived' : null} />
           ) : null}
           <h3>{element.question}</h3>
           <ul>{optionList}</ul>
@@ -151,14 +137,13 @@ const QuizCardAdmin = (props) => {
       {en ? <h2>Theme: {item.title}</h2> : null}
       <div
         style={{
-          display: "flex",
-          justifyContent: "space-between",
+          display: 'flex',
+          justifyContent: 'space-between',
           margin: 0,
-        }}
-      ></div>
+        }}></div>
 
       <span>
-        {ru ? "всего вопросов: " : null || en ? "number of questions: " : null}
+        {ru ? 'всего вопросов: ' : null || en ? 'number of questions: ' : null}
         {data.length}
       </span>
       <StyledSeparator />

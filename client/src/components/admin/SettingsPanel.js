@@ -1,4 +1,4 @@
-import { IconStyled } from "../styles/Icon.styled";
+import { IconStyled } from '../styles/Icon.styled';
 import {
   MdSettings,
   MdDelete,
@@ -6,8 +6,8 @@ import {
   MdAdd,
   MdOutlineToggleOff,
   MdOutlineToggleOn,
-} from "react-icons/md";
-import theme from "../../theme";
+} from 'react-icons/md';
+import theme from '../../theme';
 
 const SettingPanel = (props) => {
   const {
@@ -22,13 +22,12 @@ const SettingPanel = (props) => {
     hideToggle,
   } = props;
   return (
-    <div style={{ textAlign: "right" }}>
+    <div style={{ textAlign: 'right' }}>
       <IconStyled
         bg={theme.colors.surface}
         color={theme.colors.primary.light}
-        onClick={onSettings}
-      >
-        <MdSettings size={"2em"} />
+        onClick={onSettings}>
+        <MdSettings size={'2em'} />
       </IconStyled>
 
       {isEdit ? (
@@ -37,39 +36,35 @@ const SettingPanel = (props) => {
             <IconStyled
               onClick={onToggle}
               bg={theme.colors.surface}
-              color={theme.colors.primary.light}
-            >
+              color={theme.colors.primary.light}>
               {showArchived ? (
-                <MdOutlineToggleOff size={"2em"} />
+                <MdOutlineToggleOn size={'2em'} />
               ) : (
-                <MdOutlineToggleOn size={"2em"} />
+                <MdOutlineToggleOff size={'2em'} />
               )}
             </IconStyled>
           ) : null}
           {!hideAdd ? (
             <IconStyled
               bg={theme.colors.surface}
-              color={theme.colors.primary.light}
-            >
-              <MdAdd size={"2em"} onClick={onAdd} />
+              color={theme.colors.primary.light}>
+              <MdAdd size={'2em'} onClick={onAdd} />
             </IconStyled>
           ) : null}
           <IconStyled
             bg={theme.colors.surface}
             color={theme.colors.primary.light}
             hcolor={theme.colors.error}
-            onClick={onDelete}
-          >
-            <MdDelete size={"2em"} />
+            onClick={onDelete}>
+            <MdDelete size={'2em'} />
           </IconStyled>
         </>
       ) : null}
       <IconStyled
         bg={theme.colors.surface}
         color={theme.colors.primary.light}
-        onClick={onClose}
-      >
-        <MdClose size={"2em"} />
+        onClick={onClose}>
+        <MdClose size={'2em'} />
       </IconStyled>
     </div>
   );
