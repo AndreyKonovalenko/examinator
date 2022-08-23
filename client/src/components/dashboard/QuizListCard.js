@@ -1,6 +1,6 @@
 import { StyledListCard } from "../styles/ListCard.styled";
 import { ListElem } from "../styles/ListElem.styled";
-import { StatusBage } from "../styles/StatusBage.styled";
+import Bage from "../controls/Bage";
 import uniqid from "uniqid";
 
 const QuizListCard = (props) => {
@@ -13,19 +13,14 @@ const QuizListCard = (props) => {
     </ListElem>
   ));
 
-  const styled = {
-    textAlign: "right",
-    margin: 0,
-  };
   return (
     <StyledListCard>
-      <div style={styled}>
-        <StatusBage disable>
-          {name[0]} {name[1]}
-        </StatusBage>
-      </div>
-      {ru ? <h2>Tемы тестирования: </h2> : null}
-      {en ? <h2> Quizzes: </h2> : null}
+      <Bage text={`${name[0]} ${name[1]}`} />
+      {ru ? (
+        <h2>Tемы тестирования: </h2>
+      ) : null || en ? (
+        <h2> Quizzes: </h2>
+      ) : null}
       {list}
     </StyledListCard>
   );

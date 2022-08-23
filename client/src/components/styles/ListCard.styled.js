@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledListCard = styled.div`
   width: 100%;
@@ -8,10 +8,11 @@ export const StyledListCard = styled.div`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
   margin: 5px;
   padding: 25px;
-  & > ul {
-    padding: 0;
-  }
   & > h2 {
     color: ${({ theme }) => theme.colors.primary.dark};
+  }
+  span {
+    font-size: 16 px;
+    font-weight: 700;
   }
 `;

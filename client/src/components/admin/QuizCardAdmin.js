@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 import CheckBox from "./CheckBox";
+import Bage from "../controls/Bage";
 import SettingPanel from "./SettingsPanel";
 import theme from "../../theme/index.js";
 import uniqid from "uniqid";
@@ -21,11 +22,15 @@ const QuizCardAdmin = (props) => {
   const dispatch = useDispatch();
   const { en, item, ru } = props;
   const [isSelected, setIsSelected] = useState(null);
+  const [showArchived, setShowArchived] = useState(false);
   const [isChecked, setIsChecked] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
 
+  const onToggleHandler = () => {
+    setShowArchived(!showArchived);
+    console.log(showArchived);
+  };
   // List Hadlers
-
   const onClickHandler = (id, event) => {
     event.preventDefault();
     dispatch(setEditQuestionModalOn());
@@ -102,6 +107,9 @@ const QuizCardAdmin = (props) => {
           }
           onClick={(event) => onClickHandler(element._id, event)}
         >
+          {element.historical ? (
+            <Bage text={ru ? "архивный" : null || en ? "achived" : null} />
+          ) : null}
           <h3>{element.question}</h3>
           <ul>{optionList}</ul>
         </ListElem>
@@ -117,14 +125,27 @@ const QuizCardAdmin = (props) => {
         onClose={onCloseHandler}
         onDelete={onDeleteHandler}
         onSettings={onGearHandler}
+        onToggle={onToggleHandler}
+        showArchived={showArchived}
       />
       <StyledSeparator />
 
       {ru ? <h2>Тема: {item.title}</h2> : null}
       {en ? <h2>Theme: {item.title}</h2> : null}
-      {ru ? <h3>всeго: {item.questions.length}</h3> : null}
-      {en ? <h3>total: {item.questions.length}</h3> : null}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          margin: 0,
+        }}
+      ></div>
+
+      <span>
+        {ru ? "всего вопросов: " : null || en ? "number of questions: " : null}
+        {item.questions.length}
+      </span>
       <StyledSeparator />
+
       {list}
     </StyledListCard>
   );

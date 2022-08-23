@@ -1,18 +1,18 @@
-import { StyledHeader, Nav, UL, Logo } from './styles/Header.styled';
+import { StyledHeader, Nav, UL, Logo } from "./styles/Header.styled";
 import {
   MdAdminPanelSettings,
   MdMenu,
   MdPeopleAlt,
   MdPersonOutline,
   MdQuiz,
-} from 'react-icons/md';
+} from "react-icons/md";
 
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { logout, reset } from '../features/auth/authSlice';
-import { resetLogState } from '../features/log/logSlice';
-import { resetQuizState } from '../features/quiz/quizSlice';
-import { resetAdminState } from '../features/admin/adminSlice';
+import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout, reset } from "../features/auth/authSlice";
+import { resetLogState } from "../features/log/logSlice";
+import { resetQuizState } from "../features/quiz/quizSlice";
+import { resetAdminState } from "../features/admin/adminSlice";
 import {
   setRu,
   setEn,
@@ -22,11 +22,11 @@ import {
   setDropDownOff,
   resetUiState,
   setChangePasswordModalOn,
-} from '../features/ui/uiSlice';
+} from "../features/ui/uiSlice";
 
-import DropdownMenu from './controls/DropdownMenu';
-import NavItem from './controls/NavItem';
-import OutsideClickEscHandler from './OutsideClickEscHandler';
+import DropdownMenu from "./controls/DropdownMenu";
+import NavItem from "./controls/NavItem";
+import OutsideClickEscHandler from "./OutsideClickEscHandler";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -43,17 +43,17 @@ const Header = () => {
     dispatch(resetAdminState());
     dispatch(reset());
     dispatch(resetUiState());
-    navigate('/login');
+    navigate("/login");
   };
 
   const onDashboard = () => {
     dispatch(resetLogState());
     dispatch(resetQuizState());
     dispatch(resetAdminState());
-    navigate('/');
+    navigate("/");
   };
   const onAdmin = () => {
-    navigate('/admin');
+    navigate("/admin");
   };
   const onRu = () => {
     dispatch(setRu());
@@ -89,18 +89,18 @@ const Header = () => {
     if (user.admin) {
       adimnPanel = (
         <>
-          {location.pathname === '/admin' ? (
+          {location.pathname === "/admin" ? (
             <>
               <NavItem onClickHandler={onUserTab}>
-                <MdPeopleAlt size={'3em'} />
+                <MdPeopleAlt size={"3em"} />
               </NavItem>
               <NavItem onClickHandler={onQuizzesTab}>
-                <MdQuiz size={'3em'} />
+                <MdQuiz size={"3em"} />
               </NavItem>
             </>
           ) : (
             <NavItem onClickHandler={onAdmin}>
-              <MdAdminPanelSettings size={'3em'} />
+              <MdAdminPanelSettings size={"3em"} />
             </NavItem>
           )}
         </>
@@ -113,29 +113,31 @@ const Header = () => {
       <Nav>
         <UL>
           <NavItem
-            onClickHandler={location.pathname !== '/' ? onDashboard : () => {}}>
+            onClickHandler={location.pathname !== "/" ? onDashboard : () => {}}
+          >
             <Logo>Examinator</Logo>
           </NavItem>
         </UL>
         <UL>
-          {location.pathname !== '/' && location.pathname !== '/login' ? (
-            <NavItem onClickHandler={onDashboard}>
-              <MdMenu size={'3em'} />
-            </NavItem>
-          ) : null}
-          {adimnPanel}
           <NavItem onClickHandler={onRu}>
             <span
               style={{
-                fontSize: '1.5em',
-                fontWeight: 'bold',
-              }}>
+                fontSize: "1.5em",
+                fontWeight: "bold",
+              }}
+            >
               RU
             </span>
           </NavItem>
           <NavItem onClickHandler={onEn}>
-            <span style={{ fontSize: '1.5em', fontWeight: 'bold' }}>EN</span>
+            <span style={{ fontSize: "1.5em", fontWeight: "bold" }}>EN</span>
           </NavItem>
+          {location.pathname !== "/" && location.pathname !== "/login" ? (
+            <NavItem onClickHandler={onDashboard}>
+              <MdMenu size={"3em"} />
+            </NavItem>
+          ) : null}
+          {adimnPanel}
           {user ? (
             <>
               {dropDown ? (
@@ -153,12 +155,13 @@ const Header = () => {
                         stats={logs ? logs.length : null}
                       />
                     </OutsideClickEscHandler>
-                  }>
-                  <MdPersonOutline size={'3em'} />
+                  }
+                >
+                  <MdPersonOutline size={"3em"} />
                 </NavItem>
               ) : (
                 <NavItem onClickHandler={onProfile}>
-                  <MdPersonOutline size={'3em'} />
+                  <MdPersonOutline size={"3em"} />
                 </NavItem>
               )}
             </>

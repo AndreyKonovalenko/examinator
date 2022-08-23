@@ -1,9 +1,26 @@
 import { IconStyled } from "../styles/Icon.styled";
-import { MdSettings, MdDelete, MdClose, MdAdd } from "react-icons/md";
+import {
+  MdSettings,
+  MdDelete,
+  MdClose,
+  MdAdd,
+  MdOutlineToggleOff,
+  MdOutlineToggleOn,
+} from "react-icons/md";
 import theme from "../../theme";
 
 const SettingPanel = (props) => {
-  const { onSettings, isEdit, onAdd, onDelete, onClose, hideAdd } = props;
+  const {
+    onSettings,
+    isEdit,
+    onAdd,
+    onDelete,
+    onClose,
+    hideAdd,
+    showArchived,
+    onToggle,
+    hideToggle,
+  } = props;
   return (
     <div style={{ textAlign: "right" }}>
       <IconStyled
@@ -16,6 +33,19 @@ const SettingPanel = (props) => {
 
       {isEdit ? (
         <>
+          {!hideToggle ? (
+            <IconStyled
+              onClick={onToggle}
+              bg={theme.colors.surface}
+              color={theme.colors.primary.light}
+            >
+              {showArchived ? (
+                <MdOutlineToggleOff size={"2em"} />
+              ) : (
+                <MdOutlineToggleOn size={"2em"} />
+              )}
+            </IconStyled>
+          ) : null}
           {!hideAdd ? (
             <IconStyled
               bg={theme.colors.surface}

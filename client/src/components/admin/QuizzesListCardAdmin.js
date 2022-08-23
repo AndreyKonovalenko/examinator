@@ -101,6 +101,7 @@ const QuizzesListCardAdmin = (props) => {
   return (
     <StyledListCard>
       <SettingPanel
+        hideToggle={true}
         isEdit={isEdit}
         onAdd={onAddHandler}
         onClose={onCloseHandler}
