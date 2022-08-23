@@ -1,8 +1,8 @@
-import asyncHandler from 'express-async-handler';
-import { Log } from '../../models/logModel.js';
-import { Quiz } from '../../models/quizModel.js';
-import { User } from '../../models/userModel.js';
-import { Question } from '../../models/questionModel.js';
+import asyncHandler from "express-async-handler";
+import { Log } from "../../models/logModel.js";
+import { Quiz } from "../../models/quizModel.js";
+import { User } from "../../models/userModel.js";
+import { Question } from "../../models/questionModel.js";
 
 // @desc get user logs by userId
 // @route GET /api/admin/logs/user/:id
@@ -10,10 +10,10 @@ import { Question } from '../../models/questionModel.js';
 
 export const getLogs = asyncHandler(async (req, res) => {
   const data = await Log.find({ user: req.params.id })
-    .sort('-updatedAt')
+    .sort("-updatedAt")
     .populate({
-      path: 'quiz',
-      select: ['title', 'questions'],
+      path: "quiz",
+      select: ["title", "questions"],
     })
     .exec();
   if (data) {
@@ -38,7 +38,7 @@ export const deleteLog = asyncHandler(async (req, res) => {
   const log = await Log.findOne({ _id: req.params.id });
   if (!log) {
     res.status(400);
-    throw new Error('Log not found');
+    throw new Error("Log not found");
   }
   await log.remove();
   res.status(200).json({ id: req.params.id });
@@ -86,13 +86,13 @@ export const getQuizzes = asyncHandler(async (req, res) => {
 
 export const getFullQuiz = asyncHandler(async (req, res) => {
   const quiz = await Quiz.findOne({ _id: req.params.id }).populate({
-    path: 'questions',
+    path: "questions",
   });
   if (quiz) {
     res.status(200).json(quiz);
   } else {
     res.status(400);
-    throw new Error('Invalid quiz id');
+    throw new Error("Invalid quiz id");
   }
 });
 
@@ -118,7 +118,7 @@ export const getQuestion = asyncHandler(async (req, res) => {
     res.status(200).json(question);
   } else {
     res.status(400);
-    throw new Error('Invalid quesition id');
+    throw new Error("Invalid quesition id");
   }
 });
 
@@ -133,7 +133,7 @@ export const setQuestion = asyncHandler(async (req, res) => {
     res.status(200).json(newQuestion);
   } else {
     res.status(400);
-    throw new Error('New question has not been created');
+    throw new Error("New question has not been created");
   }
 });
 
@@ -157,15 +157,15 @@ export const createAndAddQuestionToQuiz = asyncHandler(async (req, res) => {
         res.status(200).json(newQuestion);
       } else {
         res.status(400);
-        throw new Error('during updating quiz something went wrong');
+        throw new Error("during updating quiz something went wrong");
       }
     } else {
       res.status(400);
-      throw new Error('New question has not been created');
+      throw new Error("New question has not been created");
     }
   } else {
     res.status(400);
-    throw new Error('Ivalid quiz id');
+    throw new Error("Ivalid quiz id");
   }
 });
 
@@ -173,24 +173,18 @@ export const createAndAddQuestionToQuiz = asyncHandler(async (req, res) => {
 // @route PUT /api/adim/questions/:id
 // @access Private Admin
 export const updateQuestionData = asyncHandler(async (req, res) => {
-  const questionData = await Question.findOne({ _id: req.params.id });
-  if (questionData) {
-    const updatedQuestion = await Question.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-      }
-    );
-    if (updatedQuestion) {
-      res.status(200).json(updatedQuestion);
-    } else {
-      res.status(400);
-      throw new Error('during updating question something went wrong');
+  const updatedQuestion = await Question.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
     }
+  );
+  if (updatedQuestion) {
+    res.status(200).json(updatedQuestion);
   } else {
     res.status(400);
-    throw new Error('Invalid quesition id');
+    throw new Error("during updating question something went wrong");
   }
 });
 
@@ -202,10 +196,29 @@ export const deleteQuestion = asyncHandler(async (req, res) => {
   const question = await Question.findOne({ _id: req.params.id });
   if (!question) {
     res.status(400);
-    throw new Error('Question not found');
+    throw new Error("Question not found");
   }
   await question.remove();
   res.status(200).json({ id: req.params.id });
+});
+
+// @desc archive question
+// @route PUT /api/adim/questions/:id
+// @access Private Admin
+export const archiveQuestion = asyncHandler(async (req, res) => {
+  const updatedQuestion = await Question.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+    }
+  );
+  if (updatedQuestion) {
+    res.status(200).json(updatedQuestion);
+  } else {
+    res.status(400);
+    throw new Error("during question archivation something went wrong");
+  }
 });
 
 // @desc Delete auiz by id
@@ -216,7 +229,7 @@ export const deleteQuiz = asyncHandler(async (req, res) => {
   const quiz = await Quiz.findOne({ _id: req.params.id });
   if (!quiz) {
     res.status(400);
-    throw new Error('Quiz not found');
+    throw new Error("Quiz not found");
   }
   if (quiz) {
     if (quiz.questions.length === 0) {
@@ -231,7 +244,7 @@ export const deleteQuiz = asyncHandler(async (req, res) => {
         //   throw new Error('Question not found');
         // }
         if (question) {
-          console.log('quesetion removed: ', question);
+          console.log("quesetion removed: ", question);
           await question.remove();
         }
       }

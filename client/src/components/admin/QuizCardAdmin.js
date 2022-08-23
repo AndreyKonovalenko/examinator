@@ -1,21 +1,21 @@
-import { useState } from 'react';
-import { StyledListCard } from '../styles/ListCard.styled';
-import { ListElem } from '../styles/ListElem.styled';
-import { StyledSeparator } from '../styles/Separator.styled';
-import { useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
+import { useState } from "react";
+import { StyledListCard } from "../styles/ListCard.styled";
+import { ListElem } from "../styles/ListElem.styled";
+import { StyledSeparator } from "../styles/Separator.styled";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
-import CheckBox from './CheckBox';
-import SettingPanel from './SettingsPanel';
-import theme from '../../theme/index.js';
-import uniqid from 'uniqid';
+import CheckBox from "./CheckBox";
+import SettingPanel from "./SettingsPanel";
+import theme from "../../theme/index.js";
+import uniqid from "uniqid";
 
 import {
   setQuestionsTabOff,
   setAddQuestionModalOn,
   setEditQuestionModalOn,
-} from '../../features/ui/uiSlice';
-import { getQuestion, deleteQuestion } from '../../features/admin/adminSlice';
+} from "../../features/ui/uiSlice";
+import { getQuestion, archiveQuestion } from "../../features/admin/adminSlice";
 
 const QuizCardAdmin = (props) => {
   const dispatch = useDispatch();
@@ -59,10 +59,10 @@ const QuizCardAdmin = (props) => {
 
   const onDeleteHandler = () => {
     if (isChecked.length > 0) {
-      console.log('Question will be deleted');
-      isChecked.forEach((element) => dispatch(deleteQuestion(element)));
+      console.log("Question will be deleted");
+      isChecked.forEach((element) => dispatch(archiveQuestion(element)));
     } else {
-      toast.error('Question for deleting is not selected!');
+      toast.error("Question for deleting is not selected!");
     }
   };
 
@@ -74,12 +74,13 @@ const QuizCardAdmin = (props) => {
           index === parseInt(element.currect)
             ? { color: theme.colors.primary.light }
             : null
-        }>
+        }
+      >
         {el}
       </li>
     ));
     return (
-      <div style={{ display: 'flex' }} key={uniqid()}>
+      <div style={{ display: "flex" }} key={uniqid()}>
         {isEdit ? (
           <CheckBox
             onCheckHandler={onCheckHandler}
@@ -99,7 +100,8 @@ const QuizCardAdmin = (props) => {
                 }
               : null
           }
-          onClick={(event) => onClickHandler(element._id, event)}>
+          onClick={(event) => onClickHandler(element._id, event)}
+        >
           <h3>{element.question}</h3>
           <ul>{optionList}</ul>
         </ListElem>
