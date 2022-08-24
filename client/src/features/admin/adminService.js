@@ -1,10 +1,10 @@
-import axios from "axios";
-import uniqid from "uniqid";
+import axios from 'axios';
+import uniqid from 'uniqid';
 
 // USER SERVICE
 
 const createNewUser = async (userData) => {
-  const response = await axios.post("/api/users", userData);
+  const response = await axios.post('/api/users', userData);
   // this for open user registartion functionality
   // if (response.data) {
   //   localStorage.setItem("user", JSON.stringify(response.data));
@@ -18,7 +18,7 @@ const getUsers = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.get("/api/admin/users", config);
+  const response = await axios.get('/api/admin/users', config);
   return response.data;
 };
 
@@ -28,7 +28,7 @@ const deleteUser = async (id, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.delete("/api/admin/users/" + id, config);
+  const response = await axios.delete('/api/admin/users/' + id, config);
   return response.data;
 };
 
@@ -40,7 +40,7 @@ const getUserLogs = async (id, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.get("/api/admin/logs/user/" + id, config);
+  const response = await axios.get('/api/admin/logs/user/' + id, config);
   return response.data;
 };
 
@@ -50,7 +50,7 @@ const deleteLog = async (id, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.delete("/api/admin/logs/" + id, config);
+  const response = await axios.delete('/api/admin/logs/' + id, config);
   return response.data;
 };
 
@@ -62,7 +62,7 @@ const getQuizzes = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.get("/api/admin/quizzes", config);
+  const response = await axios.get('/api/admin/quizzes', config);
   return response.data;
 };
 
@@ -75,17 +75,7 @@ const getFullQuiz = async (data, token) => {
       filtered: data.filtered,
     },
   };
-  const response = await axios.get("/api/admin/quizzes/" + data.id, config);
-  return response.data;
-};
-
-const getFilteredQuiz = async (id, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const response = await axios.get("/api/admin/quizzes/" + id, config);
+  const response = await axios.get('/api/admin/quizzes/' + data.id, config);
   return response.data;
 };
 
@@ -95,7 +85,7 @@ const getQuestion = async (id, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.get("/api/admin/questions/" + id, config);
+  const response = await axios.get('/api/admin/questions/' + id, config);
 
   const extendedQuestionData = response.data.options.map((element) => {
     return { id: uniqid(), defaultValue: element };
@@ -109,7 +99,7 @@ const addQuiz = async (quiz, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.post("/api/admin/quizzes", quiz, config);
+  const response = await axios.post('/api/admin/quizzes', quiz, config);
 
   return response.data;
 };
@@ -121,7 +111,7 @@ const createAndAddQuestionToQuiz = async (data, token) => {
     },
   };
   const response = await axios.post(
-    "/api/admin/quizzes/" + data.id,
+    '/api/admin/quizzes/' + data.id,
     data.questionData,
     config
   );
@@ -136,22 +126,8 @@ const updateQuestionData = async (data, token) => {
     },
   };
   const response = await axios.put(
-    "/api/admin/questions/" + data.id,
+    '/api/admin/questions/' + data.id,
     data.questionData,
-    config
-  );
-  return response.data;
-};
-
-const archiveQuestion = async (id, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const response = await axios.put(
-    "/api/admin/questions/" + id,
-    { archived: true },
     config
   );
   return response.data;
@@ -163,7 +139,7 @@ const deleteQuestion = async (id, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.delete("/api/admin/questions/" + id, config);
+  const response = await axios.delete('/api/admin/questions/' + id, config);
   return response.data;
 };
 
@@ -173,7 +149,7 @@ const deleteQuiz = async (id, token) => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.delete("/api/admin/quizzes/" + id, config);
+  const response = await axios.delete('/api/admin/quizzes/' + id, config);
   return response.data;
 };
 const quizService = {
@@ -184,13 +160,11 @@ const quizService = {
   deleteUser,
   getQuizzes,
   getFullQuiz,
-  getFilteredQuiz,
   getQuestion,
   addQuiz,
   createAndAddQuestionToQuiz,
   updateQuestionData,
   deleteQuestion,
   deleteQuiz,
-  archiveQuestion,
 };
 export default quizService;

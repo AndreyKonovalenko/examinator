@@ -4,25 +4,31 @@ import {
   MdDelete,
   MdClose,
   MdAdd,
-  MdOutlineToggleOff,
-  MdOutlineToggleOn,
+  MdOutlineUnarchive,
 } from 'react-icons/md';
 import theme from '../../theme';
 
 const SettingPanel = (props) => {
   const {
-    onSettings,
+    hideAdd,
     isEdit,
     onAdd,
-    onDelete,
     onClose,
-    hideAdd,
-    showArchived,
-    onToggle,
-    hideToggle,
+    onDelete,
+    onSettings,
+    onUnArchive,
+    hideUnArchive,
   } = props;
   return (
     <div style={{ textAlign: 'right' }}>
+      {!hideUnArchive ? (
+        <IconStyled
+          onClick={onUnArchive}
+          bg={theme.colors.surface}
+          color={theme.colors.primary.light}>
+          <MdOutlineUnarchive size={'2em'} />
+        </IconStyled>
+      ) : null}
       <IconStyled
         bg={theme.colors.surface}
         color={theme.colors.primary.light}
@@ -32,18 +38,6 @@ const SettingPanel = (props) => {
 
       {isEdit ? (
         <>
-          {!hideToggle ? (
-            <IconStyled
-              onClick={onToggle}
-              bg={theme.colors.surface}
-              color={theme.colors.primary.light}>
-              {showArchived ? (
-                <MdOutlineToggleOn size={'2em'} />
-              ) : (
-                <MdOutlineToggleOff size={'2em'} />
-              )}
-            </IconStyled>
-          ) : null}
           {!hideAdd ? (
             <IconStyled
               bg={theme.colors.surface}
