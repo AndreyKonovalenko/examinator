@@ -85,16 +85,11 @@ export const getQuizzes = asyncHandler(async (req, res) => {
 // @access Private Admin
 
 export const getFullQuiz = asyncHandler(async (req, res) => {
-  const filtered = req.headers.filtered;
-  console.log("get quiz");
-  console.log(req.headers.filtered);
-  const populationConfig = {
+  // console.log(req.params.filtered);
+  const quiz = await Quiz.findOne({ _id: req.params.id }).populate({
     path: "questions",
-    match: filtered === "true" ? { archived: false } : null,
-  };
-  const quiz = await Quiz.findOne({ _id: req.params.id }).populate(
-    populationConfig
-  );
+    match: { archived: false },
+  });
   if (quiz) {
     res.status(200).json(quiz);
   } else {

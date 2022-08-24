@@ -34,7 +34,7 @@ const QuizCardAdmin = (props) => {
   const onClickHandler = (id, event) => {
     event.preventDefault();
     dispatch(setEditQuestionModalOn());
-    dispatch(getQuestion({ id: id, filtered: true }));
+    dispatch(getQuestion(id));
     setIsSelected(id);
   };
 
@@ -70,11 +70,6 @@ const QuizCardAdmin = (props) => {
       toast.error("Question for deleting is not selected!");
     }
   };
-
-  // const filtered = item.questions.filter(
-  //   (element) => element.archived === false
-  // );
-  // const data = showArchived ? item.questions : filtered;
 
   const list = item.questions.map((element) => {
     const optionList = element.options.map((el, index) => (

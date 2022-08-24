@@ -70,7 +70,9 @@ const getFullQuiz = async (data, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
-      filtered: data.filtered ? "true" : "false",
+    },
+    params: {
+      filtered: data.filtered,
     },
   };
   const response = await axios.get("/api/admin/quizzes/" + data.id, config);
