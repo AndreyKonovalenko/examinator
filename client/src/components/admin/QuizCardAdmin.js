@@ -1,22 +1,22 @@
-import { useState } from 'react';
-import { StyledListCard } from '../styles/ListCard.styled';
-import { ListElem } from '../styles/ListElem.styled';
-import { StyledSeparator } from '../styles/Separator.styled';
-import { useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
+import { useState } from "react";
+import { StyledListCard } from "../styles/ListCard.styled";
+import { ListElem } from "../styles/ListElem.styled";
+import { StyledSeparator } from "../styles/Separator.styled";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
-import CheckBox from './CheckBox';
-import Bage from '../controls/Bage';
-import SettingPanel from './SettingsPanel';
-import theme from '../../theme/index.js';
-import uniqid from 'uniqid';
+import CheckBox from "./CheckBox";
+import Bage from "../controls/Bage";
+import SettingPanel from "./SettingsPanel";
+import theme from "../../theme/index.js";
+import uniqid from "uniqid";
 
 import {
   setQuestionsTabOff,
   setAddQuestionModalOn,
   setEditQuestionModalOn,
-} from '../../features/ui/uiSlice';
-import { getQuestion, archiveQuestion } from '../../features/admin/adminSlice';
+} from "../../features/ui/uiSlice";
+import { getQuestion, archiveQuestion } from "../../features/admin/adminSlice";
 
 const QuizCardAdmin = (props) => {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ const QuizCardAdmin = (props) => {
   const onClickHandler = (id, event) => {
     event.preventDefault();
     dispatch(setEditQuestionModalOn());
-    dispatch(getQuestion(id));
+    dispatch(getQuestion({ id: id, filtered: true }));
     setIsSelected(id);
   };
 
@@ -64,19 +64,19 @@ const QuizCardAdmin = (props) => {
 
   const onDeleteHandler = () => {
     if (isChecked.length > 0) {
-      console.log('Question will be deleted');
+      console.log("Question will be deleted");
       isChecked.forEach((element) => dispatch(archiveQuestion(element)));
     } else {
-      toast.error('Question for deleting is not selected!');
+      toast.error("Question for deleting is not selected!");
     }
   };
 
-  const filtered = item.questions.filter(
-    (element) => element.archived === false
-  );
-  const data = showArchived ? item.questions : filtered;
+  // const filtered = item.questions.filter(
+  //   (element) => element.archived === false
+  // );
+  // const data = showArchived ? item.questions : filtered;
 
-  const list = data.map((element) => {
+  const list = item.questions.map((element) => {
     const optionList = element.options.map((el, index) => (
       <li
         key={uniqid()}
@@ -84,12 +84,13 @@ const QuizCardAdmin = (props) => {
           index === parseInt(element.currect)
             ? { color: theme.colors.primary.light }
             : null
-        }>
+        }
+      >
         {el}
       </li>
     ));
     return (
-      <div style={{ display: 'flex' }} key={uniqid()}>
+      <div style={{ display: "flex" }} key={uniqid()}>
         {isEdit ? (
           <CheckBox
             onCheckHandler={onCheckHandler}
@@ -109,9 +110,10 @@ const QuizCardAdmin = (props) => {
                 }
               : null
           }
-          onClick={(event) => onClickHandler(element._id, event)}>
+          onClick={(event) => onClickHandler(element._id, event)}
+        >
           {element.archived ? (
-            <Bage text={ru ? 'архивный' : null || en ? 'achived' : null} />
+            <Bage text={ru ? "архивный" : null || en ? "achived" : null} />
           ) : null}
           <h3>{element.question}</h3>
           <ul>{optionList}</ul>
@@ -137,14 +139,15 @@ const QuizCardAdmin = (props) => {
       {en ? <h2>Theme: {item.title}</h2> : null}
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'space-between',
+          display: "flex",
+          justifyContent: "space-between",
           margin: 0,
-        }}></div>
+        }}
+      ></div>
 
       <span>
-        {ru ? 'всего вопросов: ' : null || en ? 'number of questions: ' : null}
-        {data.length}
+        {ru ? "всего вопросов: " : null || en ? "number of questions: " : null}
+        {item.questions.length}
       </span>
       <StyledSeparator />
 

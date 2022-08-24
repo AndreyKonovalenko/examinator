@@ -134,10 +134,28 @@ export const getQuizzes = createAsyncThunk(
 //Get Full Quiz data by id
 export const getFullQuiz = createAsyncThunk(
   "admin/getFullQuizData",
+  async (data, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await adminService.getFullQuiz(data, token);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const getFilteredQuiz = createAsyncThunk(
+  "admin/getFilteredQuiz",
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
-      return await adminService.getFullQuiz(id, token);
+      return await adminService.getFilteredQuiz(id, token);
     } catch (error) {
       const message =
         (error.response &&
@@ -379,6 +397,19 @@ export const adminSlice = createSlice({
         state.quiz = action.payload;
       })
       .addCase(getFullQuiz.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getFilteredQuiz.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getFilteredQuiz.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.quiz = action.payload;
+      })
+      .addCase(getFilteredQuiz.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

@@ -13,6 +13,7 @@ import {
   deleteQuestion,
   deleteQuiz,
   archiveQuestion,
+  getFilterdQuiz,
 } from "./controllers/adminController.js";
 import protect from "../middleware/authMiddleware.js";
 import isAdmin from "../middleware/adminMiddleware.js";
@@ -31,6 +32,8 @@ router.delete("/logs/:id", protect, isAdmin, deleteLog);
 router.get("/quizzes", protect, isAdmin, getQuizzes);
 // get full quiz data
 router.get("/quizzes/:id", protect, isAdmin, getFullQuiz);
+// get filtered quiz data
+//router.get("/quizzes/:id", protect, isAdmin, getFilterdQuiz);
 // get question data by id
 router.get("/questions/:id", protect, isAdmin, getQuestion);
 // create quiz
@@ -38,11 +41,11 @@ router.get("/questions/:id", protect, isAdmin, getQuestion);
 router.post("/quizzes", protect, isAdmin, addQuiz);
 // create a new question and add itot existing quiz
 router.post("/quizzes/:id", protect, isAdmin, createAndAddQuestionToQuiz);
-// update existing question
+// update existing question ???
 router.put("/questions/:id", protect, isAdmin, updateQuestionData);
 // delet question
 router.delete("/questions/:id", protect, isAdmin, deleteQuestion);
-// archive question
+// archive question ???
 router.put("/questions/:id", protect, isAdmin, archiveQuestion);
 // delet quiz
 router.delete("/quizzes/:id", protect, isAdmin, deleteQuiz);

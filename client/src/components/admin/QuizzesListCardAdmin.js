@@ -13,6 +13,7 @@ import {
   getFullQuiz,
   deleteQuiz,
   getQuizzes,
+  getFilteredQuiz,
 } from "../../features/admin/adminSlice";
 
 import CheckBox from "./CheckBox";
@@ -32,7 +33,7 @@ const QuizzesListCardAdmin = (props) => {
   const onClickHandler = (id, event) => {
     event.preventDefault();
     setIsSelected(id);
-    dispatch(getFullQuiz(id));
+    dispatch(getFullQuiz({ id: id, filtered: true }));
     dispatch(setQuestionsTabOn());
   };
 
