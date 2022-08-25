@@ -18,14 +18,14 @@ const getLogs = async (token) => {
 };
 
 // Create new log
-const setLog = async (userAnswers, token) => {
+const setLog = async (data, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
 
-  const response = await axios.post(API_URL, userAnswers, config);
+  const response = await axios.post(API_URL, data, config);
   localStorage.setItem("log", JSON.stringify(response.data));
   return response.data;
 };

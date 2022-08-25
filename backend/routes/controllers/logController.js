@@ -44,18 +44,17 @@ export const getLog = asyncHandler(async (req, res) => {
 // @access Private
 
 export const setLog = asyncHandler(async (req, res) => {
-  const { quizId, answers } = req.body;
-  const currentQuiz = await Quiz.findOne({ _id: quizId })
+  const data = req.body;
+  const currentQuiz = await Quiz.findOne({ _id: data.id })
     .populate("questions")
     .exec();
   if (currentQuiz) {
-    const { questions } = currentQuiz;
-    //const result = culcResult(questions, answers);
+    const { questions, title } = currentQuiz;
     const newLog = await Log.create({
-      user: req.user.id,
-      quiz: quizId,
-      answers,
-      result: culcResult(questions, answers),
+      user: { id: req.user.id, name: req.user.name },
+      quiz: { id: data.id, title: title },
+      answers: data.answers,
+      result: culcResult(questions, data.answers),
     });
     if (newLog) {
       res.status(200).json(newLog);

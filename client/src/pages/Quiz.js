@@ -49,7 +49,7 @@ const Quiz = () => {
     }
     if (quizState.isCompleted) {
       dispatch(
-        setLog({ quizId: quizState.quiz._id, answers: quizState.userAnswers })
+        setLog({ id: quizState.quiz._id, answers: quizState.userAnswers })
       );
       navigate("/summary");
     }
@@ -66,14 +66,26 @@ const Quiz = () => {
     quizState.userAnswers,
   ]);
 
-  const onClickHundler = (args, event) => {
+  const onClickHundler = (data, event) => {
     event.preventDefault();
     if (qIndex < quizState.quiz.questions.length - 1) {
-      dispatch(setUserAnswer({ qId: args[1], answer: [args[0]] }));
+      dispatch(
+        setUserAnswer({
+          qId: data.qId,
+          answer: [...data.answer],
+          updatedAt: data.updatedAt,
+        })
+      );
       setQIndex(qIndex + 1);
     }
     if (qIndex === quizState.quiz.questions.length - 1) {
-      dispatch(setUserAnswer({ qId: args[1], answer: [args[0]] }));
+      dispatch(
+        setUserAnswer({
+          qId: data.qId,
+          answer: [...data.answer],
+          updatedAt: data.updatedAt,
+        })
+      );
       dispatch(finishQuiz());
     }
   };

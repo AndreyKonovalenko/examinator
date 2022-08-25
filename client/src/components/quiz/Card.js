@@ -6,7 +6,7 @@ import uniqid from "uniqid";
 import quizService from "../../features/quiz/quizService";
 
 const Card = (props) => {
-  const { options, question, _id } = props.item;
+  const { options, question, _id, updatedAt } = props.item;
   const { status } = props;
   // fucntion to convert array elemtets to object
   const convertedOptions = options.map((element, index) => {
@@ -16,7 +16,12 @@ const Card = (props) => {
   const list = quizService.shuffle(convertedOptions).map((element) => (
     <ListElem
       key={uniqid()}
-      onClick={(event) => props.onClick([element.id, _id], event)}
+      onClick={(event) =>
+        props.onClick(
+          { answer: element.id, qId: _id, updatedAt: updatedAt },
+          event
+        )
+      }
     >
       <p>{element.value}</p>
     </ListElem>
