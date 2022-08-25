@@ -1,8 +1,8 @@
-import moment from 'moment';
-import { StyledListCard } from '../styles/ListCard.styled';
-import { ListElem } from '../styles/ListElem.styled';
-import theme from '../../theme/index.js';
-import uniqid from 'uniqid';
+import moment from "moment";
+import { StyledListCard } from "../styles/ListCard.styled";
+import { ListElem } from "../styles/ListElem.styled";
+import theme from "../../theme/index.js";
+import uniqid from "uniqid";
 
 const LogListCard = (props) => {
   const { item, onClick } = props;
@@ -12,8 +12,8 @@ const LogListCard = (props) => {
       return (
         <ListElem key={uniqid()} onClick={(event) => onClick(element, event)}>
           <h2>
-            {en ? 'Quiz has been deleted' : null}
-            {ru ? 'Тест был дулаент из системы' : null}
+            {en ? "Quiz has been deleted" : null}
+            {ru ? "Тест был дулаент из системы" : null}
           </h2>
         </ListElem>
       );
@@ -21,10 +21,10 @@ const LogListCard = (props) => {
 
     const score = (
       (Number.parseInt(element.result) /
-        Number.parseInt(element.quiz.questions.length)) *
+        Number.parseInt(element.answers.length)) *
       100
     ).toFixed(0);
-    const etemptTime = moment(element.updatedAt).format('HH:mm:ss/DD.MM.YYYY');
+    const etemptTime = moment(element.updatedAt).format("HH:mm:ss/DD.MM.YYYY");
 
     const succes = {
       color: theme.colors.primary.light,
@@ -39,16 +39,16 @@ const LogListCard = (props) => {
         {en ? <p>Quiz: {element.quiz.title}</p> : null}
         {ru ? (
           <p style={score >= 80 ? succes : fail}>
-            Тест {score >= 80 ? 'пройден успешно' : 'провален'} с результатом{' '}
-            {score}%, правильных ответов: {element.result} из{' '}
-            {element.quiz.questions.length}
+            Тест {score >= 80 ? "пройден успешно" : "провален"} с результатом{" "}
+            {score}%, правильных ответов: {element.result} из{" "}
+            {element.answers.length}
           </p>
         ) : null}
         {en ? (
           <p style={score >= 80 ? succes : fail}>
-            {score >= 80 ? 'You have succeeded' : 'You have failed'} with{' '}
-            {score}%, correct answers: {element.result} out of{' '}
-            {element.quiz.questions.length}
+            {score >= 80 ? "You have succeeded" : "You have failed"} with{" "}
+            {score}%, correct answers: {element.result} out of{" "}
+            {element.answers.length}
           </p>
         ) : null}
         <p>{etemptTime}</p>
