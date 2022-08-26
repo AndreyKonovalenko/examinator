@@ -1,17 +1,17 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
-import { Helmet } from 'react-helmet';
-import { useSelector, useDispatch } from 'react-redux';
+import React from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { Helmet } from "react-helmet";
+import { useSelector, useDispatch } from "react-redux";
 import {
   getQuizzes,
   resetQuizState,
   getQuizById,
-} from '../features/quiz/quizSlice';
-import { getLogs, resetLogState, getLogById } from '../features/log/logSlice';
-import QuizListCard from '../components/dashboard/QuizListCard';
-import LogListCard from '../components/dashboard/LogListCard';
-import Spinner from '../components/Spinner';
+} from "../features/quiz/quizSlice";
+import { getLogs, resetLogState, getLogById } from "../features/log/logSlice";
+import QuizListCard from "../components/dashboard/QuizListCard";
+import LogListCard from "../components/dashboard/LogListCard";
+import Spinner from "../components/Spinner";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Dashboard = () => {
     if (!user) {
       dispatch(resetQuizState());
       dispatch(resetLogState());
-      navigate('/login');
+      navigate("/login");
     }
     if (user) {
       dispatch(getQuizzes());
@@ -48,15 +48,15 @@ const Dashboard = () => {
     event.preventDefault();
     if (id) {
       dispatch(getQuizById(id));
-      navigate('/quiz');
+      navigate("/quiz");
     }
   };
 
   const onLogHandler = (log, event) => {
     event.preventDefault();
     dispatch(getLogById(log._id));
-    dispatch(getQuizById(log.quiz._id));
-    navigate('/summary');
+    // dispatch(getQuizById(log.quiz._id));
+    navigate("/summary");
   };
 
   if (quizState.isLoading || logState.isLoading) {
@@ -65,7 +65,7 @@ const Dashboard = () => {
   const dashboard = (
     <>
       <Helmet>
-        <meta charSet='utf-8' />
+        <meta charSet="utf-8" />
         <title>Dashboard | Examinator</title>
       </Helmet>
       {quizState.quizzes.length > 0 && user ? (

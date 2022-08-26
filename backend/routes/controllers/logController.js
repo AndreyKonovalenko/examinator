@@ -7,8 +7,13 @@ import { Quiz } from "../../models/quizModel.js";
 // @access Private
 
 export const getLogs = asyncHandler(async (req, res) => {
-  const data = await Log.find({ user: req.user.id }).sort("-updatedAt");
-  console.log(data);
+  const data = await Log.find({ user: req.user.id })
+    .sort("-updatedAt")
+    .populate({
+      path: "quiz",
+      select: "updatedAt",
+    });
+
   if (data) {
     res.status(200).json(data);
   } else {
@@ -22,10 +27,7 @@ export const getLogs = asyncHandler(async (req, res) => {
 // @access Private
 
 export const getLog = asyncHandler(async (req, res) => {
-  const log = await Log.findOne({ _id: req.params.id }).populate({
-    path: "user",
-    select: ["name"],
-  });
+  const log = await Log.findOne({ _id: req.params.id }).populate("updatedAt");
   if (log) {
     res.status(200).json(log);
   } else {

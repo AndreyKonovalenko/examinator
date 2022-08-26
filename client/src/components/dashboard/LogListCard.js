@@ -35,8 +35,8 @@ const LogListCard = (props) => {
 
     return (
       <ListElem key={uniqid()} onClick={(event) => onClick(element, event)}>
-        {ru ? <p>Тема: {element.quiz.title}</p> : null}
-        {en ? <p>Quiz: {element.quiz.title}</p> : null}
+        {ru ? <p>Тема: {element.title}</p> : null}
+        {en ? <p>Quiz: {element.title}</p> : null}
         {ru ? (
           <p style={score >= 80 ? succes : fail}>
             Тест {score >= 80 ? "пройден успешно" : "провален"} с результатом{" "}
@@ -52,6 +52,9 @@ const LogListCard = (props) => {
           </p>
         ) : null}
         <p>{etemptTime}</p>
+        <p>
+          {typeof element.updatedAt} {element.quiz.updatedAt}
+        </p>
       </ListElem>
     );
   });

@@ -8,7 +8,7 @@ import { StyledCertificate } from "../components/styles/Certificate.styled.js";
 import { StyledImage } from "../components/styles/Image.styled";
 
 import { resetLogState, resetAnswersLogState } from "../features/log/logSlice";
-import { resetQuizState, getQuizById } from "../features/quiz/quizSlice";
+import { resetQuizState } from "../features/quiz/quizSlice";
 
 import html2canvas from "html2canvas";
 import logService from "../features/log/logService";
@@ -21,8 +21,13 @@ const Summary = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const quizState = useSelector((state) => state.quiz);
-  const logState = useSelector((state) => state.log);
+  const { log } = useSelector((state) => state.log);
+  const { answers, title, updatedAt, result, name } = log;
+  const etemptTime = moment(updatedAt).format("DD.MM.YYYY/HH:mm:ss");
+  const score = (
+    (Number.parseInt(result) / Number.parseInt(answers.length)) *
+    100
+  ).toFixed(0);
 
   useEffect(() => {
     if (!user) {
@@ -30,35 +35,18 @@ const Summary = () => {
       dispatch(resetLogState());
       navigate("/login");
     }
-
-    if (!quizState.quiz & (logState.log !== null)) {
-      dispatch(getQuizById(logState.log.quiz));
-    }
-  }, [
-    user,
-    navigate,
-    dispatch,
-    quizState.quiz,
-    quizState.userAnswers,
-    logState.log,
-  ]);
+  }, [user, navigate, dispatch]);
 
   const printDocument = () => {
-    if (quizState.quiz && logState.log) {
-      const doc = logService.createPDF(
-        logState.log,
-        user.name,
-        quizState.quiz.title
-      );
+    if (log) {
+      const doc = logService.createPDF(log);
       html2canvas(document.querySelector("#pdfToPrint")).then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         doc.addImage(imgData, "JEPEG", 0, 50);
         html2canvas(document.querySelector("#pdfToPrint1")).then((canvas) => {
           const imgData = canvas.toDataURL("image/png");
           doc.addImage(imgData, "JEPEG", 0, 155);
-          doc.save(
-            `${logState.log.user.name || user.name} ${quizState.quiz.title}.pdf`
-          );
+          doc.save(`${name} ${title}.pdf`);
         });
       });
     }
@@ -69,27 +57,9 @@ const Summary = () => {
     printDocument();
   };
 
-  let etemptResult = null;
-  let etemptTime = null;
-  let etemptQuizeTitle = null;
-  let score = null;
-  let amount = null;
-
-  if (quizState.quiz && logState.log) {
-    const { result, updatedAt } = logState.log;
-    etemptResult = result;
-    etemptTime = moment(updatedAt).format("DD.MM.YYYY/HH:mm:ss");
-    etemptQuizeTitle = quizState.quiz.title;
-    amount = quizState.quiz.questions.length;
-    score = (
-      (Number.parseInt(etemptResult) / Number.parseInt(amount)) *
-      100
-    ).toFixed(0);
-  }
   const tryAgaineHandler = (event) => {
     event.preventDefault();
     dispatch(resetLogState());
-    dispatch(resetQuizState());
     dispatch(resetAnswersLogState());
     navigate("/");
   };
@@ -135,10 +105,8 @@ const Summary = () => {
           <h1>Протокол</h1>
           <h1>проверки знаний работников</h1>
           <Flex id={"pdfToPrint"}>{images(3)}</Flex>
-          <h2>Тема: {etemptQuizeTitle}</h2>
-          <h3>
-            ФИО: {(logState.log ? logState.log.user.name : null) || user.name}
-          </h3>
+          <h2>Тема: {title}</h2>
+          <h3>ФИО: {name}</h3>
           <h3>Дата/время проведения: {etemptTime} </h3>
           <br />
           <h2>Результат:</h2>
@@ -146,7 +114,7 @@ const Summary = () => {
             Тест {score >= 80 ? "пройден" : "провален"} с результатом {score}%
           </h2>
           <p>
-            Правильных ответов: {etemptResult} из {amount}
+            Правильных ответов: {result} из {answers.length}
           </p>
           <Flex id={"pdfToPrint1"}>{images(3)}</Flex>
         </div>
@@ -158,10 +126,11 @@ const Summary = () => {
     </>
   );
 
-  if (quizState.isLoading || logState.isLoading || !logState.log) {
+  if (!log) {
     return <Spinner />;
   }
-  return quizState.quiz && logState.log ? summary : <Spinner />;
+
+  return summary;
 };
 
 export default Summary;
