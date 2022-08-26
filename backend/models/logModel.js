@@ -3,17 +3,13 @@ const { Schema } = mongoose;
 
 const logSchema = new Schema(
   {
-    user: {
-      id: { type: Schema.Types.ObjectId, ref: "user" },
-      name: String,
-    },
+    user: { type: Schema.Types.ObjectId, ref: "user" },
+    name: String,
     quiz: {
-      id: {
-        type: Schema.Types.ObjectId,
-        ref: "quiz",
-      },
-      title: String,
+      type: Schema.Types.ObjectId,
+      ref: "quiz",
     },
+    title: String,
     answers: Array,
     result: String,
   },

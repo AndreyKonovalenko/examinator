@@ -1,21 +1,21 @@
-import React from 'react';
-import { Button } from '../components/styles/Button.styled.js';
-import { Flex } from '../components/styles/Flex.styled.js';
-import { Helmet } from 'react-helmet';
-import { resetLogState, resetAnswersLogState } from '../features/log/logSlice';
-import { resetQuizState, getQuizById } from '../features/quiz/quizSlice';
-import { StyledCertificate } from '../components/styles/Certificate.styled.js';
-import { StyledImage } from '../components/styles/Image.styled';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
+import { Button } from "../components/styles/Button.styled.js";
+import { Flex } from "../components/styles/Flex.styled.js";
+import { Helmet } from "react-helmet";
+import { StyledCertificate } from "../components/styles/Certificate.styled.js";
+import { StyledImage } from "../components/styles/Image.styled";
 
-import html2canvas from 'html2canvas';
-import logService from '../features/log/logService';
-import moment from 'moment';
-import Spinner from '../components/Spinner';
-import theme from '../theme/index.js';
-import uniqid from 'uniqid';
+import { resetLogState, resetAnswersLogState } from "../features/log/logSlice";
+import { resetQuizState, getQuizById } from "../features/quiz/quizSlice";
+
+import html2canvas from "html2canvas";
+import logService from "../features/log/logService";
+import moment from "moment";
+import Spinner from "../components/Spinner";
+import theme from "../theme/index.js";
+import uniqid from "uniqid";
 
 const Summary = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Summary = () => {
     if (!user) {
       dispatch(resetQuizState());
       dispatch(resetLogState());
-      navigate('/login');
+      navigate("/login");
     }
 
     if (!quizState.quiz & (logState.log !== null)) {
@@ -50,12 +50,12 @@ const Summary = () => {
         user.name,
         quizState.quiz.title
       );
-      html2canvas(document.querySelector('#pdfToPrint')).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        doc.addImage(imgData, 'JEPEG', 0, 50);
-        html2canvas(document.querySelector('#pdfToPrint1')).then((canvas) => {
-          const imgData = canvas.toDataURL('image/png');
-          doc.addImage(imgData, 'JEPEG', 0, 155);
+      html2canvas(document.querySelector("#pdfToPrint")).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        doc.addImage(imgData, "JEPEG", 0, 50);
+        html2canvas(document.querySelector("#pdfToPrint1")).then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+          doc.addImage(imgData, "JEPEG", 0, 155);
           doc.save(
             `${logState.log.user.name || user.name} ${quizState.quiz.title}.pdf`
           );
@@ -78,7 +78,7 @@ const Summary = () => {
   if (quizState.quiz && logState.log) {
     const { result, updatedAt } = logState.log;
     etemptResult = result;
-    etemptTime = moment(updatedAt).format('DD.MM.YYYY/HH:mm:ss');
+    etemptTime = moment(updatedAt).format("DD.MM.YYYY/HH:mm:ss");
     etemptQuizeTitle = quizState.quiz.title;
     amount = quizState.quiz.questions.length;
     score = (
@@ -91,12 +91,12 @@ const Summary = () => {
     dispatch(resetLogState());
     dispatch(resetQuizState());
     dispatch(resetAnswersLogState());
-    navigate('/');
+    navigate("/");
   };
 
   const images = (n) => {
     const styled = {
-      listStyleType: 'none',
+      listStyleType: "none",
     };
     const result = [];
     let i = 0;
@@ -109,8 +109,8 @@ const Summary = () => {
           <StyledImage
             key={uniqid()}
             style={custom}
-            src='/img/chaplain.png'
-            alt=''
+            src="/img/chaplain.png"
+            alt=""
           />
         </li>
       );
@@ -127,14 +127,14 @@ const Summary = () => {
   const summary = (
     <>
       <Helmet>
-        <meta charSet='utf-8' />
+        <meta charSet="utf-8" />
         <title>Quiz | Examinator </title>
       </Helmet>
       <StyledCertificate>
         <div>
           <h1>Протокол</h1>
           <h1>проверки знаний работников</h1>
-          <Flex id={'pdfToPrint'}>{images(3)}</Flex>
+          <Flex id={"pdfToPrint"}>{images(3)}</Flex>
           <h2>Тема: {etemptQuizeTitle}</h2>
           <h3>
             ФИО: {(logState.log ? logState.log.user.name : null) || user.name}
@@ -143,12 +143,12 @@ const Summary = () => {
           <br />
           <h2>Результат:</h2>
           <h2 style={score >= 80 ? succes : fail}>
-            Тест {score >= 80 ? 'пройден' : 'провален'} с результатом {score}%
+            Тест {score >= 80 ? "пройден" : "провален"} с результатом {score}%
           </h2>
           <p>
             Правильных ответов: {etemptResult} из {amount}
           </p>
-          <Flex id={'pdfToPrint1'}>{images(3)}</Flex>
+          <Flex id={"pdfToPrint1"}>{images(3)}</Flex>
         </div>
         <Flex>
           <Button onClick={getPdf}>Сохранить в PDF </Button>

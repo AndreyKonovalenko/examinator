@@ -42,14 +42,14 @@ const getLog = async (logId, token) => {
   return response.data;
 };
 
-const createPDF = (log, user, title) => {
+const createPDF = ({ title, name, result, answers, updatedAt }) => {
   const doc = new jsPDF();
   const score = (
-    (Number.parseInt(log.result) / Number.parseInt(log.answers.length)) *
+    (Number.parseInt(result) / Number.parseInt(answers.length)) *
     100
   ).toFixed(0);
 
-  const etemptTime = moment(log.updatedAt).format("DD.MM.YYYY/HH:mm:ss");
+  const etemptTime = moment(updatedAt).format("DD.MM.YYYY/HH:mm:ss");
   doc.addFont(PodkovaBold, "PodkovaBold", "normal");
   doc.setFont("PodkovaBold");
   doc.setFontSize(28);
@@ -59,7 +59,7 @@ const createPDF = (log, user, title) => {
   doc.setFontSize(22);
   doc.text(`Тема: ${title}`, 105, 70, null, null, "center");
   doc.setFontSize(16);
-  doc.text(`ФИО:  ${log.user.name || user}`, 105, 85, null, null, "center");
+  doc.text(`ФИО:  ${name}`, 105, 85, null, null, "center");
   doc.text(
     `Дата/время проведения: ${etemptTime}`,
     105,
@@ -71,11 +71,11 @@ const createPDF = (log, user, title) => {
 
   doc.setFontSize(22);
   doc.text("Результат:", 105, 120, null, null, "center");
-  const result = score >= 80 ? "пройден" : "провален";
+  const summary = score >= 80 ? "пройден" : "провален";
   const color = score >= 80 ? theme.colors.primary.light : theme.colors.error;
   doc.setTextColor(color);
   doc.text(
-    `Тест ${result} с результатом ${score}%`,
+    `Тест ${summary} с результатом ${score}%`,
     105,
     135,
     null,
@@ -85,7 +85,7 @@ const createPDF = (log, user, title) => {
   doc.setTextColor(theme.colors.text.onSurface);
   doc.setFontSize(14);
   doc.text(
-    `Правильных ответов: ${log.result} из ${log.answers.length}`,
+    `Правильных ответов: ${result} из ${answers.length}`,
     105,
     145,
     null,

@@ -7,13 +7,8 @@ import { Quiz } from "../../models/quizModel.js";
 // @access Private
 
 export const getLogs = asyncHandler(async (req, res) => {
-  const data = await Log.find({ user: req.user.id })
-    .sort("-updatedAt")
-    .populate({
-      path: "quiz",
-      select: ["title", "questions"],
-    })
-    .exec();
+  const data = await Log.find({ user: req.user.id }).sort("-updatedAt");
+  console.log(data);
   if (data) {
     res.status(200).json(data);
   } else {
@@ -51,8 +46,10 @@ export const setLog = asyncHandler(async (req, res) => {
   if (currentQuiz) {
     const { questions, title } = currentQuiz;
     const newLog = await Log.create({
-      user: { id: req.user.id, name: req.user.name },
-      quiz: { id: data.id, title: title },
+      user: req.user.id,
+      name: req.user.name,
+      quiz: data.id,
+      title: title,
       answers: data.answers,
       result: culcResult(questions, data.answers),
     });
