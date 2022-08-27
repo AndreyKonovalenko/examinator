@@ -1,3 +1,10 @@
+import { useState, useEffect } from 'react';
+import { useTheme } from 'styled-components';
+
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
+import moment from 'moment';
+
 import { deleteLog } from '../../features/admin/adminSlice';
 import { getLogById } from '../../features/log/logSlice';
 import { ListElem } from '../styles/ListElem.styled';
@@ -5,17 +12,13 @@ import { setLogsTabOff } from '../../features/ui/uiSlice';
 import { StyledListCard } from '../styles/ListCard.styled';
 import { StyledSeparator } from '../styles/Separator.styled';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
-import { useState } from 'react';
-
 import CheckBox from './CheckBox';
-import moment from 'moment';
 import SettingPanel from './SettingsPanel';
-import theme from '../../theme/index.js';
+// import theme from '../../theme/index.js';
 import uniqid from 'uniqid';
 
 const LogsListCardAdmin = (props) => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { en, item, ru } = props;

@@ -26,10 +26,10 @@ const UsersListCard = (props) => {
 
   // List Hadlers
 
-  const onClickHandler = (args, event) => {
+  const onClickHandler = (id, event) => {
     event.preventDefault();
-    setIsSelected(args[1]);
-    dispatch(getUserLogs(args[0]));
+    setIsSelected(id);
+    dispatch(getUserLogs(id));
     dispatch(setLogsTabOn());
   };
 
@@ -86,7 +86,7 @@ const UsersListCard = (props) => {
                 }
               : null
           }
-          onClick={(event) => onClickHandler([element._id, index], event)}>
+          onClick={(event) => onClickHandler(element._id, event)}>
           <p>
             {element.username} / {element.name}
           </p>
@@ -98,7 +98,7 @@ const UsersListCard = (props) => {
   return (
     <StyledListCard>
       <SettingPanel
-        hideUnArchive={true}
+        hideUnArchive
         isEdit={isEdit}
         onAdd={onAddHandler}
         onClose={onCloseHandler}
