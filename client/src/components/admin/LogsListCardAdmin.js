@@ -1,19 +1,19 @@
-import { deleteLog } from "../../features/admin/adminSlice";
-import { getLogById } from "../../features/log/logSlice";
-import { ListElem } from "../styles/ListElem.styled";
-import { setLogsTabOff } from "../../features/ui/uiSlice";
-import { StyledListCard } from "../styles/ListCard.styled";
-import { StyledSeparator } from "../styles/Separator.styled";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
-import { useState } from "react";
+import { deleteLog } from '../../features/admin/adminSlice';
+import { getLogById } from '../../features/log/logSlice';
+import { ListElem } from '../styles/ListElem.styled';
+import { setLogsTabOff } from '../../features/ui/uiSlice';
+import { StyledListCard } from '../styles/ListCard.styled';
+import { StyledSeparator } from '../styles/Separator.styled';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { useState } from 'react';
 
-import CheckBox from "./CheckBox";
-import moment from "moment";
-import SettingPanel from "./SettingsPanel";
-import theme from "../../theme/index.js";
-import uniqid from "uniqid";
+import CheckBox from './CheckBox';
+import moment from 'moment';
+import SettingPanel from './SettingsPanel';
+import theme from '../../theme/index.js';
+import uniqid from 'uniqid';
 
 const LogsListCardAdmin = (props) => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const LogsListCardAdmin = (props) => {
     event.preventDefault();
     setIsSelected(id);
     dispatch(getLogById(id));
-    navigate("/summary");
+    navigate('/summary');
   };
 
   const onCheckHandler = (id, event) => {
@@ -50,7 +50,7 @@ const LogsListCardAdmin = (props) => {
 
   const onGearHandler = () => {
     if (item.length === 0) {
-      toast.error("Nothing to edit");
+      toast.error('Nothing to edit');
     }
     if (item.length > 0) {
       setIsEdit(!isEdit);
@@ -63,7 +63,7 @@ const LogsListCardAdmin = (props) => {
         dispatch(deleteLog(element));
       }
     } else {
-      toast.error("You try to delete empty or not selected logs!");
+      toast.error('You try to delete empty or not selected logs!');
     }
   };
 
@@ -74,7 +74,7 @@ const LogsListCardAdmin = (props) => {
   const list = item.map((element, index) => {
     if (element.quiz === null) {
       return (
-        <div style={{ display: "flex" }} key={uniqid()}>
+        <div style={{ display: 'flex' }} key={uniqid()}>
           {isEdit ? (
             <CheckBox
               onCheckHandler={onCheckHandler}
@@ -85,11 +85,10 @@ const LogsListCardAdmin = (props) => {
           ) : null}
           <ListElem
             key={uniqid()}
-            onClick={(event) => onClickHandler(element._id, event)}
-          >
+            onClick={(event) => onClickHandler(element._id, event)}>
             <h2>
-              {en ? "Quiz has been deleted" : null}
-              {ru ? "Тест был дулаент из системы" : null}
+              {en ? 'Quiz has been deleted' : null}
+              {ru ? 'Тест был дулаент из системы' : null}
             </h2>
           </ListElem>
         </div>
@@ -100,7 +99,7 @@ const LogsListCardAdmin = (props) => {
         Number.parseInt(element.answers.length)) *
       100
     ).toFixed(0);
-    const etemptTime = moment(element.updatedAt).format("HH:mm:ss/DD.MM.YYYY");
+    const etemptTime = moment(element.updatedAt).format('HH:mm:ss/DD.MM.YYYY');
 
     const success = {
       color: theme.colors.primary.light,
@@ -111,7 +110,7 @@ const LogsListCardAdmin = (props) => {
     };
 
     return (
-      <div style={{ display: "flex" }} key={uniqid()}>
+      <div style={{ display: 'flex' }} key={uniqid()}>
         {isEdit ? (
           <CheckBox
             onCheckHandler={onCheckHandler}
@@ -131,21 +130,20 @@ const LogsListCardAdmin = (props) => {
                   color: theme.colors.text.onPrimary,
                 }
               : null
-          }
-        >
+          }>
           {ru ? <p>Тема: {element.title}</p> : null}
           {en ? <p>Quiz: {element.title}</p> : null}
           {ru ? (
             <p style={score >= 80 ? success : fail}>
-              Тест {score >= 80 ? "пройден успешно" : "провален"} с результатом{" "}
-              {score}%, правильных ответов: {element.result} из{" "}
+              Тест {score >= 80 ? 'пройден успешно' : 'провален'} с результатом{' '}
+              {score}%, правильных ответов: {element.result} из{' '}
               {element.answers.length}
             </p>
           ) : null}
           {en ? (
             <p style={score >= 80 ? success : fail}>
-              {score >= 80 ? "You have succeeded" : "You have failed"} with{" "}
-              {score}%, correct answers: {element.result} out of{" "}
+              {score >= 80 ? 'You have succeeded' : 'You have failed'} with{' '}
+              {score}%, correct answers: {element.result} out of{' '}
               {element.answers.length}
             </p>
           ) : null}
@@ -158,7 +156,7 @@ const LogsListCardAdmin = (props) => {
   return (
     <StyledListCard>
       <SettingPanel
-        hideAdd={true}
+        hideAdd
         isEdit={isEdit}
         onAdd={() => {}}
         onClose={onCloseHandler}
