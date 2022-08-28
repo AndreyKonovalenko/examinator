@@ -1,21 +1,21 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
+
+import moment from 'moment';
+import html2canvas from 'html2canvas';
+import uniqid from 'uniqid';
+
 import { Button } from '../components/styles/Button.styled.js';
 import { Flex } from '../components/styles/Flex.styled.js';
 import { Helmet } from 'react-helmet';
 import { StyledCertificate } from '../components/styles/Certificate.styled.js';
 import { StyledImage } from '../components/styles/Image.styled';
-
 import { resetLogState, resetAnswersLogState } from '../features/log/logSlice';
 import { resetQuizState } from '../features/quiz/quizSlice';
-
-import html2canvas from 'html2canvas';
 import logService from '../features/log/logService';
-import moment from 'moment';
 import Spinner from '../components/Spinner';
 import theme from '../theme/index.js';
-import uniqid from 'uniqid';
 
 const Summary = () => {
   const navigate = useNavigate();
@@ -25,6 +25,7 @@ const Summary = () => {
   const { answers, title, updatedAt, result, name } = useSelector(
     (state) => state.log.log
   );
+
   const etemptTime = moment(updatedAt).format('DD.MM.YYYY/HH:mm:ss');
   const score = (
     (Number.parseInt(result) / Number.parseInt(answers.length)) *
