@@ -1,54 +1,47 @@
-import React from "react";
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
-import { Helmet } from "react-helmet";
-import { useSelector, useDispatch } from "react-redux";
+import React from 'react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { Helmet } from 'react-helmet';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   getQuizzes,
   resetQuizState,
   getQuizById,
-} from "../features/quiz/quizSlice";
-import { getLogs, resetLogState, getLogById } from "../features/log/logSlice";
-import QuizListCard from "../components/dashboard/QuizListCard";
-import LogListCard from "../components/dashboard/LogListCard";
-import Spinner from "../components/Spinner";
+} from '../features/quiz/quizSlice';
+import { getLogs, resetLogState, getLogById } from '../features/log/logSlice';
+import QuizListCard from '../components/dashboard/QuizListCard';
+import LogListCard from '../components/dashboard/LogListCard';
+import Spinner from '../components/Spinner';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { ru, en } = useSelector((state) => state.ui);
   const { user } = useSelector((state) => state.auth);
-  const quizState = useSelector((state) => state.quiz);
-  const logState = useSelector((state) => state.log);
+  const { quizzes, isLodaidng: quizIsLoading } = useSelector(
+    (state) => state.quiz
+  );
+  const { logs, isLodaidng: logIsLoading } = useSelector((state) => state.log);
 
   useEffect(() => {
     if (!user) {
       dispatch(resetQuizState());
       dispatch(resetLogState());
-      navigate("/login");
+      navigate('/login');
     }
-    if (user) {
+    if (user && !quizzes) {
       dispatch(getQuizzes());
     }
-    if (quizState.isSuccess) {
+    if (user && !logs) {
       dispatch(getLogs());
     }
-  }, [
-    user,
-    navigate,
-    quizState.isError,
-    logState.isError,
-    quizState.message,
-    quizState.isSuccess,
-    logState.message,
-    dispatch,
-  ]);
+  }, [user, navigate, dispatch, quizzes, logs]);
 
   const onQuizSelect = (id, event) => {
     event.preventDefault();
     if (id) {
       dispatch(getQuizById(id));
-      navigate("/quiz");
+      navigate('/quiz');
     }
   };
 
@@ -56,34 +49,29 @@ const Dashboard = () => {
     event.preventDefault();
     dispatch(getLogById(log._id));
     // dispatch(getQuizById(log.quiz._id));
-    navigate("/summary");
+    navigate('/summary');
   };
 
-  if (quizState.isLoading || logState.isLoading) {
+  if (quizIsLoading || logIsLoading) {
     return <Spinner />;
   }
   const dashboard = (
     <>
       <Helmet>
-        <meta charSet="utf-8" />
+        <meta charSet='utf-8' />
         <title>Dashboard | Examinator</title>
       </Helmet>
-      {quizState.quizzes.length > 0 && user ? (
+      {quizzes && user ? (
         <QuizListCard
           ru={ru}
           en={en}
           user={user.name}
-          item={quizState.quizzes}
+          item={quizzes}
           onClick={onQuizSelect}
         />
       ) : null}
-      {logState.logs.length > 0 && user ? (
-        <LogListCard
-          ru={ru}
-          en={en}
-          onClick={onLogHandler}
-          item={logState.logs}
-        />
+      {logs && user ? (
+        <LogListCard ru={ru} en={en} onClick={onLogHandler} item={logs} />
       ) : null}
     </>
   );

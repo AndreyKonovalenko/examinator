@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-const API_URL = "/api/quiz/";
+const API_URL = '/api/quiz/';
 
 const shuffle = (array) => {
   const arr = array.slice();

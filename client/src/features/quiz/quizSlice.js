@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import quizService from './quizService';
 
 const initialState = {
-  quizzes: [],
+  quizzes: null,
   quiz: null,
   userAnswers: [],
   isCompleted: false,

@@ -28,6 +28,14 @@ const LogsListCardAdmin = (props) => {
 
   // List Hadlers
 
+  for (let i = 0; i < 3; i++) {
+    debugger;
+    const log = () => {
+      console.log(i);
+    };
+    setTimeout(log, 100);
+  }
+
   const onClickHandler = (id, event) => {
     event.preventDefault();
     setIsSelected(id);
