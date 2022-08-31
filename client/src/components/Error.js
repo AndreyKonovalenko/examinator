@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Error = () => {
   const quizState = useSelector((state) => state.quiz);

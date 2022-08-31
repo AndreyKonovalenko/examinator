@@ -1,17 +1,14 @@
-import React from "react";
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
-import { Helmet } from "react-helmet";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  getQuizzes,
-  resetQuizState,
-  getQuizById,
-} from "../features/quiz/quizSlice";
-import { getLogs, resetLogState, getLogById } from "../features/log/logSlice";
-import QuizListCard from "../components/dashboard/QuizListCard";
-import LogListCard from "../components/dashboard/LogListCard";
-import Spinner from "../components/Spinner";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { Helmet } from 'react-helmet';
+import { useSelector, useDispatch } from 'react-redux';
+
+import QuizListCard from '../components/dashboard/QuizListCard';
+import LogListCard from '../components/dashboard/LogListCard';
+import Spinner from '../components/Spinner';
+
+import { getQuizzes, getQuizById } from '../features/quiz/quizSlice';
+import { getLogs, getLogById } from '../features/log/logSlice';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -23,31 +20,26 @@ const Dashboard = () => {
   );
   const { logs, isLodaidng: logIsLoading } = useSelector((state) => state.log);
 
-  const topLevelAction = (dispatch) => {
-    return Promise.all(dispatch(getQuizzes(), dispatch(getLogs())));
-  };
   useEffect(() => {
     if (!user) {
-      navigate("/login");
+      navigate('/login');
     }
-    console.log("rerendering");
-    dispatch(getQuizzes());
-    dispatch(getLogs());
-  }, [dispatch, user]);
+    if (user) {
+      dispatch(getQuizzes());
+      dispatch(getLogs());
+    }
+  }, [dispatch, navigate, user]);
 
-  const onQuizSelect = (id, event) => {
-    event.preventDefault();
+  const onQuizSelect = (id) => {
     if (id) {
       dispatch(getQuizById(id));
-      navigate("/quiz");
+      navigate('/quiz');
     }
   };
 
-  const onLogHandler = (log, event) => {
-    event.preventDefault();
+  const onLogHandler = (log) => {
     dispatch(getLogById(log._id));
-    // dispatch(getQuizById(log.quiz._id));
-    navigate("/summary");
+    navigate('/summary');
   };
 
   if (quizIsLoading || logIsLoading) {
@@ -56,9 +48,10 @@ const Dashboard = () => {
   const dashboard = (
     <>
       <Helmet>
-        <meta charSet="utf-8" />
+        <meta charSet='utf-8' />
         <title>Dashboard | Examinator</title>
       </Helmet>
+
       {quizzes && user ? (
         <QuizListCard
           ru={ru}

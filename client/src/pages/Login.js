@@ -8,16 +8,15 @@ import LoginForm from '../components/auth/LoginFrom';
 import Spinner from '../components/Spinner';
 
 const Login = () => {
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+  const { ru, en } = useSelector((state) => state.ui);
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.auth
-  );
   const { username, password } = formData;
-
-  const { ru, en } = useSelector((state) => state.ui);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();

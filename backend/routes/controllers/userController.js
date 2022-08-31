@@ -67,9 +67,9 @@ export const login = asyncHandler(async (req, res) => {
 // @route GET /api/users/me
 // @access Privet
 
-export const getMe = asyncHandler(async (req, res) => {
-  res.status(200).json(req.user);
-});
+// export const getMe = asyncHandler(async (req, res) => {
+//   res.status(200).json(req.user);
+// });
 
 // Generate JWT
 const generateToken = (id) => {

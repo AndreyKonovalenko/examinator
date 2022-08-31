@@ -5,12 +5,12 @@ import theme from '../../theme/index.js';
 import uniqid from 'uniqid';
 
 const LogListCard = (props) => {
-  const { item, onClick } = props;
-  const { en, ru } = props;
+  const { item, onClick, en, ru } = props;
+
   const list = item.map((element) => {
     if (element.quiz === null) {
       return (
-        <ListElem key={uniqid()} onClick={(event) => onClick(element, event)}>
+        <ListElem key={uniqid()} onClick={() => onClick(element)}>
           <h2>
             {en ? 'Quiz has been deleted' : null}
             {ru ? 'Тест был удлен из системы' : null}
@@ -34,7 +34,7 @@ const LogListCard = (props) => {
     };
 
     return (
-      <ListElem key={uniqid()} onClick={(event) => onClick(element, event)}>
+      <ListElem key={uniqid()} onClick={() => onClick(element)}>
         {ru ? <p>Тема: {element.title}</p> : null}
         {en ? <p>Quiz: {element.title}</p> : null}
         {ru ? (

@@ -24,6 +24,7 @@ const MainLayout = () => {
 
   useEffect(() => {
     if (user) {
+      console.log(user);
       const decoded = jwt_decode(user.token);
       if (decoded.exp * 1000 < Date.now()) {
         dispatch(logout());
