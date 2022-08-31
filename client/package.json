@@ -6,8 +6,6 @@
   "dependencies": {
     "@react-pdf/render": "^3.2.0",
     "@reduxjs/toolkit": "^1.8.1",
-    "@testing-library/jest-dom": "^5.16.3",
-    "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "html2canvas": "^1.4.1",
@@ -54,5 +52,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "import": "^0.0.6"
   }
 }

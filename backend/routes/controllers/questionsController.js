@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import { Question } from '../../models/questionModel.js';
 
 // @desc Get Questions
-// @route GET /api//question
+// @route GET /api//questions
 // @access Private
 
 export const getQuestions = asyncHandler(async (req, res) => {
@@ -12,11 +12,11 @@ export const getQuestions = asyncHandler(async (req, res) => {
 });
 
 // @desc Get Question by id
-// @route GET /api//question/id
+// @route GET /api//questions/id
 // @access Private
 
 // @desc Create new Question
-// @route POST /api/question
+// @route POST /api/questions
 // @access Private
 
 export const setQuestion = asyncHandler(async (req, res) => {

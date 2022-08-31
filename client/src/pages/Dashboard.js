@@ -9,16 +9,17 @@ import Spinner from '../components/Spinner';
 
 import { getQuizzes, getQuizById } from '../features/quiz/quizSlice';
 import { getLogs, getLogById } from '../features/log/logSlice';
+import { login } from '../features/auth/authSlice';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { ru, en } = useSelector((state) => state.ui);
   const { user } = useSelector((state) => state.auth);
-  const { quizzes, isLodaidng: quizIsLoading } = useSelector(
+  const { quizzes, isLoading: quizzesIsLoading } = useSelector(
     (state) => state.quiz
   );
-  const { logs, isLodaidng: logIsLoading } = useSelector((state) => state.log);
+  const { logs, isLoading: logsIsLoading } = useSelector((state) => state.log);
 
   useEffect(() => {
     if (!user) {
@@ -41,8 +42,7 @@ const Dashboard = () => {
     dispatch(getLogById(log._id));
     navigate('/summary');
   };
-
-  if (quizIsLoading || logIsLoading) {
+  if (quizzesIsLoading || logsIsLoading) {
     return <Spinner />;
   }
   const dashboard = (
@@ -66,6 +66,7 @@ const Dashboard = () => {
       ) : null}
     </>
   );
+
   return dashboard;
 };
 

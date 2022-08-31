@@ -9,7 +9,9 @@ const Error = () => {
   const logState = useSelector((state) => state.log);
   const userState = useSelector((state) => state.auth);
   const adminState = useSelector((state) => state.admin);
+
   useEffect(() => {
+    console.log('rerendering');
     const errorList = [];
     if (userState.isError) {
       errorList.push(userState.message);
