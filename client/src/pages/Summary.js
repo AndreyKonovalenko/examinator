@@ -22,12 +22,18 @@ const Summary = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const { user } = useSelector((state) => state.auth);
-  const { log } = useSelector((state) => state.log);
-  const { answers, title, updatedAt, result, name } = log;
+  const log = useSelector((state) => state.log.log);
+  const answers = useSelector((state) => state.log.log.answers);
+  const title = useSelector((state) => state.log.log.title);
+  const result = useSelector((state) => state.log.log.result);
+  const updatedAt = useSelector((state) => state.log.log.updatedAt);
+  const name = useSelector((state) => state.log.log.name);
+
+  const answersLength = log ? answers : '1';
 
   const etemptTime = moment(updatedAt).format('DD.MM.YYYY/HH:mm:ss');
   const score = (
-    (Number.parseInt(result) / Number.parseInt(answers.length)) *
+    (Number.parseInt(result) / Number.parseInt(answersLength)) *
     100
   ).toFixed(0);
 
@@ -37,11 +43,11 @@ const Summary = () => {
       dispatch(resetLogState());
       navigate('/login');
     }
-  }, [user, navigate, dispatch, log]);
+  }, [user, navigate, dispatch]);
 
   const getPdf = (event) => {
     event.preventDefault();
-    printDocument();
+    printDocument(log);
   };
 
   const tryAgaineHandler = (event) => {
@@ -101,7 +107,7 @@ const Summary = () => {
             Тест {score >= 80 ? 'пройден' : 'провален'} с результатом {score}%
           </h2>
           <p>
-            Правильных ответов: {result} из {answers.length}
+            Правильных ответов: {result} из {answersLength}
           </p>
           <Flex id={'pdfToPrint1'}>{images(3)}</Flex>
         </div>
