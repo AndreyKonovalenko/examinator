@@ -29,6 +29,7 @@ export const getLogs = asyncHandler(async (req, res) => {
 export const getLog = asyncHandler(async (req, res) => {
   const log = await Log.findOne({ _id: req.params.id }).populate('updatedAt');
   if (log) {
+    console.log(log);
     res.status(200).json(log);
   } else {
     res.status(400);

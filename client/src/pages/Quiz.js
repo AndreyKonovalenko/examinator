@@ -1,10 +1,13 @@
 import React from 'react';
-import Spinner from '../components/Spinner.js';
-import Card from '../components/quiz/Card';
+
+import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import { Helmet } from 'react-helmet';
 import { toast } from 'react-toastify';
-import { useSelector, useDispatch } from 'react-redux';
+
+import Spinner from '../components/Spinner.js';
+import Card from '../components/quiz/Card';
 import quizService from '../features/quiz/quizService';
 
 import {
@@ -13,7 +16,6 @@ import {
   finishQuiz,
 } from '../features/quiz/quizSlice';
 import { setLog } from '../features/log/logSlice.js';
-import { useNavigate } from 'react-router';
 
 const Quiz = () => {
   const navigate = useNavigate();

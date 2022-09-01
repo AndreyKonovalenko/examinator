@@ -9,7 +9,6 @@ import Spinner from '../components/Spinner';
 
 import { getQuizzes, getQuizById } from '../features/quiz/quizSlice';
 import { getLogs, getLogById } from '../features/log/logSlice';
-import { login } from '../features/auth/authSlice';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -42,6 +41,7 @@ const Dashboard = () => {
     dispatch(getLogById(log._id));
     navigate('/summary');
   };
+
   if (quizzesIsLoading || logsIsLoading) {
     return <Spinner />;
   }

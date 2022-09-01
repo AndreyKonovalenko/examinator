@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTheme } from 'styled-components';
 
 import { useDispatch } from 'react-redux';
@@ -25,16 +25,6 @@ const LogsListCardAdmin = (props) => {
   const [isSelected, setIsSelected] = useState(null);
   const [isChecked, setIsChecked] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
-
-  // List Hadlers
-
-  for (let i = 0; i < 3; i++) {
-    debugger;
-    const log = () => {
-      console.log(i);
-    };
-    setTimeout(log, 100);
-  }
 
   const onClickHandler = (id, event) => {
     event.preventDefault();

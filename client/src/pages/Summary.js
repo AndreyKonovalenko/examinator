@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTheme } from 'styled-components';
 
 import moment from 'moment';
-import html2canvas from 'html2canvas';
+
 import uniqid from 'uniqid';
 
 import { Button } from '../components/styles/Button.styled.js';
@@ -13,18 +14,16 @@ import { StyledCertificate } from '../components/styles/Certificate.styled.js';
 import { StyledImage } from '../components/styles/Image.styled';
 import { resetLogState, resetAnswersLogState } from '../features/log/logSlice';
 import { resetQuizState } from '../features/quiz/quizSlice';
-import logService from '../features/log/logService';
+import { printDocument } from '../utils/createPDF';
 import Spinner from '../components/Spinner';
-import theme from '../theme/index.js';
 
 const Summary = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const theme = useTheme();
   const { user } = useSelector((state) => state.auth);
   const { log } = useSelector((state) => state.log);
-  const { answers, title, updatedAt, result, name } = useSelector(
-    (state) => state.log.log
-  );
+  const { answers, title, updatedAt, result, name } = log;
 
   const etemptTime = moment(updatedAt).format('DD.MM.YYYY/HH:mm:ss');
   const score = (
@@ -38,22 +37,7 @@ const Summary = () => {
       dispatch(resetLogState());
       navigate('/login');
     }
-  }, [user, navigate, dispatch]);
-
-  const printDocument = () => {
-    if (log) {
-      const doc = logService.createPDF(log);
-      html2canvas(document.querySelector('#pdfToPrint')).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        doc.addImage(imgData, 'JEPEG', 0, 50);
-        html2canvas(document.querySelector('#pdfToPrint1')).then((canvas) => {
-          const imgData = canvas.toDataURL('image/png');
-          doc.addImage(imgData, 'JEPEG', 0, 155);
-          doc.save(`${name} ${title}.pdf`);
-        });
-      });
-    }
-  };
+  }, [user, navigate, dispatch, log]);
 
   const getPdf = (event) => {
     event.preventDefault();
@@ -128,12 +112,7 @@ const Summary = () => {
       </StyledCertificate>
     </>
   );
-
-  if (!log) {
-    return <Spinner />;
-  }
-
-  return summary;
+  return !log ? <Spinner /> : summary;
 };
 
 export default Summary;
