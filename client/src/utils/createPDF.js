@@ -1,18 +1,14 @@
-import { jsPDF } from 'jspdf';
-import moment from 'moment';
 import html2canvas from 'html2canvas';
-
+import { jsPDF } from 'jspdf';
+import { scoreCulc } from './scoreCulc';
+import { updatedAtPareser } from './dateUtils';
 import PodkovaBold from '../assets/fonts/Podkova-Bold.ttf';
 import theme from '../theme/index.js';
 
 const createPDF = ({ title, name, result, answers, updatedAt }) => {
   const doc = new jsPDF();
-  const score = (
-    (Number.parseInt(result) / Number.parseInt(answers.length)) *
-    100
-  ).toFixed(0);
-
-  const etemptTime = moment(updatedAt).format('DD.MM.YYYY/HH:mm:ss');
+  const score = scoreCulc(result, answers);
+  const etemptTime = updatedAtPareser(updatedAt);
   doc.addFont(PodkovaBold, 'PodkovaBold', 'normal');
   doc.setFont('PodkovaBold');
   doc.setFontSize(28);
