@@ -20,7 +20,7 @@ import { setLog } from '../features/log/logSlice.js';
 const Quiz = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.auth);
   const quizState = useSelector((state) => state.quiz);
   const logState = useSelector((state) => state.log);
   const [qIndex, setQIndex] = useState(0);

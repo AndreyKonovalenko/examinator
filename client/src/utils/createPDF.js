@@ -63,14 +63,16 @@ export const printDocument = (log) => {
   if (log) {
     const { name, title } = log;
     const doc = createPDF(log);
-    html2canvas(document.querySelector('#pdfToPrint')).then((canvas) => {
+    html2canvas(document.querySelector('#pdfToPrintFirst')).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
       doc.addImage(imgData, 'JEPEG', 0, 50);
-      html2canvas(document.querySelector('#pdfToPrint1')).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        doc.addImage(imgData, 'JEPEG', 0, 155);
-        doc.save(`${name} ${title}.pdf`);
-      });
+      html2canvas(document.querySelector('#pdfToPrintSecond')).then(
+        (canvas) => {
+          const imgData = canvas.toDataURL('image/png');
+          doc.addImage(imgData, 'JEPEG', 0, 155);
+          doc.save(`${name} ${title}.pdf`);
+        }
+      );
     });
   }
 };
