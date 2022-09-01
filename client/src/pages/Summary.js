@@ -72,7 +72,7 @@ const Summary = () => {
           <br />
           <h2>Результат:</h2>
           <h2 style={scoreDependentStyle}>
-            Тест {score >= 80 ? 'пройден' : 'провален'} с результатом {score}%
+            Тест {score >= 80 ? 'пройден' : 'провален'} c результатом {score}%
           </h2>
           <p>
             Правильных ответов: {result} из {answers.length}
