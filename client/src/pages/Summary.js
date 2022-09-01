@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from 'styled-components';
-import moment from 'moment';
 import Spinner from '../components/Spinner';
 import Watermark from '../components/summary/Watermark.js';
 import { Button } from '../components/styles/Button.styled.js';
@@ -12,6 +11,8 @@ import { StyledCertificate } from '../components/styles/Certificate.styled.js';
 import { resetLogState, resetAnswersLogState } from '../features/log/logSlice';
 import { resetQuizState } from '../features/quiz/quizSlice';
 import { printDocument } from '../utils/createPDF';
+import { scoreCulc } from '../utils/scoreCulc';
+import { updatedAtPareser } from '../utils/dateUtils';
 
 const Summary = () => {
   const navigate = useNavigate();
@@ -27,12 +28,8 @@ const Summary = () => {
     result: '',
   });
   const { name, title, answers, updatedAt, result } = data;
-  const etemptTime = moment(updatedAt).format('DD.MM.YYYY/HH:mm:ss');
-  const score = (
-    (Number.parseInt(result) / Number.parseInt(answers.length)) *
-    100
-  ).toFixed(0);
-
+  const etemptTime = updatedAtPareser(updatedAt);
+  const score = scoreCulc(result, answers);
   const scoreDependentStyle = {
     color: score >= 80 ? theme.colors.primary.light : theme.colors.error,
   };
@@ -48,13 +45,11 @@ const Summary = () => {
     }
   }, [user, navigate, dispatch, log]);
 
-  const getPdf = (event) => {
-    event.preventDefault();
+  const getPdf = () => {
     printDocument(log);
   };
 
-  const tryAgaineHandler = (event) => {
-    event.preventDefault();
+  const tryAgaineHandler = () => {
     dispatch(resetLogState());
     dispatch(resetAnswersLogState());
     navigate('/');
