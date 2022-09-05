@@ -30,6 +30,7 @@ const Summary = () => {
   const { name, title, answers, updatedAt, result } = data;
   const etemptTime = updatedAtPareser(updatedAt);
   const score = scoreCulc(result, answers);
+  console.log(typeof score);
   const scoreDependentStyle = {
     color: score >= 80 ? theme.colors.primary.light : theme.colors.error,
   };

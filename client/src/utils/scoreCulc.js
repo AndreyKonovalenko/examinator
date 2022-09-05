@@ -1,4 +1,10 @@
-export const scoreCulc = (result, answers) =>
-  ((Number.parseInt(result) / Number.parseInt(answers.length)) * 100).toFixed(
-    0
-  );
+export const scoreCulc = (result, answers) => {
+  if (answers.length === 0) {
+    return 0;
+  }
+  if (answers.length > 0) {
+    return Number.parseInt(
+      ((Number.parseInt(result) / answers.length) * 100).toFixed(0)
+    );
+  }
+};

@@ -38,18 +38,16 @@ const MainLayout = () => {
     }
   }, [user, dispatch, navigate]);
   return (
-    <>
-      <IconContext.Provider
-        value={{ style: { verticalAlign: 'middle', alignSelf: 'center' } }}>
-        <Header />
-        <Error />
-        {changePasswordModal ? <ChangePassModal /> : null}
-        <StyledMainLayout>
-          <Outlet />
-        </StyledMainLayout>
-        <Footer />
-      </IconContext.Provider>
-    </>
+    <IconContext.Provider
+      value={{ style: { verticalAlign: 'middle', alignSelf: 'center' } }}>
+      <Header />
+      <Error />
+      {changePasswordModal ? <ChangePassModal /> : null}
+      <StyledMainLayout>
+        <Outlet />
+      </StyledMainLayout>
+      <Footer />
+    </IconContext.Provider>
   );
 };
 
