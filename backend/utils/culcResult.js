@@ -1,4 +1,4 @@
-import { arraysEquality } from "./arraysEquality";
+import { arraysEquality } from "./arraysEquality.js";
 
 export const culcResult = (questions, answers) => {
   let result = 0;

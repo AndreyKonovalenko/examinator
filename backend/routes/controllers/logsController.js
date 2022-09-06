@@ -67,28 +67,3 @@ export const setLog = asyncHandler(async (req, res) => {
     throw new Error("Quiz not found");
   }
 });
-
-// util fuction test two array for equality
-const arrayEquals = (a, b) => {
-  return (
-    Array.isArray(a) &&
-    Array.isArray(b) &&
-    a.length === b.length &&
-    a.every((val, index) => val === b[index])
-  );
-};
-
-// calculate result function for log object data
-const culcResult = (questions, answers) => {
-  let result = 0;
-  questions.forEach((element) => {
-    const { _id, currect } = element;
-    answers.forEach((el) => {
-      if (el.qId === _id.toString()) {
-        const test = arrayEquals(currect, el.answer);
-        test ? (result += 1) : result;
-      }
-    });
-  });
-  return result;
-};

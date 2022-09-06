@@ -3,7 +3,7 @@ import { ListElem } from "../styles/ListElem.styled";
 
 import Bage from "../controls/Bage";
 import uniqid from "uniqid";
-import { shuffle } from "../../utils/suffle";
+import { shuffle } from "../../utils/shuffle";
 
 const Card = (props) => {
   const { options, question, _id, updatedAt } = props.item;
