@@ -1,9 +1,9 @@
-import { StyledListCard } from '../styles/ListCard.styled';
-import { ListElem } from '../styles/ListElem.styled';
+import { StyledListCard } from "../styles/ListCard.styled";
+import { ListElem } from "../styles/ListElem.styled";
 
-import Bage from '../controls/Bage';
-import uniqid from 'uniqid';
-import quizService from '../../features/quiz/quizService';
+import Bage from "../controls/Bage";
+import uniqid from "uniqid";
+import { shuffle } from "../../utils/suffle";
 
 const Card = (props) => {
   const { options, question, _id, updatedAt } = props.item;
@@ -13,7 +13,7 @@ const Card = (props) => {
     return { id: index.toString(), value: element };
   });
 
-  const list = quizService.shuffle(convertedOptions).map((element) => (
+  const list = shuffle(convertedOptions).map((element) => (
     <ListElem
       key={uniqid()}
       onClick={(event) =>
@@ -21,7 +21,8 @@ const Card = (props) => {
           { answer: element.id, qId: _id, updatedAt: updatedAt },
           event
         )
-      }>
+      }
+    >
       <p>{element.value}</p>
     </ListElem>
   ));

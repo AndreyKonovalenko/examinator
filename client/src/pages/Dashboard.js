@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
-import { Helmet } from 'react-helmet';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { Helmet } from "react-helmet";
+import { useSelector, useDispatch } from "react-redux";
 
-import QuizListCard from '../components/dashboard/QuizListCard';
-import LogListCard from '../components/dashboard/LogListCard';
-import Spinner from '../components/Spinner';
+import QuizListCard from "../components/dashboard/QuizListCard";
+import LogListCard from "../components/dashboard/LogListCard";
+import Spinner from "../components/Spinner";
 
-import { getQuizzes, getQuizById } from '../features/quiz/quizSlice';
-import { getLogs, getLogById } from '../features/log/logSlice';
+import { getQuizById } from "../features/quiz/quizSlice";
+import { getQuizzes } from "../features/quizzes/quizzesSlice";
+import { getLogs, getLogById } from "../features/log/logSlice";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -16,13 +17,13 @@ const Dashboard = () => {
   const { ru, en } = useSelector((state) => state.ui);
   const { user } = useSelector((state) => state.auth);
   const { quizzes, isLoading: quizzesIsLoading } = useSelector(
-    (state) => state.quiz
+    (state) => state.quizzes
   );
   const { logs, isLoading: logsIsLoading } = useSelector((state) => state.log);
 
   useEffect(() => {
     if (!user) {
-      navigate('/login');
+      navigate("/login");
     }
     if (user) {
       dispatch(getQuizzes());
@@ -33,22 +34,19 @@ const Dashboard = () => {
   const onQuizSelect = (id) => {
     if (id) {
       dispatch(getQuizById(id));
-      navigate('/quiz');
+      navigate("/quiz");
     }
   };
 
   const onLogHandler = (log) => {
     dispatch(getLogById(log._id));
-    navigate('/summary');
+    navigate("/summary");
   };
 
-  if (quizzesIsLoading || logsIsLoading) {
-    return <Spinner />;
-  }
   const dashboard = (
     <>
       <Helmet>
-        <meta charSet='utf-8' />
+        <meta charSet="utf-8" />
         <title>Dashboard | Examinator</title>
       </Helmet>
 
@@ -67,7 +65,7 @@ const Dashboard = () => {
     </>
   );
 
-  return dashboard;
+  return quizzesIsLoading || logsIsLoading ? <Spinner /> : dashboard;
 };
 
 export default Dashboard;
