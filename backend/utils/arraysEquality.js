@@ -1,4 +1,4 @@
-export const arraysEquality = (a, b) => {
+const arraysEquality = (a, b) => {
   return (
     Array.isArray(a) &&
     Array.isArray(b) &&
@@ -6,3 +6,5 @@ export const arraysEquality = (a, b) => {
     a.every((val, index) => val === b[index])
   );
 };
+
+module.exports = arraysEquality;

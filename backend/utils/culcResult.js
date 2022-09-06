@@ -1,6 +1,6 @@
-import { arraysEquality } from "./arraysEquality.js";
+const arraysEquality = require('./arraysEquality');
 
-export const culcResult = (questions, answers) => {
+const culcResult = (questions, answers) => {
   let result = 0;
   questions.forEach((element) => {
     const { _id, currect } = element;
@@ -13,3 +13,5 @@ export const culcResult = (questions, answers) => {
   });
   return result;
 };
+
+module.exports = culcResult;

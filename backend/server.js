@@ -1,22 +1,22 @@
-import express from 'express';
-import colors from 'colors';
-import dotenv from 'dotenv';
-import connectDB from './config/db.js';
-import quizzesRouter from './routes/quizzesRoutes.js';
-import path from 'path';
-import usersRouter from './routes/usersRoutes.js';
-import logsRouter from './routes/logsRoutes.js';
-import questionsRouter from './routes/questionsRoutes.js';
-import adminRouter from './routes/adminRoutes.js';
-import errorHandler from './middleware/errorMiddleware.js';
-import { fileURLToPath } from 'url';
+const express = require('express');
+const colors = require('colors');
+const dotenv = require('dotenv');
+const path = requier('path');
+const connectDB = requier('./config/db');
+const quizzesRouter = requier('./routes/quizzesRoutes');
+const usersRouter = requier('./routes/usersRoutes');
+const logsRouter = requier('./routes/logsRoutes');
+const questionsRouter = requier('./routes/questionsRoute');
+const adminRouter = requier('./routes/adminRoutes');
+const errorHandler = requier('./middleware/errorMiddleware');
+// import { fileURLToPath } from 'url';
 
 dotenv.config();
 connectDB();
 
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
