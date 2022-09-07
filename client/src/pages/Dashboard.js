@@ -9,7 +9,8 @@ import Spinner from "../components/Spinner";
 
 import { getQuizById } from "../features/quiz/quizSlice";
 import { getQuizzes } from "../features/quizzes/quizzesSlice";
-import { getLogs, getLogById } from "../features/log/logSlice";
+import { getLogById } from "../features/log/logSlice";
+import { getLogs } from "../features/logs/logsSlice";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Dashboard = () => {
   const { quizzes, isLoading: quizzesIsLoading } = useSelector(
     (state) => state.quizzes
   );
-  const { logs, isLoading: logsIsLoading } = useSelector((state) => state.log);
+  const { logs, isLoading: logsIsLoading } = useSelector((state) => state.logs);
 
   useEffect(() => {
     if (!user) {

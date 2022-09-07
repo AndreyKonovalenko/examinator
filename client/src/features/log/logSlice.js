@@ -1,33 +1,18 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import logService from './logService';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import logService from "./logService";
 
-const log = JSON.parse(localStorage.getItem('log'));
+const log = JSON.parse(localStorage.getItem("log"));
 
 const initialState = {
-  logs: null,
   log: log ? log : null,
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: '',
+  message: "",
 };
 
-// Get all user's logs
-export const getLogs = createAsyncThunk('log/getAll', async (_, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.user.token;
-    return await logService.getLogs(token);
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-    return thunkAPI.rejectWithValue(message);
-  }
-});
-
 // Create new log
-export const setLog = createAsyncThunk('log/create', async (data, thunkAPI) => {
+export const setLog = createAsyncThunk("log/create", async (data, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.user.token;
     return await logService.setLog(data, token);
@@ -42,7 +27,7 @@ export const setLog = createAsyncThunk('log/create', async (data, thunkAPI) => {
 
 // Get user log by id
 export const getLogById = createAsyncThunk(
-  'log/getLogById',
+  "log/getLogById",
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -60,35 +45,19 @@ export const getLogById = createAsyncThunk(
 );
 
 export const logSlice = createSlice({
-  name: 'log',
+  name: "log",
   initialState,
   reducers: {
     resetLogState: (state) => {
-      state.logs = null;
+      state.log = null;
       state.isError = false;
       state.isSuccess = false;
       state.isLoading = false;
-      state.message = '';
-    },
-    resetAnswersLogState: (state) => {
-      state.log = null;
+      state.message = "";
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getLogs.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getLogs.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.logs = action.payload;
-      })
-      .addCase(getLogs.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-      })
       .addCase(getLogById.pending, (state) => {
         state.isLoading = true;
       })
@@ -118,5 +87,5 @@ export const logSlice = createSlice({
   },
 });
 
-export const { resetLogState, resetAnswersLogState } = logSlice.actions;
+export const { resetLogState } = logSlice.actions;
 export default logSlice.reducer;

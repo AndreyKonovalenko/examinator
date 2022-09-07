@@ -8,7 +8,7 @@ import Watermark from "../components/summary/Watermark.js";
 import { Button } from "../components/styles/Button.styled.js";
 import { Flex } from "../components/styles/Flex.styled.js";
 import { StyledCertificate } from "../components/styles/Certificate.styled.js";
-import { resetLogState, resetAnswersLogState } from "../features/log/logSlice";
+import { resetLogState } from "../features/log/logSlice";
 import { resetQuizState } from "../features/quiz/quizSlice";
 import { printDocument } from "../utils/createPDF";
 import { scoreCulc } from "../utils/scoreCulc";
@@ -51,7 +51,6 @@ const Summary = () => {
 
   const tryAgaineHandler = () => {
     dispatch(resetLogState());
-    dispatch(resetAnswersLogState());
     navigate("/");
   };
 
