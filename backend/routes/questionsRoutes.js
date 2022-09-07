@@ -1,16 +1,15 @@
-import express from 'express';
-import protect from '../middleware/authMiddleware.js';
-
-import {
+const express = require("express");
+const protect = require("../middleware/authMiddleware");
+const {
   setQuestion,
   getQuestions,
-} from './controllers/questionsController.js';
+} = require("./controllers/questionsController");
 
 const router = express.Router();
 
 // get all quetions
-router.get('/', protect, getQuestions);
+router.get("/", protect, getQuestions);
 // set new question
-router.post('/', protect, setQuestion);
+router.post("/", protect, setQuestion);
 
-export default router;
+module.exports = router;

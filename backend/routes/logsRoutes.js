@@ -1,13 +1,13 @@
-import express from 'express';
-import { setLog, getLogs, getLog } from './controllers/logsController.js';
-import protect from '../middleware/authMiddleware.js';
+const express = require("express");
+const { setLog, getLogs, getLog } = require("./controllers/logsController");
+const protect = require("../middleware/authMiddleware");
 const router = express.Router();
 
 // get all user logs
-router.get('/', protect, getLogs);
+router.get("/", protect, getLogs);
 //
-router.get('/:id', protect, getLog);
+router.get("/:id", protect, getLog);
 // set new log
-router.post('/', protect, setLog);
+router.post("/", protect, setLog);
 
-export default router;
+module.exports = router;

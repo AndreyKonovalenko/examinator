@@ -1,12 +1,12 @@
-import asyncHandler from 'express-async-handler';
-import { User } from '../../../models/userModel.js';
-import { Log } from '../../../models/logModel.js';
+const asyncHandler = require("express-async-handler");
+const User = require("../../../models/userModel");
+const Log = require("../../../models/logModel");
 
 // @desc get all users
 // @route GET /api/users
 // @access Private Admin
 
-export const getUsers = asyncHandler(async (req, res) => {
+const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find();
   res.status(200).json(users);
 });
@@ -15,7 +15,7 @@ export const getUsers = asyncHandler(async (req, res) => {
 // @route Delete /api/admin/users/:id
 // @access Private Adimin
 
-export const deleteUser = asyncHandler(async (req, res) => {
+const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ _id: req.params.id });
   if (!user) {
     res.status(400);
@@ -37,3 +37,8 @@ export const deleteUser = asyncHandler(async (req, res) => {
     }
   }
 });
+
+module.exports = {
+  getUsers,
+  deleteUser,
+};

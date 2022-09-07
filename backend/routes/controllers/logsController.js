@@ -1,27 +1,25 @@
-import asyncHandler from 'express-async-handler';
-import { Log } from '../../models/logModel.js';
-import { Quiz } from '../../models/quizModel.js';
-
-const culcResult = require('../../utils/culcResult');
-// import { culcResult } from '../../utils/culcResult.js';
+const asyncHandler = require("express-async-handler");
+const Log = require("../../models/logModel");
+const Quiz = require("../../models/quizModel");
+const culcResult = require("../../utils/culcResult");
 
 // @desc Get user logs
 // @route GET /api/logs
 // @access Private
 
-export const getLogs = asyncHandler(async (req, res) => {
+const getLogs = asyncHandler(async (req, res) => {
   const data = await Log.find({ user: req.user.id })
-    .sort('-updatedAt')
+    .sort("-updatedAt")
     .populate({
-      path: 'quiz',
-      select: 'updatedAt',
+      path: "quiz",
+      select: "updatedAt",
     });
 
   if (data) {
     res.status(200).json(data);
   } else {
     res.status(400);
-    throw new Error('Log not found');
+    throw new Error("Log not found");
   }
 });
 
@@ -29,13 +27,13 @@ export const getLogs = asyncHandler(async (req, res) => {
 // @route GET /api/logs/:id
 // @access Private
 
-export const getLog = asyncHandler(async (req, res) => {
-  const log = await Log.findOne({ _id: req.params.id }).populate('updatedAt');
+const getLog = asyncHandler(async (req, res) => {
+  const log = await Log.findOne({ _id: req.params.id }).populate("updatedAt");
   if (log) {
     res.status(200).json(log);
   } else {
     res.status(400);
-    throw new Error('Invalid log id');
+    throw new Error("Invalid log id");
   }
 });
 
@@ -43,10 +41,10 @@ export const getLog = asyncHandler(async (req, res) => {
 // @route POST /apis/log
 // @access Private
 
-export const setLog = asyncHandler(async (req, res) => {
+const setLog = asyncHandler(async (req, res) => {
   const data = req.body;
   const currentQuiz = await Quiz.findOne({ _id: data.id })
-    .populate('questions')
+    .populate("questions")
     .exec();
   if (currentQuiz) {
     const { questions, title } = currentQuiz;
@@ -62,10 +60,16 @@ export const setLog = asyncHandler(async (req, res) => {
       res.status(200).json(newLog);
     } else {
       res.status(400);
-      throw new Error('New Log has not been created');
+      throw new Error("New Log has not been created");
     }
   } else {
     res.status(400);
-    throw new Error('Quiz not found');
+    throw new Error("Quiz not found");
   }
 });
+
+module.exports = {
+  getLog,
+  getLogs,
+  setLog,
+};

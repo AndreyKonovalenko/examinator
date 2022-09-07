@@ -1,20 +1,20 @@
-import asyncHandler from 'express-async-handler';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { User } from '../../models/userModel.js';
+const asyncHandler = require("express-async-handler");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const User = require("../../models/userModel");
 
 // @desc Register new user
 
-export const registerUser = asyncHandler(async (req, res) => {
+const registerUser = asyncHandler(async (req, res) => {
   const { name, username, password } = req.body;
   if (!name || !username || !password) {
     res.status(400);
-    throw new Error('Please add all fields');
+    throw new Error("Please add all fields");
   }
   const userExists = await User.findOne({ username });
   if (userExists) {
     res.status(400);
-    throw Error('User already exsits');
+    throw Error("User already exsits");
   }
   // Hash password
   const salt = await bcrypt.genSalt(10);
@@ -38,7 +38,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(400);
-    throw new Error('Invalid user data');
+    throw new Error("Invalid user data");
   }
 });
 
@@ -46,7 +46,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 // @route POST /api/users/login
 // @access Public
 
-export const login = asyncHandler(async (req, res) => {
+const login = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
   if (user && (await bcrypt.compare(password, user.password))) {
@@ -59,7 +59,7 @@ export const login = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(400);
-    throw new Error('Invalid user data');
+    throw new Error("Invalid user data");
   }
 });
 
@@ -74,7 +74,7 @@ export const login = asyncHandler(async (req, res) => {
 // Generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '1h',
+    expiresIn: "1h",
   });
 };
 
@@ -85,3 +85,5 @@ const generateRefreshToken = (user) => {
     process.env.JWT_REFRESH_SECRET
   );
 };
+
+module.exports = { registerUser, login };

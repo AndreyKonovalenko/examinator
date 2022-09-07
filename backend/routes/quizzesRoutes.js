@@ -1,22 +1,12 @@
-import express from 'express';
-import {
-  getQuizzes,
-  getQuiz,
-  addQuestionToQuiz,
-  setQuiz,
-} from './controllers/quizzesController.js';
-import isAdmin from '../middleware/adminMiddleware.js';
-import protect from '../middleware/authMiddleware.js';
+const express = require("express");
+const { getQuizzes, getQuiz } = require("./controllers/quizzesController");
+const protect = require("../middleware/authMiddleware");
 const router = express.Router();
 
 // get all quizzes
 
-router.get('/', protect, getQuizzes);
+router.get("/", protect, getQuizzes);
 // get quiz by id, don't have logic yet
-router.get('/:id', protect, getQuiz);
-// post quiz for test
-router.post('/', protect, setQuiz);
-// upadate quiz by id
-router.post('/:id', protect, addQuestionToQuiz);
+router.get("/:id", protect, getQuiz);
 
-export default router;
+module.exports = router;

@@ -1,25 +1,21 @@
-import asyncHandler from 'express-async-handler';
-import { Question } from '../../models/questionModel.js';
+const asyncHandler = require("express-async-handler");
+const Question = require("../../models/questionModel");
 
 // @desc Get Questions
 // @route GET /api//questions
 // @access Private
 
-export const getQuestions = asyncHandler(async (req, res) => {
-  const data = await Question.find().select('-currect');
+const getQuestions = asyncHandler(async (req, res) => {
+  const data = await Question.find().select("-currect");
   // req.user = await User.findById(decoded.id).select('-password') need more deep quiz model
   res.status(200).json(data);
 });
-
-// @desc Get Question by id
-// @route GET /api//questions/id
-// @access Private
 
 // @desc Create new Question
 // @route POST /api/questions
 // @access Private
 
-export const setQuestion = asyncHandler(async (req, res) => {
+const setQuestion = asyncHandler(async (req, res) => {
   const { question, options, currect } = req.body;
   const newQuestion = await Question.create({
     question,
@@ -31,6 +27,11 @@ export const setQuestion = asyncHandler(async (req, res) => {
     res.status(200).json(newQuestion);
   } else {
     res.status(400);
-    throw new Error('New question has not been created');
+    throw new Error("New question has not been created");
   }
 });
+
+module.exports = {
+  getQuestions,
+  setQuestion,
+};
