@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import adminReducer from "../features/admin/adminSlice";
 import adminUsersReducer from "../features/adminUsers/adminUsersSlice";
+import adminLogsReducer from "../features/adminLogs/adminLogsService";
 import authReducer from "../features/auth/authSlice";
 import logReducer from "../features/log/logSlice";
 import logsReducer from "../features/logs/logsSlice";
@@ -12,6 +13,7 @@ export default configureStore({
   reducer: {
     admin: adminReducer,
     adminUsers: adminUsersReducer,
+    adminLogs: adminLogsReducer,
     auth: authReducer,
     quiz: quizReducer,
     quizzes: quizzesReducer,

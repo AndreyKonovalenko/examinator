@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { deleteUser } from "../../features/adminUsers/adminUsersSlice";
-import { getUserLogs } from "../../features/admin/adminSlice";
+import { getUserLogs } from "../../features/adminLogs/adminLogsSlice";
 import {
   setLogsTabOn,
   setRegisterUserTabOn,
