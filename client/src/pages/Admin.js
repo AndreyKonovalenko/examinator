@@ -1,22 +1,23 @@
-import React from 'react';
-import { Flex } from '../components/styles/Flex.styled';
-import { Helmet } from 'react-helmet';
-import { toast } from 'react-toastify';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
-import { useSelector, useDispatch } from 'react-redux';
+import React from "react";
+import { Flex } from "../components/styles/Flex.styled";
+import { Helmet } from "react-helmet";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
 
-import AdminRegisterForm from '../components/admin/AdminRegisterFrom';
-import AddQuizModal from '../components/admin/AddQuizModal';
-import AddQuestionModal from '../components/admin/AddQuestionModal';
-import LogsListCardAdmin from '../components/admin/LogsListCardAdmin';
-import QuizCardAdmin from '../components/admin/QuizCardAdmin';
-import QuizzesListCardAdmin from '../components/admin/QuizzesListCardAdmin';
-import Spinner from '../components/Spinner';
-import UsersListCard from '../components/admin/UsersListCard';
-import EditQuestionModal from '../components/admin/EditQuestionModal';
+import AdminRegisterForm from "../components/admin/AdminRegisterFrom";
+import AddQuizModal from "../components/admin/AddQuizModal";
+import AddQuestionModal from "../components/admin/AddQuestionModal";
+import LogsListCardAdmin from "../components/admin/LogsListCardAdmin";
+import QuizCardAdmin from "../components/admin/QuizCardAdmin";
+import QuizzesListCardAdmin from "../components/admin/QuizzesListCardAdmin";
+import Spinner from "../components/Spinner";
+import UsersListCard from "../components/admin/UsersListCard";
+import EditQuestionModal from "../components/admin/EditQuestionModal";
 
-import { getQuizzes, getUsers } from '../features/admin/adminSlice';
+import { getQuizzes } from "../features/admin/adminSlice";
+import { getUsers } from "../features/adminUsers/adminUsersSlice";
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -35,19 +36,20 @@ const Admin = () => {
     addQuestionModal,
     editQuestionModal,
   } = useSelector((state) => state.ui);
-  const { users, userLogs, quizzes, quiz, isLoading } = useSelector(
+  const { users } = useSelector((state) => state.adminUsers);
+  const { userLogs, quizzes, quiz, isLoading } = useSelector(
     (state) => state.admin
   );
   const { questionData } = useSelector((state) => state.admin);
 
   useEffect(() => {
     if (!user) {
-      navigate('/login');
+      navigate("/login");
     }
     if (user) {
       if (!user.admin) {
-        toast.error('You do not have administrator access!');
-        navigate('/');
+        toast.error("You do not have administrator access!");
+        navigate("/");
       } else {
         dispatch(getUsers());
         dispatch(getQuizzes());
@@ -62,7 +64,7 @@ const Admin = () => {
   return (
     <>
       <Helmet>
-        <meta charSet='utf-8' />
+        <meta charSet="utf-8" />
         <title>Admin | Examinator</title>
       </Helmet>
       {isLoading ? <Spinner /> : null}

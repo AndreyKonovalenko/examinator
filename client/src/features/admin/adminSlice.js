@@ -1,8 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import adminService from './adminService';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import adminService from "./adminService";
 
 const initialState = {
-  users: null,
   userLogs: null,
   questionData: null,
   quizzes: null,
@@ -10,72 +9,14 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: '',
+  message: "",
 };
-
-// USER ACTIONS
-
-// Admin create new user
-export const createNewUser = createAsyncThunk(
-  'admin/createNewUser',
-  async (user, thunkAPI) => {
-    try {
-      return await adminService.createNewUser(user);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-// Get all Users
-export const getUsers = createAsyncThunk(
-  'admin/getUsers',
-  async (_, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await adminService.getUsers(token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-// Delete selelected user
-export const deleteUser = createAsyncThunk(
-  'admin/deleteUSer',
-  async (id, thunkAPI) => {
-    try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await adminService.deleteUser(id, token);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
 
 // LOG ACTIONS
 
 // Get selected user logs
 export const getUserLogs = createAsyncThunk(
-  'admin/getUserLogs',
+  "admin/getUserLogs",
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -94,7 +35,7 @@ export const getUserLogs = createAsyncThunk(
 
 // Delete selelected user log
 export const deleteLog = createAsyncThunk(
-  'admin/deleteLog',
+  "admin/deleteLog",
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -114,7 +55,7 @@ export const deleteLog = createAsyncThunk(
 
 // Get all Quizzes
 export const getQuizzes = createAsyncThunk(
-  'admin/getQuizzes',
+  "admin/getQuizzes",
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -133,7 +74,7 @@ export const getQuizzes = createAsyncThunk(
 
 //Get Full Quiz data by id
 export const getFullQuiz = createAsyncThunk(
-  'admin/getFullQuizData',
+  "admin/getFullQuizData",
   async (data, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -151,7 +92,7 @@ export const getFullQuiz = createAsyncThunk(
 );
 
 export const getFilteredQuiz = createAsyncThunk(
-  'admin/getFilteredQuiz',
+  "admin/getFilteredQuiz",
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -169,7 +110,7 @@ export const getFilteredQuiz = createAsyncThunk(
 );
 
 export const addQuiz = createAsyncThunk(
-  'admin/addNewQuiz',
+  "admin/addNewQuiz",
   async (quiz, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -188,7 +129,7 @@ export const addQuiz = createAsyncThunk(
 
 // Get Question data by id
 export const getQuestion = createAsyncThunk(
-  'admin/getQuestionData',
+  "admin/getQuestionData",
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -206,7 +147,7 @@ export const getQuestion = createAsyncThunk(
 );
 
 export const createAndAddQuestionToQuiz = createAsyncThunk(
-  'admin/createQuestionAndAddToQuiz',
+  "admin/createQuestionAndAddToQuiz",
   async (data, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -224,7 +165,7 @@ export const createAndAddQuestionToQuiz = createAsyncThunk(
 );
 
 export const updateQuestionData = createAsyncThunk(
-  'admin/updateQuestionData',
+  "admin/updateQuestionData",
   async (data, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -242,7 +183,7 @@ export const updateQuestionData = createAsyncThunk(
 );
 
 export const deleteQuestion = createAsyncThunk(
-  'admin/deleteQuestion',
+  "admin/deleteQuestion",
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -260,7 +201,7 @@ export const deleteQuestion = createAsyncThunk(
 );
 
 export const deleteQuiz = createAsyncThunk(
-  'admin/deleteQuiz',
+  "admin/deleteQuiz",
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -278,7 +219,7 @@ export const deleteQuiz = createAsyncThunk(
 );
 
 export const adminSlice = createSlice({
-  name: 'admin',
+  name: "admin",
   initialState,
   reducers: {
     resetAdminState: (state) => initialState,
@@ -288,19 +229,6 @@ export const adminSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUsers.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getUsers.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.users = action.payload;
-      })
-      .addCase(getUsers.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-      })
       .addCase(getUserLogs.pending, (state) => {
         state.isLoading = true;
       })
@@ -310,19 +238,6 @@ export const adminSlice = createSlice({
         state.userLogs = action.payload;
       })
       .addCase(getUserLogs.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-      })
-      .addCase(createNewUser.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(createNewUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.users.push(action.payload);
-      })
-      .addCase(createNewUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -338,21 +253,6 @@ export const adminSlice = createSlice({
         );
       })
       .addCase(deleteLog.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-      })
-      .addCase(deleteUser.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(deleteUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.users = state.users.filter(
-          (user) => user._id !== action.payload.id
-        );
-      })
-      .addCase(deleteUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

@@ -1,20 +1,21 @@
-import { ListElem } from '../styles/ListElem.styled';
-import { StyledListCard } from '../styles/ListCard.styled';
-import { StyledSeparator } from '../styles/Separator.styled';
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-import { getUserLogs, deleteUser } from '../../features/admin/adminSlice';
+import { ListElem } from "../styles/ListElem.styled";
+import { StyledListCard } from "../styles/ListCard.styled";
+import { StyledSeparator } from "../styles/Separator.styled";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { deleteUser } from "../../features/adminUsers/adminUsersSlice";
+import { getUserLogs } from "../../features/admin/adminSlice";
 import {
   setLogsTabOn,
   setRegisterUserTabOn,
   setUsersTabOff,
-} from '../../features/ui/uiSlice';
+} from "../../features/ui/uiSlice";
 
-import uniqid from 'uniqid';
-import CheckBox from './CheckBox';
-import SettingPanel from './SettingsPanel';
-import theme from '../../theme/index.js';
+import uniqid from "uniqid";
+import CheckBox from "./CheckBox";
+import SettingPanel from "./SettingsPanel";
+import theme from "../../theme/index.js";
 
 const UsersListCard = (props) => {
   const dispatch = useDispatch();
@@ -61,13 +62,13 @@ const UsersListCard = (props) => {
     if (isChecked.length > 0) {
       isChecked.forEach((element) => dispatch(deleteUser(element)));
     } else {
-      toast.error('User for deleting is not selected!');
+      toast.error("User for deleting is not selected!");
     }
   };
 
   const list = item.map((element, index) => {
     return (
-      <div style={{ display: 'flex' }} key={uniqid()}>
+      <div style={{ display: "flex" }} key={uniqid()}>
         {isEdit ? (
           <CheckBox
             onCheckHandler={onCheckHandler}
@@ -86,7 +87,8 @@ const UsersListCard = (props) => {
                 }
               : null
           }
-          onClick={(event) => onClickHandler(element._id, event)}>
+          onClick={(event) => onClickHandler(element._id, event)}
+        >
           <p>
             {element.username} / {element.name}
           </p>
