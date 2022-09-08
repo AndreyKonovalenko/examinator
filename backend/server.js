@@ -1,14 +1,14 @@
-const express = require("express");
-const colors = require("colors");
-const dotenv = require("dotenv");
-const path = require("path");
-const connectDB = require("./config/db");
-const quizzesRouter = require("./routes/quizzesRoutes");
-const usersRouter = require("./routes/usersRoutes");
-const logsRouter = require("./routes/logsRoutes");
-const questionsRouter = require("./routes/questionsRoutes");
-const adminRouter = require("./routes/adminRoutes");
-const errorHandler = require("./middleware/errorMiddleware");
+const express = require('express');
+const colors = require('colors');
+const dotenv = require('dotenv');
+const path = require('path');
+const connectDB = require('./config/db');
+const quizzesRouter = require('./routes/quizzesRoutes');
+const usersRouter = require('./routes/usersRoutes');
+const logsRouter = require('./routes/logsRoutes');
+const questionsRouter = require('./routes/questionsRoutes');
+const adminRouter = require('./routes/adminRoutes');
+const errorHandler = require('./middleware/errorMiddleware');
 // import { fileURLToPath } from 'url';
 
 dotenv.config();
@@ -21,23 +21,23 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/api/quizzes/", quizzesRouter);
-app.use("/api/users/", usersRouter);
-app.use("/api/questions", questionsRouter);
-app.use("/api/logs", logsRouter);
-app.use("/api/admin", adminRouter);
+app.use('/api/quizzes/', quizzesRouter);
+app.use('/api/users/', usersRouter);
+app.use('/api/questions', questionsRouter);
+app.use('/api/logs', logsRouter);
+app.use('/api/admin', adminRouter);
 
 // Serve frontend
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
 
-  app.get("*", (req, res) =>
+  app.get('*', (req, res) =>
     res.sendFile(
-      path.resolve(__dirname, "../", "client", "build", "index.html")
+      path.resolve(__dirname, '../', 'client', 'build', 'index.html')
     )
   );
 } else {
-  app.get("/", (req, res) => res.send("Please set to production"));
+  app.get('/', (req, res) => res.send('Please set to production'));
 }
 
 app.use(errorHandler);

@@ -1,20 +1,20 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { login, reset } from "../features/auth/authSlice";
-import LoginForm from "../components/auth/LoginFrom";
-import Spinner from "../components/Spinner";
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { login, reset } from '../features/auth/authSlice';
+import LoginForm from '../components/auth/LoginFrom';
+import Spinner from '../components/Spinner';
 
 const Login = () => {
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user, isLoading, isError, isSuccess } = useSelector(
     (state) => state.auth
   );
   const { ru, en } = useSelector((state) => state.ui);
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
+    username: '',
+    password: '',
   });
   const { username, password } = formData;
 
@@ -23,10 +23,10 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess || user) {
-      navigate("/");
+      navigate('/');
     }
     dispatch(reset());
-  }, [user, isError, isSuccess, message, navigate, dispatch]);
+  }, [user, isError, isSuccess, navigate, dispatch]);
 
   const onChange = (event) => {
     event.preventDefault();
@@ -49,7 +49,7 @@ const Login = () => {
   return (
     <>
       <Helmet>
-        <meta charSet="utf-8" />
+        <meta charSet='utf-8' />
         <title>Login | Examinator</title>
       </Helmet>
       <LoginForm
