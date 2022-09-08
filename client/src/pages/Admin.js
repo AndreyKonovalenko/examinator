@@ -1,11 +1,12 @@
 import React from "react";
-import { Flex } from "../components/styles/Flex.styled";
+
 import { Helmet } from "react-helmet";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 
+import { Flex } from "../components/styles/Flex.styled";
 import AdminRegisterForm from "../components/admin/AdminRegisterFrom";
 import AddQuizModal from "../components/admin/AddQuizModal";
 import AddQuestionModal from "../components/admin/AddQuestionModal";
@@ -16,7 +17,7 @@ import Spinner from "../components/Spinner";
 import UsersListCard from "../components/admin/UsersListCard";
 import EditQuestionModal from "../components/admin/EditQuestionModal";
 
-import { getQuizzes } from "../features/admin/adminSlice";
+import { getQuizzes } from "../features/adminQuizzes/adminQuizzesSlice";
 import { getUsers } from "../features/adminUsers/adminUsersSlice";
 
 const Admin = () => {
@@ -37,10 +38,10 @@ const Admin = () => {
     editQuestionModal,
   } = useSelector((state) => state.ui);
   const { users } = useSelector((state) => state.adminUsers);
-  const { userLogs, quizzes, quiz, isLoading } = useSelector(
-    (state) => state.admin
-  );
-  const { questionData } = useSelector((state) => state.admin);
+  const { userLogs } = useSelector((state) => state.adminLogs);
+  const { quiz } = useSelector((state) => state.adminQuiz);
+  const { quizzes, isLoading } = useSelector((state) => state.adminQuizzes);
+  const { questionData } = useSelector((state) => state.adminQuestion);
 
   useEffect(() => {
     if (!user) {

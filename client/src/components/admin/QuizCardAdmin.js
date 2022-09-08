@@ -1,26 +1,26 @@
-import { useState } from 'react';
-import { StyledListCard } from '../styles/ListCard.styled';
-import { ListElem } from '../styles/ListElem.styled';
-import { StyledSeparator } from '../styles/Separator.styled';
-import { useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
+import { useState } from "react";
+import { StyledListCard } from "../styles/ListCard.styled";
+import { ListElem } from "../styles/ListElem.styled";
+import { StyledSeparator } from "../styles/Separator.styled";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
-import CheckBox from './CheckBox';
-import Bage from '../controls/Bage';
-import SettingPanel from './SettingsPanel';
-import theme from '../../theme/index.js';
-import uniqid from 'uniqid';
+import CheckBox from "./CheckBox";
+import Bage from "../controls/Bage";
+import SettingPanel from "./SettingsPanel";
+import theme from "../../theme/index.js";
+import uniqid from "uniqid";
 
 import {
   setQuestionsTabOff,
   setAddQuestionModalOn,
   setEditQuestionModalOn,
-} from '../../features/ui/uiSlice';
+} from "../../features/ui/uiSlice";
 import {
   getFullQuiz,
-  getQuestion,
   updateQuestionData,
-} from '../../features/admin/adminSlice';
+} from "../../features/adminQuiz/adminQuizSlice";
+import { getQuestion } from "../../features/adminQuestion/adminQuiestionSlice";
 
 const QuizCardAdmin = (props) => {
   const dispatch = useDispatch();
@@ -68,14 +68,14 @@ const QuizCardAdmin = (props) => {
 
   const onDeleteHandler = () => {
     if (isChecked.length > 0) {
-      console.log('Question will be deleted');
+      console.log("Question will be deleted");
       isChecked.forEach((element) =>
         dispatch(
           updateQuestionData({ id: element, questionData: { archived: true } })
         )
       );
     } else {
-      toast.error('Question for deleting is not selected!');
+      toast.error("Question for deleting is not selected!");
     }
   };
 
@@ -87,12 +87,13 @@ const QuizCardAdmin = (props) => {
           index === parseInt(element.currect)
             ? { color: theme.colors.primary.light }
             : null
-        }>
+        }
+      >
         {el}
       </li>
     ));
     return (
-      <div style={{ display: 'flex' }} key={uniqid()}>
+      <div style={{ display: "flex" }} key={uniqid()}>
         {isEdit ? (
           <CheckBox
             onCheckHandler={onCheckHandler}
@@ -112,9 +113,10 @@ const QuizCardAdmin = (props) => {
                 }
               : null
           }
-          onClick={(event) => onClickHandler(element._id, event)}>
+          onClick={(event) => onClickHandler(element._id, event)}
+        >
           {element.archived ? (
-            <Bage text={ru ? 'архивный' : null || en ? 'achived' : null} />
+            <Bage text={ru ? "архивный" : null || en ? "achived" : null} />
           ) : null}
           <h3>{element.question}</h3>
           <ul>{optionList}</ul>
@@ -139,13 +141,14 @@ const QuizCardAdmin = (props) => {
       {en ? <h2>Theme: {item.title}</h2> : null}
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'space-between',
+          display: "flex",
+          justifyContent: "space-between",
           margin: 0,
-        }}></div>
+        }}
+      ></div>
 
       <span>
-        {ru ? 'всего вопросов: ' : null || en ? 'number of questions: ' : null}
+        {ru ? "всего вопросов: " : null || en ? "number of questions: " : null}
         {item.questions.length}
       </span>
       <StyledSeparator />

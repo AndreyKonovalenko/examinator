@@ -1,5 +1,4 @@
 import axios from "axios";
-import uniqid from "uniqid";
 
 // QUIZ SERVICE
 
@@ -24,20 +23,6 @@ const getFullQuiz = async (data, token) => {
   };
   const response = await axios.get("/api/admin/quizzes/" + data.id, config);
   return response.data;
-};
-
-const getQuestion = async (id, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const response = await axios.get("/api/admin/questions/" + id, config);
-
-  const extendedQuestionData = response.data.options.map((element) => {
-    return { id: uniqid(), defaultValue: element };
-  });
-  return { ...response.data, options: extendedQuestionData };
 };
 
 const addQuiz = async (quiz, token) => {
@@ -99,14 +84,13 @@ const deleteQuiz = async (id, token) => {
   const response = await axios.delete("/api/admin/quizzes/" + id, config);
   return response.data;
 };
-const quizService = {
+const quizQuizService = {
   getQuizzes,
   getFullQuiz,
-  getQuestion,
   addQuiz,
   createAndAddQuestionToQuiz,
   updateQuestionData,
   deleteQuestion,
   deleteQuiz,
 };
-export default quizService;
+export default quizQuizService;

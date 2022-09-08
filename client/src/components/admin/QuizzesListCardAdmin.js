@@ -1,26 +1,27 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
-import { ListElem } from '../styles/ListElem.styled';
-import { StyledListCard } from '../styles/ListCard.styled';
-import { StyledSeparator } from '../styles/Separator.styled';
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import uniqid from "uniqid";
+import { useTheme } from "styled-components";
+import { ListElem } from "../styles/ListElem.styled";
+import { StyledListCard } from "../styles/ListCard.styled";
+import { StyledSeparator } from "../styles/Separator.styled";
 import {
   setAddQuizModalOn,
   setQuestionsTabOn,
   setQuizzesTabOff,
-} from '../../features/ui/uiSlice';
+} from "../../features/ui/uiSlice";
 import {
-  getFullQuiz,
-  deleteQuiz,
   getQuizzes,
-} from '../../features/admin/adminSlice';
+  deleteQuiz,
+} from "../../features/adminQuizzes/adminQuizzesSlice";
+import { getFullQuiz } from "../../features/adminQuiz/adminQuizSlice";
 
-import CheckBox from './CheckBox';
-import SettingPanel from './SettingsPanel';
-import theme from '../../theme';
-import uniqid from 'uniqid';
+import CheckBox from "./CheckBox";
+import SettingPanel from "./SettingsPanel";
 
 const QuizzesListCardAdmin = (props) => {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const { en, item, ru } = props;
   const [isSelected, setIsSelected] = useState(null);
@@ -65,13 +66,13 @@ const QuizzesListCardAdmin = (props) => {
     if (isChecked.length > 0) {
       dispatch(deleteQuiz(isChecked));
     } else {
-      toast.error('Quiz for deleting is not selected!');
+      toast.error("Quiz for deleting is not selected!");
     }
   };
 
   const list = item.map((element) => {
     return (
-      <div style={{ display: 'flex' }} key={uniqid()}>
+      <div style={{ display: "flex" }} key={uniqid()}>
         {isEdit ? (
           <CheckBox
             onCheckHandler={onCheckHandler}
@@ -90,7 +91,8 @@ const QuizzesListCardAdmin = (props) => {
                 }
               : null
           }
-          onClick={(event) => onClickHandler(element._id, event)}>
+          onClick={(event) => onClickHandler(element._id, event)}
+        >
           <h2>{element.title}</h2>
         </ListElem>
       </div>
