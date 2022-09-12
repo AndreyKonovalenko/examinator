@@ -12,7 +12,7 @@ import { resetLogState } from "../features/log/logSlice";
 import { resetQuizState } from "../features/quiz/quizSlice";
 import { printDocument } from "../utils/createPDF";
 import { scoreCulc } from "../utils/scoreCulc";
-import { updatedAtPareser } from "../utils/dateUtils";
+import { updatedAtParser } from "../utils/dateUtils";
 
 const Summary = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Summary = () => {
     result: "",
   });
   const { name, title, answers, updatedAt, result } = data;
-  const etemptTime = updatedAtPareser(updatedAt);
+  const etemptTime = updatedAtParser(updatedAt);
   const score = scoreCulc(result, answers);
   const scoreDependentStyle = {
     color: score >= 80 ? theme.colors.primary.light : theme.colors.error,

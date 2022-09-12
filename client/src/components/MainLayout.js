@@ -1,17 +1,21 @@
-import React from "react";
-import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { StyledMainLayout } from "./styles/MainLayout.styled";
-import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { IconContext } from "react-icons";
+import jwt_decode from "jwt-decode";
 import { logout, reset } from "../features/auth/authSlice";
 import { resetLogState } from "../features/log/logSlice";
 import { resetLogsState } from "../features/logs/logsSlice";
 import { resetQuizState } from "../features/quiz/quizSlice";
 import { resetQuizzesState } from "../features/quizzes/quizzesSlice";
+import { resetAdminLogsState } from "../features/adminLogs/adminLogsSlice";
+import { resetAdminQuizState } from "../features/adminQuiz/adminQuizSlice";
+import { resetAdminQuizzesState } from "../features/adminQuizzes/adminQuizzesSlice";
+import { resetAdminUsersState } from "../features/adminUsers/adminUsersSlice";
+import { resetAdminQuestionState } from "../features/adminQuestion/adminQuiestionSlice";
 import { resetUiState } from "../features/ui/uiSlice";
-import { IconContext } from "react-icons";
 
 import Error from "../components/Error.js";
 import Header from "./Header";
@@ -26,7 +30,6 @@ const MainLayout = () => {
 
   useEffect(() => {
     if (user) {
-      console.log(user);
       const decoded = jwt_decode(user.token);
       if (decoded.exp * 1000 < Date.now()) {
         dispatch(logout());
@@ -35,6 +38,11 @@ const MainLayout = () => {
         dispatch(resetLogsState());
         dispatch(resetQuizState());
         dispatch(resetQuizzesState());
+        dispatch(resetAdminLogsState());
+        dispatch(resetAdminQuizState());
+        dispatch(resetAdminQuizzesState());
+        dispatch(resetAdminUsersState());
+        dispatch(resetAdminQuestionState());
         dispatch(resetUiState());
         navigate("/login");
       }
