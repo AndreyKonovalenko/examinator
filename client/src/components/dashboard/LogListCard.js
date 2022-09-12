@@ -28,7 +28,7 @@ const LogListCard = (props) => {
       element.updatedAt,
       element.quiz.updatedAt
     );
-    const succes = {
+    const success = {
       color: theme.colors.primary.light,
     };
     const fail = {
@@ -40,21 +40,21 @@ const LogListCard = (props) => {
         {ru ? <p>Тема: {element.title}</p> : null}
         {en ? <p>Quiz: {element.title}</p> : null}
         {ru ? (
-          <p style={score >= 80 ? succes : fail}>
+          <p style={score >= 80 ? success : fail}>
             Тест {score >= 80 ? "пройден успешно" : "провален"} с результатом{" "}
             {score}%, правильных ответов: {element.result} из{" "}
             {element.answers.length}
           </p>
         ) : null}
         {en ? (
-          <p style={score >= 80 ? succes : fail}>
+          <p style={score >= 80 ? success : fail}>
             {score >= 80 ? "You have succeeded" : "You have failed"} with{" "}
             {score}%, correct answers: {element.result} out of{" "}
             {element.answers.length}
           </p>
         ) : null}
         <p>{etemptTime}</p>
-        <p style={comparedDates ? succes : fail}>
+        <p style={comparedDates ? success : fail}>
           {en
             ? comparedDates
               ? "Relevant"

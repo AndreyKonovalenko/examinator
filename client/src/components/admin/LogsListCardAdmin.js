@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import moment from "moment";
 import { toast } from "react-toastify";
 import uniqid from "uniqid";
 import CheckBox from "./CheckBox";
@@ -14,6 +13,9 @@ import { StyledSeparator } from "../styles/Separator.styled";
 
 import { deleteLog } from "../../features/adminLogs/adminLogsSlice";
 import { getLogById } from "../../features/log/logSlice";
+
+import { updatedAtParser, dateCompare } from "../../utils/dateUtils";
+import { scoreCulc } from "../../utils/scoreCulc";
 
 const LogsListCardAdmin = (props) => {
   const theme = useTheme();
@@ -90,13 +92,13 @@ const LogsListCardAdmin = (props) => {
         </div>
       );
     }
-    const score = (
-      (Number.parseInt(element.result) /
-        Number.parseInt(element.answers.length)) *
-      100
-    ).toFixed(0);
-    const etemptTime = moment(element.updatedAt).format("HH:mm:ss/DD.MM.YYYY");
-
+    const score = scoreCulc(element.result, element.answers);
+    const etemptTime = updatedAtParser(element.updatedAt);
+    const lastQuizUpdate = updatedAtParser(element.quiz.updatedAt);
+    const comparedDates = dateCompare(
+      element.updatedAt,
+      element.quiz.updatedAt
+    );
     const success = {
       color: theme.colors.primary.light,
     };
@@ -145,6 +147,18 @@ const LogsListCardAdmin = (props) => {
             </p>
           ) : null}
           <p>{etemptTime}</p>
+          <p style={comparedDates ? success : fail}>
+            {en
+              ? comparedDates
+                ? "Relevant"
+                : `Irrelevant, quiz last update at ${lastQuizUpdate}`
+              : null}
+            {ru
+              ? comparedDates
+                ? "Актуальный результат"
+                : `Результат устарел, структура опроса изменена позднее даты попытки: ${lastQuizUpdate}`
+              : null}
+          </p>
         </ListElem>
       </div>
     );

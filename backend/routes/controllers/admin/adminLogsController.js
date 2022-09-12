@@ -6,7 +6,12 @@ const Log = require("../../../models/logModel");
 // @access Private Admin
 
 const getLogs = asyncHandler(async (req, res) => {
-  const data = await Log.find({ user: req.params.id }).sort("-updatedAt");
+  const data = await Log.find({ user: req.params.id })
+    .sort("-updatedAt")
+    .populate({
+      path: "quiz",
+      select: "updatedAt",
+    });
   if (data) {
     res.status(200).json(data);
   } else {

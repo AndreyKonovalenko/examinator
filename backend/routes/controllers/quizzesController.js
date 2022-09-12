@@ -17,7 +17,11 @@ const getQuizzes = asyncHandler(async (req, res) => {
 
 const getQuiz = asyncHandler(async (req, res) => {
   const currentQuiz = await Quiz.findOne({ _id: req.params.id })
-    .populate({ path: "questions", select: ["question", "options"] })
+    .populate({
+      path: "questions",
+      select: ["question", "options", "archived"],
+      match: { archived: { $eq: false } },
+    })
     .exec();
   if (currentQuiz) {
     res.status(200).json(currentQuiz);
