@@ -1,17 +1,17 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import adminUsersService from "./adminUsersService";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import adminUsersService from './adminUsersService';
 
 const initialState = {
   users: null,
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: "",
+  message: '',
 };
 
 // Admin create new user
 export const createNewUser = createAsyncThunk(
-  "admin/createNewUser",
+  'admin/createNewUser',
   async (user, thunkAPI) => {
     try {
       return await adminUsersService.createNewUser(user);
@@ -29,7 +29,7 @@ export const createNewUser = createAsyncThunk(
 
 // Get all Users
 export const getUsers = createAsyncThunk(
-  "admin/getUsers",
+  'admin/getUsers',
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -48,7 +48,7 @@ export const getUsers = createAsyncThunk(
 
 // Delete selelected user
 export const deleteUser = createAsyncThunk(
-  "admin/deleteUSer",
+  'admin/deleteUSer',
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -66,7 +66,7 @@ export const deleteUser = createAsyncThunk(
 );
 
 export const adminUsersSlice = createSlice({
-  name: "adminUsers",
+  name: 'adminUsers',
   initialState,
   reducers: {
     resetAdminUsersState: (state) => initialState,

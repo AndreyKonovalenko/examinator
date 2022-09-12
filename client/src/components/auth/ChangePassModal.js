@@ -5,6 +5,7 @@ import Modal from '../controls/Modal';
 import ChangePassForm from './ChangePassFrom';
 
 import { setChangePasswordModalOff } from '../../features/ui/uiSlice';
+import { resetUserPassword } from '../../features/auth/authSlice';
 
 const ChangePassModal = () => {
   const dispatch = useDispatch();
@@ -33,9 +34,13 @@ const ChangePassModal = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const userData = { currentPassword, password, password1 };
-    console.log(userData);
-
+    const userData = {
+      currentPassword: currentPassword,
+      newPassword: password1,
+    };
+    if (password === password1) {
+      dispatch(resetUserPassword(userData));
+    }
     // dispatch(login(userData));
   };
 

@@ -1,7 +1,7 @@
-const asyncHandler = require("express-async-handler");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../../models/userModel");
+const asyncHandler = require('express-async-handler');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const User = require('../../models/userModel');
 
 // @desc Register new user
 // @route POST /api/users
@@ -11,12 +11,12 @@ const registerUser = asyncHandler(async (req, res) => {
   const { name, username, password } = req.body;
   if (!name || !username || !password) {
     res.status(400);
-    throw new Error("Please add all fields");
+    throw new Error('Please add all fields');
   }
   const userExists = await User.findOne({ username });
   if (userExists) {
     res.status(400);
-    throw Error("User already exsits");
+    throw Error('User already exsits');
   }
   // Hash password
   const salt = await bcrypt.genSalt(10);
@@ -40,7 +40,7 @@ const registerUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(400);
-    throw new Error("Invalid user data");
+    throw new Error('Invalid user data');
   }
 });
 
@@ -61,7 +61,7 @@ const login = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(400);
-    throw new Error("Invalid user data");
+    throw new Error('Invalid user data');
   }
 });
 
@@ -70,31 +70,38 @@ const login = asyncHandler(async (req, res) => {
 // @access Privet
 
 const resetUserPassword = asyncHandler(async (req, res) => {
-  const { newPassword } = req.body;
+  const { currentPassword, newPassword } = req.body;
   // Hash password
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(newPassword, salt);
-  // get user id from user (auth middleware)
-  const updatedUser = await User.findByIdAndUpdate(
-    req.user.id,
-    {
-      password: hashedPassword,
-    },
-    { new: true }
-  );
-  console.log(updatedUser);
-  if (updatedUser) {
+  const user = await User.findOne({ _id: req.user.id });
+  if (user && (await bcrypt.compare(currentPassword, user.password))) {
+    console.log(currentPassword, user.password);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    // get user id from user (auth middleware)
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        password: hashedPassword,
+      },
+      { new: true }
+    );
     console.log(updatedUser);
-    res.status(201).json({
-      _id: updatedUser.id,
-      admin: updatedUser.admin,
-      name: updatedUser.name,
-      token: generateToken(updatedUser._id),
-      username: updatedUser.username,
-    });
+    if (updatedUser) {
+      console.log(updatedUser);
+      res.status(201).json({
+        _id: updatedUser.id,
+        admin: updatedUser.admin,
+        name: updatedUser.name,
+        token: generateToken(updatedUser._id),
+        username: updatedUser.username,
+      });
+    } else {
+      res.status(400);
+      throw new Error('Invalid user data');
+    }
   } else {
     res.status(400);
-    throw new Error("Invalid user data");
+    throw new Error('Invalid user current password');
   }
 });
 
@@ -121,4 +128,4 @@ const generateRefreshToken = (user) => {
   );
 };
 
-module.exports = { registerUser, login };
+module.exports = { registerUser, login, resetUserPassword };
