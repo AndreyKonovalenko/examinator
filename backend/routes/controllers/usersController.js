@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../../models/userModel");
 
 // @desc Register new user
+// @route POST /api/users
+// @access Public
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, username, password } = req.body;
@@ -64,6 +66,39 @@ const login = asyncHandler(async (req, res) => {
 });
 
 // @desc Get user data
+// @route PUT /api/users/reset-password
+// @access Privet
+
+const resetUserPassword = asyncHandler(async (req, res) => {
+  const { newPassword } = req.body;
+  // Hash password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(newPassword, salt);
+  // get user id from user (auth middleware)
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user.id,
+    {
+      password: hashedPassword,
+    },
+    { new: true }
+  );
+  console.log(updatedUser);
+  if (updatedUser) {
+    console.log(updatedUser);
+    res.status(201).json({
+      _id: updatedUser.id,
+      admin: updatedUser.admin,
+      name: updatedUser.name,
+      token: generateToken(updatedUser._id),
+      username: updatedUser.username,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid user data");
+  }
+});
+
+// @desc Get user data
 // @route GET /api/users/me
 // @access Privet
 
@@ -74,7 +109,7 @@ const login = asyncHandler(async (req, res) => {
 // Generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
+    expiresIn: process.env.TOKEN_EXPIRES_IN,
   });
 };
 
