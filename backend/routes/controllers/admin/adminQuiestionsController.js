@@ -35,7 +35,6 @@ const setQuestion = asyncHandler(async (req, res) => {
 // @route PUT /api/adim/questions/:id
 // @access Private Admin
 const updateQuestionData = asyncHandler(async (req, res) => {
-  console.log("put updated question");
   const updatedQuestion = await Question.findByIdAndUpdate(
     req.params.id,
     req.body,

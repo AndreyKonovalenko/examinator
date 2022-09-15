@@ -68,7 +68,6 @@ const QuizCardAdmin = (props) => {
 
   const onDeleteHandler = () => {
     if (isChecked.length > 0) {
-      console.log("Question will be deleted");
       isChecked.forEach((element) =>
         dispatch(
           updateQuestionData({ id: element, questionData: { archived: true } })

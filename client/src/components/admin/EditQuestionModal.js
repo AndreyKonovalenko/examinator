@@ -121,7 +121,9 @@ const EditQuestionModal = (props) => {
 
   useEffect(() => {
     dispatch(setOptionsData(options));
-    setIsChecked(options[parseInt(currect)].id);
+    if (options.currect !== undefined) {
+      setIsChecked(options[parseInt(currect)].id);
+    }
   }, [dispatch, options, currect]);
 
   return (

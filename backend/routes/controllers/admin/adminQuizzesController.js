@@ -73,7 +73,6 @@ const deleteQuiz = asyncHandler(async (req, res) => {
         //   throw new Error('Question not found');
         // }
         if (question) {
-          console.log("quesetion removed: ", question);
           await question.remove();
         }
       }
