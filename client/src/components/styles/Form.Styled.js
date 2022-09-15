@@ -1,4 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
+
+const inputFontSize = 16;
 
 export const Wrapper = styled.section`
   display: flex;
@@ -6,19 +8,18 @@ export const Wrapper = styled.section`
   align-items: center;
   height: 100%;
   width: 100%;
-`
+`;
 export const Title = styled.h2`
   color: ${({ theme }) => theme.colors.primary.dark};
   font-weight: normal;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
   text-align: center;
-`
+`;
 
 export const Form = styled.form`
   margin: 0 auto;
-  width: 100%;
   max-width: 414px;
-  padding: 1.3rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -26,10 +27,9 @@ export const Form = styled.form`
   color: ${({ theme }) => theme.colors.text.onSurface};
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-  margin: 40px;
-  padding: 40px;
-  }
-`
+  margin: 5px;
+  padding: 25px;
+`;
 
 export const Input = styled.input`
   max-width: 100%;
@@ -40,7 +40,7 @@ export const Input = styled.input`
   border-radius: 4px;
   outline: 0;
   border: 1px solid rgba(245, 245, 245, 0.7);
-  font-size: 16px;
+  font-size: ${inputFontSize + 'px'};
   transition: all 0.3s ease-out;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.1);
   :focus,
@@ -62,4 +62,23 @@ export const Input = styled.input`
     color: ${({ theme }) => theme.colors.text.onSurface};
     opacity: 0.4
   }
-`
+`;
+
+// wrapper height cal = input font size +2 + input padding * 2  + input border * 2
+
+export const InsideInputIconWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 2px;
+  padding: 0 13px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  height: ${inputFontSize + 2 + 11 * 2 + 2 + 'px'};
+  color: ${({ theme }) => theme.colors.primary.light};
+  background-color: ${({ theme }) => theme.colors.surface};
+  &:hover {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+`;

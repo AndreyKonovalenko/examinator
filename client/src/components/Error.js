@@ -6,17 +6,54 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Error = () => {
   const quizState = useSelector((state) => state.quiz);
+  const quizzesState = useSelector((state) => state.quizzes);
   const logState = useSelector((state) => state.log);
+  const logsState = useSelector((state) => state.logs);
   const userState = useSelector((state) => state.auth);
+  const adminUsersState = useSelector((state) => state.adminUsers);
+  const adminQuizState = useSelector((state) => state.adminQuiz);
+  const adminQuizzesState = useSelector((stete) => stete.adminQuizzes);
+  const adminLogsState = useSelector((state) => state.adminLogs);
+  const adminQuestionState = useSelector((state) => state.adminQuestion);
+
   useEffect(() => {
+    const errorList = [];
     if (userState.isError) {
-      toast.error(userState.message);
+      errorList.push(userState.message);
     }
     if (quizState.isError) {
-      toast.error(quizState.message);
+      errorList.push(quizState.message);
+    }
+    if (quizzesState.isError) {
+      errorList.push(quizzesState.message);
     }
     if (logState.isError) {
-      toast.error(logState.message);
+      errorList.push(logState.message);
+    }
+    if (logsState.isError) {
+      errorList.push(logsState.message);
+    }
+    if (adminUsersState.isError) {
+      errorList.push(adminUsersState.message);
+    }
+    if (adminQuizState.isError) {
+      errorList.push(adminQuizState.message);
+    }
+    if (adminQuizzesState.isError) {
+      errorList.push(adminQuizzesState.message);
+    }
+    if (adminLogsState.isError) {
+      errorList.push(adminLogsState.message);
+    }
+    if (adminQuestionState.isError) {
+      errorList.push(adminQuestionState.message);
+    }
+
+    if (errorList.length > 0) {
+      const updatedErrorList = [...new Set(errorList)];
+      updatedErrorList.forEach((element) => {
+        toast.error(element);
+      });
     }
   }, [
     quizState.isError,
@@ -25,6 +62,20 @@ const Error = () => {
     logState.message,
     userState.isError,
     userState.message,
+    adminQuizState.isError,
+    adminQuizState.message,
+    quizzesState.isError,
+    quizzesState.message,
+    logsState.isError,
+    logsState.message,
+    adminUsersState.isError,
+    adminUsersState.message,
+    adminQuizzesState.isError,
+    adminQuizzesState.message,
+    adminLogsState.isError,
+    adminLogsState.message,
+    adminQuestionState.isError,
+    adminQuestionState.message,
   ]);
 
   return <ToastContainer />;

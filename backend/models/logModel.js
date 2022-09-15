@@ -1,16 +1,14 @@
-import mongoose from 'mongoose';
-const { Schema } = mongoose;
+const mongoose = require("mongoose");
 
-const logSchema = new Schema(
+const logSchema = mongoose.Schema(
   {
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: 'user',
-    },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    name: String,
     quiz: {
-      type: Schema.Types.ObjectId,
-      ref: 'quiz',
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Quiz",
     },
+    title: String,
     answers: Array,
     result: String,
   },
@@ -18,4 +16,5 @@ const logSchema = new Schema(
     timestamps: true,
   }
 );
-export const Log = mongoose.model('log', logSchema);
+
+module.exports = mongoose.model("Log", logSchema);

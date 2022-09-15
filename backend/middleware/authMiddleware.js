@@ -1,6 +1,6 @@
-import jwt from "jsonwebtoken";
-import asyncHandler from "express-async-handler";
-import { User } from "../models/userModel.js";
+const asyncHandler = require("express-async-handler");
+const User = require("../models/userModel.js");
+const jwt = require("jsonwebtoken");
 
 const protect = asyncHandler(async (req, res, next) => {
   let token;
@@ -18,7 +18,6 @@ const protect = asyncHandler(async (req, res, next) => {
       next();
     } catch (error) {
       res.status(401);
-      console.log(error);
       throw new Error(
         error.message === "jwt expired" ? "jwt expired" : "Not authorized"
       );
@@ -30,4 +29,4 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-export default protect;
+module.exports = protect;
