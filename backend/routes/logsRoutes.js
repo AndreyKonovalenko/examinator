@@ -5,7 +5,7 @@ const router = express.Router();
 
 // get all user logs
 router.get("/", protect, getLogs);
-//
+// get log by id
 router.get("/:id", protect, getLog);
 // set new log
 router.post("/", protect, setLog);
