@@ -1,5 +1,5 @@
-const asyncHandler = require("express-async-handler");
-const Quiz = require("../../models/quizModel");
+const asyncHandler = require('express-async-handler');
+const Quiz = require('../../models/quizModel');
 
 // @desc Get Quizzes
 // @route GET /api/quizzes
@@ -18,8 +18,8 @@ const getQuizzes = asyncHandler(async (req, res) => {
 const getQuiz = asyncHandler(async (req, res) => {
   const currentQuiz = await Quiz.findOne({ _id: req.params.id })
     .populate({
-      path: "questions",
-      select: ["question", "options", "archived"],
+      path: 'questions',
+      select: ['question', 'options', 'archived'],
       match: { archived: { $eq: false } },
     })
     .exec();
@@ -27,7 +27,7 @@ const getQuiz = asyncHandler(async (req, res) => {
     res.status(200).json(currentQuiz);
   } else {
     res.status(400);
-    throw new Error("Invalid quiz id");
+    throw new Error('Invalid quiz id');
   }
 });
 
