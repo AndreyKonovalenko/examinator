@@ -42,6 +42,15 @@ const DropdownMenu = (props) => {
             {en ? <span>stats: {stats}</span> : null}
           </TextConteiner>
         </LiElem>
+        <LiElem>
+          <IconConteiner>
+            <MdDoneOutline size={"1em"} />
+          </IconConteiner>
+          <TextConteiner>
+            {ru ? <span>%REACT_APP_MONGO_DB%</span> : null}
+            {en ? <span>stats: </span> : null}
+          </TextConteiner>
+        </LiElem>
         <LiElem style={{ justifyContent: "space-between", padding: 0 }}>
           {ru ? (
             <DMButton onClick={() => onCP()}>изменить пароль</DMButton>

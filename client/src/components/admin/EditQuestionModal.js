@@ -21,6 +21,7 @@ import {
 } from "../../features/ui/uiSlice";
 import { updateQuestionData } from "../../features/adminQuiz/adminQuizSlice";
 import { resetAdminQuestionState } from "../../features/adminQuestion/adminQuiestionSlice";
+import { checkedElementIdExtractor } from "../../utils/checkedElementIdExtractor";
 
 const EditQuestionModal = (props) => {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ const EditQuestionModal = (props) => {
 
   // handlers
 
-  function onSaveQuestion() {
+  const onSaveQuestion = () => {
     saveCurrentTextareaState();
     const currectAnswers = [];
     optionsData.forEach((element, index) => {
@@ -67,7 +68,7 @@ const EditQuestionModal = (props) => {
     dispatch(setEditQuestionModalOff());
     dispatch(resetAdminQuestionState());
     dispatch(resetOptionsData());
-  }
+  };
 
   const onClose = () => {
     dispatch(setEditQuestionModalOff());
@@ -121,9 +122,8 @@ const EditQuestionModal = (props) => {
 
   useEffect(() => {
     dispatch(setOptionsData(options));
-    if (options.currect !== undefined) {
-      setIsChecked(options[parseInt(currect)].id);
-    }
+    console.log(parseInt(currect));
+    setIsChecked(checkedElementIdExtractor(options, currect));
   }, [dispatch, options, currect]);
 
   return (

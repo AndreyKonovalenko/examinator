@@ -31,7 +31,7 @@ export const adminQuestionSlice = createSlice({
   name: "admin",
   initialState,
   reducers: {
-    resetAdminQuestionState: (state) => state,
+    resetAdminQuestionState: (state) => initialState,
   },
   extraReducers: (builder) => {
     builder
