@@ -51,17 +51,8 @@ const DropdownMenu = (props) => {
               <TbDatabase size={"1em"} />
             </IconConteiner>
             <TextConteiner>
-              {ru ? (
-                <span>
-                  база данных:{" "}
-                  {process.env.REACT_APP_DB || process.env.MONGO_DB}
-                </span>
-              ) : null}
-              {en ? (
-                <span>
-                  data base: {process.env.REACT_APP_DB || process.env.MONGO_DB}
-                </span>
-              ) : null}
+              {ru ? <span>база данных: {process.env.REACT_APP_DB}</span> : null}
+              {en ? <span>data base: {process.env.REACT_APP_DB}</span> : null}
             </TextConteiner>
           </LiElem>
         ) : null}
