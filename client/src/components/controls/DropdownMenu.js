@@ -11,9 +11,12 @@ import {
   MdOutlineAccountCircle,
   MdOutlineLogin,
 } from "react-icons/md";
+import { TbDatabase, TbBrandGithub } from "react-icons/tb";
 
 const DropdownMenu = (props) => {
-  const { ru, en, name, username, stats, onCP, onLogout } = props;
+  const { ru, en, user, stats, onCP, onLogout } = props;
+  const { username, name, admin } = user;
+  console.log(process.env);
   return (
     <StyledDropdownMenu>
       <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
@@ -42,14 +45,29 @@ const DropdownMenu = (props) => {
             {en ? <span>stats: {stats}</span> : null}
           </TextConteiner>
         </LiElem>
+        {admin ? (
+          <LiElem>
+            <IconConteiner>
+              <TbDatabase size={"1em"} />
+            </IconConteiner>
+            <TextConteiner>
+              {ru ? <span>база данных: {process.env.REACT_APP_DB}</span> : null}
+              {en ? <span>data base: {process.env.REACT_APP_DB}</span> : null}
+            </TextConteiner>
+          </LiElem>
+        ) : null}
         <LiElem>
           <IconConteiner>
-            <MdDoneOutline size={"1em"} />
+            <TbBrandGithub size={"1em"} />
           </IconConteiner>
           <TextConteiner>
-            {ru ? <span>%REACT_APP_MONGO_DB%</span> : null}
-            {en ? <span>stats: </span> : null}
+            <a href="https://github.com/AndreyKonovalenko/examinator.git">
+              GitHub v{process.env.REACT_APP_VERSION}
+            </a>
           </TextConteiner>
+        </LiElem>
+        <LiElem>
+          <TextConteiner></TextConteiner>
         </LiElem>
         <LiElem style={{ justifyContent: "space-between", padding: 0 }}>
           {ru ? (

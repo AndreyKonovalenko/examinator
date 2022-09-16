@@ -163,8 +163,7 @@ const Header = () => {
                         ru={ru}
                         onCP={onChangePassword}
                         onLogout={onLogout}
-                        username={user.username}
-                        name={user.name}
+                        user={user}
                         stats={logs ? logs.length : null}
                       />
                     </OutsideClickEscHandler>
