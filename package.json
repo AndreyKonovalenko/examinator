@@ -8,7 +8,7 @@
     "server": "nodemon backend/server",
     "client": "REACT_APP_DB=$(grep MONGO_DB .env | cut -d '=' -f2) REACT_APP_VERSION=$npm_package_version npm start --prefix client",
     "dev": "concurrently \"npm run server \" \" npm run client\"",
-    "heroku-postbuild": "REACT_APP_DB=$(grep MONGO_DB .env | cut -d '=' -f2) REACT_APP_VERSION=$npm_package_version NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "heroku-postbuild": "REACT_APP_VERSION=$npm_package_version NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
     "prod": "REACT_APP_DB=$(grep MONGO_DB .env | cut -d '=' -f2) REACT_APP_VERSION=$npm_package_version npm run build --prefix client && NODE_ENV=production node backend/server",
     "test": "jest backend && npm run test --prefix client"
   },
