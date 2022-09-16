@@ -61,6 +61,8 @@ const Header = () => {
   };
 
   const onDashboard = () => {
+    dispatch(resetLogsState());
+    dispatch(resetQuizState());
     navigate("/");
   };
   const onAdmin = () => {

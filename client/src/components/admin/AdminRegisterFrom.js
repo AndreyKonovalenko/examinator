@@ -66,7 +66,7 @@ const AdminRegisterForm = (props) => {
           </IconStyled>
           <StyledSeparator />
         </div>
-        {ru ? <Title>Добваить пользователя</Title> : null}
+        {ru ? <Title>Добавить пользователя</Title> : null}
         {en ? <Title>Add new User</Title> : null}
         <Input
           placeholder="Username"
@@ -100,7 +100,7 @@ const AdminRegisterForm = (props) => {
           bg={theme.colors.primary.light}
           color={theme.colors.text.onPrimary}
         >
-          {ru ? "Добвить" : null}
+          {ru ? "Добавить" : null}
           {en ? "Submit" : null}
         </Button>
       </Form>

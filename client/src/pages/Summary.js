@@ -51,6 +51,7 @@ const Summary = () => {
 
   const tryAgaineHandler = () => {
     dispatch(resetLogState());
+    dispatch(resetQuizState());
     navigate("/");
   };
 
