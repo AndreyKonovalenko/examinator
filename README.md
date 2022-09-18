@@ -18,7 +18,8 @@ At current stage of development examinator has only one quiz type:
 
 - Pass available quizzes;
 - View your attempts history;
-- Get/download quiz result certificate.
+- Get/download quiz result certificate;
+- Two language.
 
 ## Administrator Features
 
@@ -34,6 +35,8 @@ You can run it on your local machine.
 
 If you familiar with Heroku you can deploy it on your Heroku account after installing it locally.
 Package.json file has "heroku-postbuild" script for Heroku deployment.
+
+First clone latest release branch version or you can try master)
 
 ```
 $ git clone https://github.com/AndreyKonovalenko/examinator.git
