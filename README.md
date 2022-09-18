@@ -86,4 +86,4 @@ npm run prod
 
 You can now view app in the browser http://localhost:5000
 
-Now you can login with admin acount, create new users, quizzes, pass quizes, and have fun.
+Now you can login with admin account, create new users, quizzes, pass quizes, and have fun.

@@ -16,7 +16,6 @@ import { TbDatabase, TbBrandGithub } from 'react-icons/tb';
 const DropdownMenu = (props) => {
   const { ru, en, user, stats, onCP, onLogout } = props;
   const { username, name, admin } = user;
-  console.log(process.env);
   return (
     <StyledDropdownMenu>
       <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
