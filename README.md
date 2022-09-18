@@ -11,7 +11,8 @@ At current stage of development examinator has only one quiz type:
 - questions options appears also in random order.
 
 <kbd>
-  <img src="https://user-images.githubusercontent.com/16167616/190902558-ca19e504-ad00-45a1-adae-cb28085121a2.gif"/>
+  <img src="https://user-images.githubusercontent.com/16167616/190920500-0e8fb83a-9fa7-4e7a-9235-c2dc7e38207d.gif"/>
+
 </kbd>
 
 ## Basic Features
