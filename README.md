@@ -6,7 +6,7 @@
 
 At current stage of development examinator has only one quiz type:
 
-- one correct answer per question;|
+- one correct answer per question;
 - all questions in quiz appears in random order;
 - questions options appears also in random order.
 
@@ -36,10 +36,10 @@ You can run it on your local machine.
 If you familiar with Heroku you can deploy it on your Heroku account after installing it locally.
 Package.json file has "heroku-postbuild" script for Heroku deployment.
 
-First clone latest release branch version or you can try master)
+Clone latest release branch.
 
 ```
-$ git clone https://github.com/AndreyKonovalenko/examinator.git
+$ git clone --branch release --single-branch https://github.com/AndreyKonovalenko/examinator.git
 $ cd examinator
 ```
 
@@ -67,9 +67,15 @@ JWT_SECRET = ****
 TOKEN_EXPIRES_IN = 1h
 ```
 
-For backend you need setup MongoDB, I personally use Atlas cloud database.
-So you need first set up you personal Atlas account and create new claster with data base with collection users;
-inside collection users youn need create administrator user.
+For backend you need MongoDB, I personally use Atlas cloud database.
+Steps for Atlas:
+
+- setup Atlas accout;
+- create cluster;
+- create new data base with users collection;
+- open users collecction and create adminstarator user, \_id will be edded automaticly.
+
+Use this user model:
 
 ```
 "name": "user name",
@@ -87,6 +93,6 @@ If you pass password without encryption, it won't work.
 npm run prod
 ```
 
-You can now view app in the browser http://localhost:5000
+You can now view app in the browser localhost:5000
 
-Now you can login with admin account, create new users, quizzes, pass quizes, and have fun.
+Login with admin account, create new users, quizzes, pass quizzes, have fun.
