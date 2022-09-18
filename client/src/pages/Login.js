@@ -42,11 +42,7 @@ const Login = () => {
     dispatch(login(userData));
   };
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  return (
+  const form = (
     <>
       <Helmet>
         <meta charSet='utf-8' />
@@ -62,6 +58,8 @@ const Login = () => {
       />
     </>
   );
+
+  return isLoading || isSuccess ? <Spinner /> : form;
 };
 
 export default Login;
