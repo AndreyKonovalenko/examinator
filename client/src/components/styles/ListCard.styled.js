@@ -12,6 +12,10 @@ export const StyledListCard = styled.div`
   h2 {
     color: ${({ theme }) => theme.colors.primary.dark};
   }
+  li > h2 {
+    color: ${({ theme }) => theme.colors.text.onSurface};
+  }
+
   span {
     font-size: 16 px;
     font-weight: 700;
