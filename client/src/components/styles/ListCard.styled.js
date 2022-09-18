@@ -8,7 +8,8 @@ export const StyledListCard = styled.div`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
   margin: 5px;
   padding: 25px;
-  & > h2 {
+  h3,
+  h2 {
     color: ${({ theme }) => theme.colors.primary.dark};
   }
   span {

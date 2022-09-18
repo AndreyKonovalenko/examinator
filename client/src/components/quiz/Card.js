@@ -1,9 +1,9 @@
-import { StyledListCard } from "../styles/ListCard.styled";
-import { ListElem } from "../styles/ListElem.styled";
+import { StyledListCard } from '../styles/ListCard.styled';
+import { ListElem } from '../styles/ListElem.styled';
 
-import Bage from "../controls/Bage";
-import uniqid from "uniqid";
-import { shuffle } from "../../utils/shuffle";
+import Bage from '../controls/Bage';
+import uniqid from 'uniqid';
+import { shuffle } from '../../utils/shuffle';
 
 const Card = (props) => {
   const { options, question, _id, updatedAt } = props.item;
@@ -21,8 +21,7 @@ const Card = (props) => {
           { answer: element.id, qId: _id, updatedAt: updatedAt },
           event
         )
-      }
-    >
+      }>
       <p>{element.value}</p>
     </ListElem>
   ));
@@ -30,8 +29,8 @@ const Card = (props) => {
   return (
     <StyledListCard>
       <Bage text={status} />
-      <h2>{question}</h2>
-      <ul>{list}</ul>
+      <h3>{question}</h3>
+      {list}
     </StyledListCard>
   );
 };

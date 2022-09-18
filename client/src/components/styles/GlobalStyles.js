@@ -18,7 +18,7 @@ const GlobalStyles = createGlobalStyle`
     line-height: 1.5em;
   }
 
-  button { font-family: inherit }
+  button { font-family: inherit }  
   
 }
 `;

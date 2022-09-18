@@ -1,11 +1,9 @@
 import { StyledListCard } from '../styles/ListCard.styled';
 import { ListElem } from '../styles/ListElem.styled';
-import Bage from '../controls/Bage';
 import uniqid from 'uniqid';
 
 const QuizListCard = (props) => {
-  const { user, en, ru, item, onClick } = props;
-  const name = user.split(' ').slice(1);
+  const { en, ru, item, onClick } = props;
 
   const list = item.map((element) => (
     <ListElem key={uniqid()} onClick={() => onClick(element._id)}>
@@ -15,7 +13,6 @@ const QuizListCard = (props) => {
 
   return (
     <StyledListCard>
-      <Bage text={`${name[0]} ${name[1]}`} />
       {ru ? (
         <h2>Tемы тестирования: </h2>
       ) : null || en ? (
