@@ -73,7 +73,7 @@ Steps for Atlas:
 - setup Atlas accout;
 - create cluster;
 - create new data base with users collection;
-- open users collecction and create adminstarator user, \_id will be edded automaticly.
+- open users collecction and create adminstarator user, \_id will be added automaticly.
 
 Use this user model:
 
