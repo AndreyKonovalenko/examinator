@@ -19,7 +19,7 @@ At current stage of development examinator has only one quiz type:
 - Pass available quizzes;
 - View your attempts history;
 - Get/download quiz result certificate;
-- Two language.
+- Two languages interface.
 
 ## Administrator Features
 
