@@ -27,8 +27,8 @@ At current stage of development examinator has only one quiz type:
 - Create, delete non-admin users;
 - Create, Edit, Delete quizzes;
 - Create, Edit, Delete(archicve) questions connected to editing quiz.
-- View all users atempts history;
-- Delete users atempts history.
+- View all users attempts history;
+- Delete users attempts history.
 
 ## Instalation
 
@@ -71,7 +71,7 @@ TOKEN_EXPIRES_IN = 1h
 For backend you need MongoDB, I personally use Atlas cloud database.
 Steps for Atlas:
 
-- setup Atlas accout;
+- setup Atlas account;
 - create cluster;
 - create new data base with users collection;
 - open users collecction and create adminstarator user, \_id will be added automaticly.
