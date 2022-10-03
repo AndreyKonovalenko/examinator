@@ -63,7 +63,7 @@ const DropdownMenu = (props) => {
               </IconConteiner>
               <TextConteiner>
                 <a href='https://github.com/AndreyKonovalenko/examinator.git'>
-                  GitHub v{process.env.REACT_APP_VERSION}
+                  GitHub: v{process.env.REACT_APP_VERSION}
                 </a>
               </TextConteiner>
             </LiElem>
