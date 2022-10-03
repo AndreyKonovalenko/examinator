@@ -45,26 +45,30 @@ const DropdownMenu = (props) => {
           </TextConteiner>
         </LiElem>
         {admin ? (
-          <LiElem>
-            <IconConteiner>
-              <TbDatabase size={'1em'} />
-            </IconConteiner>
-            <TextConteiner>
-              {ru ? <span>база данных: {process.env.REACT_APP_DB}</span> : null}
-              {en ? <span>data base: {process.env.REACT_APP_DB}</span> : null}
-            </TextConteiner>
-          </LiElem>
+          <>
+            <LiElem>
+              <IconConteiner>
+                <TbDatabase size={'1em'} />
+              </IconConteiner>
+              <TextConteiner>
+                {ru ? (
+                  <span>база данных: {process.env.REACT_APP_DB}</span>
+                ) : null}
+                {en ? <span>data base: {process.env.REACT_APP_DB}</span> : null}
+              </TextConteiner>
+            </LiElem>
+            <LiElem>
+              <IconConteiner>
+                <TbBrandGithub size={'1em'} />
+              </IconConteiner>
+              <TextConteiner>
+                <a href='https://github.com/AndreyKonovalenko/examinator.git'>
+                  GitHub v{process.env.REACT_APP_VERSION}
+                </a>
+              </TextConteiner>
+            </LiElem>
+          </>
         ) : null}
-        <LiElem>
-          <IconConteiner>
-            <TbBrandGithub size={'1em'} />
-          </IconConteiner>
-          <TextConteiner>
-            <a href='https://github.com/AndreyKonovalenko/examinator.git'>
-              GitHub v{process.env.REACT_APP_VERSION}
-            </a>
-          </TextConteiner>
-        </LiElem>
         <LiElem>
           <TextConteiner></TextConteiner>
         </LiElem>
