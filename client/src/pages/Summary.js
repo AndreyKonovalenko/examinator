@@ -92,7 +92,7 @@ const Summary = () => {
           </h2>
           <h2 style={scoreDependentStyle}>
             {ru &&
-              `Тест' ${score >= 80 ? 'пройден' : 'провален'} c результатом 
+              `Тест ${score >= 80 ? 'пройден' : 'провален'} c результатом 
             ${score}%`}
             {en &&
               `You have ${score >= 80 ? 'succeeded' : 'failed'} with 
