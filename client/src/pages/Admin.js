@@ -42,7 +42,7 @@ const Admin = () => {
   const { users } = useSelector((state) => state.adminUsers);
   const { userLogs } = useSelector((state) => state.adminLogs);
   const { quiz } = useSelector((state) => state.adminQuiz);
-  const { log } = useSelector((state) => state.log);
+  const { fullUserLog } = useSelector((state) => state.adminFullUserLog);
   const { quizzes, isLoading } = useSelector((state) => state.adminQuizzes);
   const { questionData } = useSelector((state) => state.adminQuestion);
 
@@ -77,7 +77,7 @@ const Admin = () => {
       {editQuestionModal && questionData ? (
         <EditQuestionModal ru={ru} en={en} />
       ) : null}
-      {answersHistoryModal && log ? (
+      {answersHistoryModal && fullUserLog ? (
         <AnswersHistoryModal ru={ru} en={en} />
       ) : null}
       <Flex>

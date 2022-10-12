@@ -17,6 +17,8 @@ export const MContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.surface};
   border-radius: 15px;
   margin: auto;
+  margin-top: 10%;
+  max-width: 1000px;
   overflow: hidden;
   padding: 30px;
   position: relative;

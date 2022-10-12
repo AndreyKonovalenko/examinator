@@ -46,8 +46,11 @@ const getLog = asyncHandler(async (req, res) => {
       .in(log.answers.map((element) => element.qId))
       .exec();
     if (fullAnswers) {
-      log.answers.forEach((element, index) => {
-        Object.assign(element, { question: fullAnswers[index] });
+      log.answers.forEach((element) => {
+        const question = fullAnswers.find(
+          (elem) => elem._id.toString() === element.qId
+        );
+        Object.assign(element, { question: question });
       });
       res.status(200).json(log);
     }

@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from 'styled-components';
 import uniqid from 'uniqid';
@@ -6,54 +5,43 @@ import { ListElem } from '../styles/ListElem.styled';
 import Modal from '../controls/Modal';
 
 import { setAnswersHistoryModalOff } from '../../features/ui/uiSlice';
-import { getQuestion } from '../../features/adminQuestion/adminQuiestionSlice';
-import { getFullUserLog } from '../../features/adminFullUserLog/adminFullUserLogSlice';
+import { resetAdminFullUserLogState } from '../../features/adminFullUserLog/adminFullUserLogSlice';
 
 const AnswersHistoryModal = (props) => {
   const dispatch = useDispatch();
-  const { log } = useSelector((state) => state.log);
-  const { questionData, isSuccess } = useSelector(
-    (state) => state.adminQuestion
-  );
+  const { fullUserLog } = useSelector((state) => state.adminFullUserLog);
   const theme = useTheme();
   const { en, ru } = props;
-  // cosnt[(i, setI)] = us;
-  // const [answers, setAnswers] = useState([]);
-
-  // handlers
 
   const onClose = () => {
     dispatch(setAnswersHistoryModalOff());
+    dispatch(resetAdminFullUserLogState());
   };
 
-  // useEffect(() => {
-  //   if()
-  //       dispatch(getQuestion(element.qId));
-  //     }
-  //   }
-  //   if (questionData) {
-  //     setAnswers((prevState) => [...prevState, questionData]);
-  //   }
-  //   console.log(answers);
-  // }, [answers, dispatch, log.answers, questionData]);
+  const list = fullUserLog.answers.map((element) => {
+    const optionList = element.question.options.map((el, index) => {
+      let styled = null;
+      if (index === parseInt(element.question.currect)) {
+        styled = { color: theme.colors.primary.light };
+      }
+      if (
+        index === parseInt(element.answer[0]) &&
+        parseInt(element.answer[0]) !== parseInt(element.question.currect)
+      ) {
+        styled = { color: theme.colors.error };
+      }
 
-  const list = log.answers.map((element) => {
-    // const optionList = element.options.map((el, index) => (
-    // <li
-    //   key={uniqid()}
-    //   style={
-    //     index === parseInt(element.currect)
-    //       ? { color: theme.colors.primary.light }
-    //       : null
-    //   }>
-    //   {el}
-    // </li>
-    // ));
+      return (
+        <li key={uniqid()} style={styled}>
+          {el}
+        </li>
+      );
+    });
     return (
       <div style={{ display: 'flex' }} key={uniqid()}>
         <ListElem key={uniqid()}>
-          {element.answer}
-          {/* <ul>{optionList}</ul> */}
+          {element.question.question}
+          <ul>{optionList}</ul>
         </ListElem>
       </div>
     );
@@ -62,10 +50,11 @@ const AnswersHistoryModal = (props) => {
   return (
     <Modal onClose={onClose}>
       <h2>
-        {ru && 'Tема: '}
+        {ru && 'Тема: '}
         {en && 'Topic: '}
-        {log.title}
+        {fullUserLog.title}
       </h2>
+      {list}
     </Modal>
   );
 };
