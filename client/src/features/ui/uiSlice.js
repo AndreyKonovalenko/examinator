@@ -14,6 +14,7 @@ const initialState = {
   addQuizModal: false,
   addQuestionModal: false,
   editQuestionModal: false,
+  answersHistoryModal: false,
   optionsData: [{ id: uniqid(), defaultValue: '' }],
 };
 
@@ -90,6 +91,12 @@ export const uiSlice = createSlice({
     setEditQuestionModalOff: (state) => {
       state.editQuestionModal = false;
     },
+    setAnswersHistoryModalOn: (state) => {
+      state.answersHistoryModal = true;
+    },
+    setAnswersHistoryModalOff: (state) => {
+      state.answersHistoryModal = false;
+    },
     addToOptions: (state) => {
       state.optionsData.push({ id: uniqid(), defaultValue: '' });
     },
@@ -139,6 +146,8 @@ export const {
   setAddQuestionModalOff,
   setEditQuestionModalOff,
   setEditQuestionModalOn,
+  setAnswersHistoryModalOn,
+  setAnswersHistoryModalOff,
   addToOptions,
   setOptionsData,
   removeFromOptions,

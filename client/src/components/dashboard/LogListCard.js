@@ -1,9 +1,9 @@
-import uniqid from "uniqid";
-import { StyledListCard } from "../styles/ListCard.styled";
-import { ListElem } from "../styles/ListElem.styled";
-import { useTheme } from "styled-components";
-import { updatedAtParser, dateCompare } from "../../utils/dateUtils";
-import { scoreCulc } from "../../utils/scoreCulc";
+import uniqid from 'uniqid';
+import { StyledListCard } from '../styles/ListCard.styled';
+import { ListElem } from '../styles/ListElem.styled';
+import { useTheme } from 'styled-components';
+import { updatedAtParser, dateCompare } from '../../utils/dateUtils';
+import { scoreCulc } from '../../utils/scoreCulc';
 
 const LogListCard = (props) => {
   const theme = useTheme();
@@ -14,8 +14,8 @@ const LogListCard = (props) => {
       return (
         <ListElem key={uniqid()} onClick={() => onClick(element)}>
           <h2>
-            {en ? "Quiz has been deleted" : null}
-            {ru ? "Тест был удлен из системы" : null}
+            {en ? 'Quiz has been deleted' : null}
+            {ru ? 'Тест был удлен из системы' : null}
           </h2>
         </ListElem>
       );
@@ -40,16 +40,18 @@ const LogListCard = (props) => {
         {ru ? <p>Тема: {element.title}</p> : null}
         {en ? <p>Quiz: {element.title}</p> : null}
         {ru ? (
-          <p style={score >= 80 ? success : fail}>
-            Тест {score >= 80 ? "пройден успешно" : "провален"} с результатом{" "}
-            {score}%, правильных ответов: {element.result} из{" "}
+          <p style={score >= element.threshold ? success : fail}>
+            Тест {score >= element.threshold ? 'пройден успешно' : 'провален'} с
+            результатом {score}%, правильных ответов: {element.result} из{' '}
             {element.answers.length}
           </p>
         ) : null}
         {en ? (
-          <p style={score >= 80 ? success : fail}>
-            {score >= 80 ? "You have succeeded" : "You have failed"} with{" "}
-            {score}%, correct answers: {element.result} out of{" "}
+          <p style={score >= element.threshold ? success : fail}>
+            {score >= element.threshold
+              ? 'You have succeeded'
+              : 'You have failed'}{' '}
+            with {score}%, correct answers: {element.result} out of{' '}
             {element.answers.length}
           </p>
         ) : null}
@@ -57,12 +59,12 @@ const LogListCard = (props) => {
         <p style={comparedDates ? success : fail}>
           {en
             ? comparedDates
-              ? "Relevant"
+              ? 'Relevant'
               : `Irrelevant, quiz last update at ${lastQuizUpdate}`
             : null}
           {ru
             ? comparedDates
-              ? "Актуальный результат"
+              ? 'Актуальный результат'
               : `Результат устарел, структура опроса изменена позднее даты попытки: ${lastQuizUpdate}`
             : null}
         </p>

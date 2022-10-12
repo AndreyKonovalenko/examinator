@@ -28,7 +28,7 @@ const Summary = () => {
     updatedAt: '',
     result: '',
   });
-  const { name, title, answers, updatedAt, result } = data;
+  const { name, title, answers, updatedAt, result, threshold } = data;
   const etemptTime = updatedAtParser(updatedAt);
   const score = scoreCulc(result, answers);
   const scoreDependentStyle = {
@@ -92,10 +92,12 @@ const Summary = () => {
           </h2>
           <h2 style={scoreDependentStyle}>
             {ru &&
-              `Тест ${score >= 80 ? 'пройден' : 'провален'} c результатом 
+              `Тест ${
+                score >= threshold ? 'пройден' : 'провален'
+              } c результатом 
             ${score}%`}
             {en &&
-              `You have ${score >= 80 ? 'succeeded' : 'failed'} with 
+              `You have ${score >= threshold ? 'succeeded' : 'failed'} with 
             ${score}%`}
           </h2>
           <p>

@@ -1,24 +1,25 @@
-import React from "react";
+import React from 'react';
 
-import { Helmet } from "react-helmet";
-import { toast } from "react-toastify";
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
-import { useSelector, useDispatch } from "react-redux";
+import { Helmet } from 'react-helmet';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { Flex } from "../components/styles/Flex.styled";
-import AdminRegisterForm from "../components/admin/AdminRegisterFrom";
-import AddQuizModal from "../components/admin/AddQuizModal";
-import AddQuestionModal from "../components/admin/AddQuestionModal";
-import LogsListCardAdmin from "../components/admin/LogsListCardAdmin";
-import QuizCardAdmin from "../components/admin/QuizCardAdmin";
-import QuizzesListCardAdmin from "../components/admin/QuizzesListCardAdmin";
-import Spinner from "../components/Spinner";
-import UsersListCard from "../components/admin/UsersListCard";
-import EditQuestionModal from "../components/admin/EditQuestionModal";
+import { Flex } from '../components/styles/Flex.styled';
+import AdminRegisterForm from '../components/admin/AdminRegisterFrom';
+import AddQuizModal from '../components/admin/AddQuizModal';
+import AddQuestionModal from '../components/admin/AddQuestionModal';
+import LogsListCardAdmin from '../components/admin/LogsListCardAdmin';
+import QuizCardAdmin from '../components/admin/QuizCardAdmin';
+import QuizzesListCardAdmin from '../components/admin/QuizzesListCardAdmin';
+import Spinner from '../components/Spinner';
+import UsersListCard from '../components/admin/UsersListCard';
+import EditQuestionModal from '../components/admin/EditQuestionModal';
+import AnswersHistoryModal from '../components/admin/AnswersHistoryModal';
 
-import { getQuizzes } from "../features/adminQuizzes/adminQuizzesSlice";
-import { getUsers } from "../features/adminUsers/adminUsersSlice";
+import { getQuizzes } from '../features/adminQuizzes/adminQuizzesSlice';
+import { getUsers } from '../features/adminUsers/adminUsersSlice';
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -36,21 +37,23 @@ const Admin = () => {
     addQuizModal,
     addQuestionModal,
     editQuestionModal,
+    answersHistoryModal,
   } = useSelector((state) => state.ui);
   const { users } = useSelector((state) => state.adminUsers);
   const { userLogs } = useSelector((state) => state.adminLogs);
   const { quiz } = useSelector((state) => state.adminQuiz);
+  const { log } = useSelector((state) => state.log);
   const { quizzes, isLoading } = useSelector((state) => state.adminQuizzes);
   const { questionData } = useSelector((state) => state.adminQuestion);
 
   useEffect(() => {
     if (!user) {
-      navigate("/login");
+      navigate('/login');
     }
     if (user) {
       if (!user.admin) {
-        toast.error("You do not have administrator access!");
-        navigate("/");
+        toast.error('You do not have administrator access!');
+        navigate('/');
       } else {
         dispatch(getUsers());
         dispatch(getQuizzes());
@@ -65,7 +68,7 @@ const Admin = () => {
   return (
     <>
       <Helmet>
-        <meta charSet="utf-8" />
+        <meta charSet='utf-8' />
         <title>Admin | Examinator</title>
       </Helmet>
       {isLoading ? <Spinner /> : null}
@@ -74,7 +77,9 @@ const Admin = () => {
       {editQuestionModal && questionData ? (
         <EditQuestionModal ru={ru} en={en} />
       ) : null}
-
+      {answersHistoryModal && log ? (
+        <AnswersHistoryModal ru={ru} en={en} />
+      ) : null}
       <Flex>
         {registerUserTab ? <AdminRegisterForm en={en} ru={ru} /> : null}
         {users && usersTab ? (

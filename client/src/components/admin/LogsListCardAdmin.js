@@ -1,25 +1,28 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
-import uniqid from "uniqid";
-import CheckBox from "./CheckBox";
-import SettingPanel from "./SettingsPanel";
-import { useTheme } from "styled-components";
-import { ListElem } from "../styles/ListElem.styled";
-import { setLogsTabOff } from "../../features/ui/uiSlice";
-import { StyledListCard } from "../styles/ListCard.styled";
-import { StyledSeparator } from "../styles/Separator.styled";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
+import uniqid from 'uniqid';
+import CheckBox from './CheckBox';
+import SettingPanel from './SettingsPanel';
+import { useTheme } from 'styled-components';
+import { ListElem } from '../styles/ListElem.styled';
+import { setLogsTabOff } from '../../features/ui/uiSlice';
+import { StyledListCard } from '../styles/ListCard.styled';
+import { StyledSeparator } from '../styles/Separator.styled';
 
-import { deleteLog } from "../../features/adminLogs/adminLogsSlice";
-import { getLogById } from "../../features/log/logSlice";
+import { deleteLog } from '../../features/adminLogs/adminLogsSlice';
+import { getLogById } from '../../features/log/logSlice';
+import { getFullUserLog } from '../../features/adminFullUserLog/adminFullUserLogSlice';
 
-import { updatedAtParser, dateCompare } from "../../utils/dateUtils";
-import { scoreCulc } from "../../utils/scoreCulc";
+import { updatedAtParser, dateCompare } from '../../utils/dateUtils';
+import { scoreCulc } from '../../utils/scoreCulc';
+
+import { setAnswersHistoryModalOn } from '../../features/ui/uiSlice';
 
 const LogsListCardAdmin = (props) => {
   const theme = useTheme();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const dispatch = useDispatch();
   const { en, item, ru } = props;
   const [isSelected, setIsSelected] = useState(null);
@@ -29,8 +32,10 @@ const LogsListCardAdmin = (props) => {
   const onClickHandler = (id, event) => {
     event.preventDefault();
     setIsSelected(id);
+    dispatch(getFullUserLog(id));
     dispatch(getLogById(id));
-    navigate("/summary");
+    dispatch(setAnswersHistoryModalOn());
+    //  navigate('/summary');
   };
 
   const onCheckHandler = (id, event) => {
@@ -51,7 +56,7 @@ const LogsListCardAdmin = (props) => {
 
   const onGearHandler = () => {
     if (item.length === 0) {
-      toast.error("Nothing to edit");
+      toast.error('Nothing to edit');
     }
     if (item.length > 0) {
       setIsEdit(!isEdit);
@@ -64,14 +69,14 @@ const LogsListCardAdmin = (props) => {
         dispatch(deleteLog(element));
       }
     } else {
-      toast.error("You try to delete empty or not selected logs!");
+      toast.error('You try to delete empty or not selected logs!');
     }
   };
 
   const list = item.map((element, index) => {
     if (element.quiz === null) {
       return (
-        <div style={{ display: "flex" }} key={uniqid()}>
+        <div style={{ display: 'flex' }} key={uniqid()}>
           {isEdit ? (
             <CheckBox
               onCheckHandler={onCheckHandler}
@@ -82,11 +87,10 @@ const LogsListCardAdmin = (props) => {
           ) : null}
           <ListElem
             key={uniqid()}
-            onClick={(event) => onClickHandler(element._id, event)}
-          >
+            onClick={(event) => onClickHandler(element._id, event)}>
             <h2>
-              {en ? "Quiz has been deleted" : null}
-              {ru ? "Тест был дулаент из системы" : null}
+              {en ? 'Quiz has been deleted' : null}
+              {ru ? 'Тест был дулаент из системы' : null}
             </h2>
           </ListElem>
         </div>
@@ -108,7 +112,7 @@ const LogsListCardAdmin = (props) => {
     };
 
     return (
-      <div style={{ display: "flex" }} key={uniqid()}>
+      <div style={{ display: 'flex' }} key={uniqid()}>
         {isEdit ? (
           <CheckBox
             onCheckHandler={onCheckHandler}
@@ -128,21 +132,22 @@ const LogsListCardAdmin = (props) => {
                   color: theme.colors.text.onPrimary,
                 }
               : null
-          }
-        >
+          }>
           {ru ? <p>Тема: {element.title}</p> : null}
           {en ? <p>Quiz: {element.title}</p> : null}
           {ru ? (
-            <p style={score >= 80 ? success : fail}>
-              Тест {score >= 80 ? "пройден успешно" : "провален"} с результатом{" "}
-              {score}%, правильных ответов: {element.result} из{" "}
+            <p style={score >= element.threshold ? success : fail}>
+              Тест {score >= element.threshold ? 'пройден успешно' : 'провален'}{' '}
+              с результатом {score}%, правильных ответов: {element.result} из{' '}
               {element.answers.length}
             </p>
           ) : null}
           {en ? (
-            <p style={score >= 80 ? success : fail}>
-              {score >= 80 ? "You have succeeded" : "You have failed"} with{" "}
-              {score}%, correct answers: {element.result} out of{" "}
+            <p style={score >= element.threshold ? success : fail}>
+              {score >= element.threshold
+                ? 'You have succeeded'
+                : 'You have failed'}{' '}
+              with {score}%, correct answers: {element.result} out of{' '}
               {element.answers.length}
             </p>
           ) : null}
@@ -150,12 +155,12 @@ const LogsListCardAdmin = (props) => {
           <p style={comparedDates ? success : fail}>
             {en
               ? comparedDates
-                ? "Relevant"
+                ? 'Relevant'
                 : `Irrelevant, quiz last update at ${lastQuizUpdate}`
               : null}
             {ru
               ? comparedDates
-                ? "Актуальный результат"
+                ? 'Актуальный результат'
                 : `Результат устарел, структура опроса изменена позднее даты попытки: ${lastQuizUpdate}`
               : null}
           </p>

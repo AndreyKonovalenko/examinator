@@ -6,7 +6,7 @@ import PodkovaBold from '../assets/fonts/Podkova-Bold.ttf';
 import theme from '../theme/index.js';
 
 const createPDF = (log, lang) => {
-  const { title, name, result, answers, updatedAt } = log;
+  const { title, name, result, answers, updatedAt, threshold } = log;
   const { ru, en } = lang;
   const doc = new jsPDF();
   const score = scoreCulc(result, answers);
@@ -68,10 +68,11 @@ const createPDF = (log, lang) => {
     'center'
   );
   const summary =
-    score >= 80
+    score >= threshold
       ? `${(ru && 'пройден') || (en && 'succeeded')}`
       : `${(ru && 'провален') || (en && 'failed')}`;
-  const color = score >= 80 ? theme.colors.primary.light : theme.colors.error;
+  const color =
+    score >= threshold ? theme.colors.primary.light : theme.colors.error;
   doc.setTextColor(color);
   doc.text(
     `${(ru && 'Тест') || (en && 'You have')}  ${summary} ${

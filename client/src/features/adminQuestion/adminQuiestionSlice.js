@@ -1,16 +1,16 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import adminQuestionService from "./adminQuestionService";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import adminQuestionService from './adminQuestionService';
 
 const initialState = {
   questionData: null,
   isError: false,
   isSuccess: false,
   isLoading: false,
-  message: "",
+  message: '',
 };
 
 export const getQuestion = createAsyncThunk(
-  "admin/getQuestionData",
+  'admin/getQuestionData',
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token;
@@ -28,7 +28,7 @@ export const getQuestion = createAsyncThunk(
 );
 
 export const adminQuestionSlice = createSlice({
-  name: "admin",
+  name: 'admin',
   initialState,
   reducers: {
     resetAdminQuestionState: (state) => initialState,

@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import adminUsersReducer from '../features/adminUsers/adminUsersSlice';
 import adminLogsReducer from '../features/adminLogs/adminLogsSlice';
+import adminFullUserLogReducer from '../features/adminFullUserLog/adminFullUserLogSlice';
 import adminQuestionReducer from '../features/adminQuestion/adminQuiestionSlice';
 import adminQuizReducer from '../features/adminQuiz/adminQuizSlice';
 import adminQuizzesReducer from '../features/adminQuizzes/adminQuizzesSlice';
@@ -16,6 +17,7 @@ export default configureStore({
   reducer: {
     adminUsers: adminUsersReducer,
     adminLogs: adminLogsReducer,
+    adminFullUserLog: adminFullUserLogReducer,
     adminQuestion: adminQuestionReducer,
     adminQuiz: adminQuizReducer,
     adminQuizzes: adminQuizzesReducer,

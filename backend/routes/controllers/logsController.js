@@ -1,7 +1,7 @@
-const asyncHandler = require("express-async-handler");
-const Log = require("../../models/logModel");
-const Quiz = require("../../models/quizModel");
-const culcResult = require("../../utils/culcResult");
+const asyncHandler = require('express-async-handler');
+const Log = require('../../models/logModel');
+const Quiz = require('../../models/quizModel');
+const culcResult = require('../../utils/culcResult');
 
 // @desc Get user logs
 // @route GET /api/logs
@@ -9,17 +9,17 @@ const culcResult = require("../../utils/culcResult");
 
 const getLogs = asyncHandler(async (req, res) => {
   const data = await Log.find({ user: req.user.id })
-    .sort("-updatedAt")
+    .sort('-updatedAt')
     .populate({
-      path: "quiz",
-      select: "updatedAt",
+      path: 'quiz',
+      select: 'updatedAt',
     });
 
   if (data) {
     res.status(200).json(data);
   } else {
     res.status(400);
-    throw new Error("Log not found");
+    throw new Error('Log not found');
   }
 });
 
@@ -28,12 +28,12 @@ const getLogs = asyncHandler(async (req, res) => {
 // @access Private
 
 const getLog = asyncHandler(async (req, res) => {
-  const log = await Log.findOne({ _id: req.params.id }).populate("updatedAt");
+  const log = await Log.findOne({ _id: req.params.id });
   if (log) {
     res.status(200).json(log);
   } else {
     res.status(400);
-    throw new Error("Invalid log id");
+    throw new Error('Invalid log id');
   }
 });
 
@@ -44,15 +44,16 @@ const getLog = asyncHandler(async (req, res) => {
 const setLog = asyncHandler(async (req, res) => {
   const data = req.body;
   const currentQuiz = await Quiz.findOne({ _id: data.id })
-    .populate("questions")
+    .populate('questions')
     .exec();
   if (currentQuiz) {
-    const { questions, title } = currentQuiz;
+    const { questions, title, threshold } = currentQuiz;
     const newLog = await Log.create({
       user: req.user.id,
       name: req.user.name,
       quiz: data.id,
       title: title,
+      threshold: threshold,
       answers: data.answers,
       result: culcResult(questions, data.answers),
     });
@@ -60,11 +61,11 @@ const setLog = asyncHandler(async (req, res) => {
       res.status(200).json(newLog);
     } else {
       res.status(400);
-      throw new Error("New Log has not been created");
+      throw new Error('New Log has not been created');
     }
   } else {
     res.status(400);
-    throw new Error("Quiz not found");
+    throw new Error('Quiz not found');
   }
 });
 

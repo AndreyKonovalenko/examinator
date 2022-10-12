@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const quizSchema = mongoose.Schema(
   {
@@ -6,10 +6,14 @@ const quizSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    questions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Question" }],
+    threshold: {
+      type: Number,
+      required: true,
+    },
+    questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
   },
   {
     timestamps: true,
   }
 );
-module.exports = mongoose.model("Quiz", quizSchema);
+module.exports = mongoose.model('Quiz', quizSchema);
