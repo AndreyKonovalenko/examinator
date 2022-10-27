@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import uniqid from "uniqid";
 import { useTheme } from "styled-components";
 import { ListElem } from "../styles/ListElem.styled";
+import Bage from "../controls/Bage";
 import { StyledListCard } from "../styles/ListCard.styled";
 import { StyledSeparator } from "../styles/Separator.styled";
 import {
@@ -93,6 +94,7 @@ const QuizzesListCardAdmin = (props) => {
           }
           onClick={(event) => onClickHandler(element._id, event)}
         >
+          <Bage text={`${element.threshold} %`} />
           <h2>{element.title}</h2>
         </ListElem>
       </div>
