@@ -34,7 +34,6 @@ const Textarea = (props) => {
         value={data}
         onChange={onChange}
         maxLength={maxLength}
-        type={type}
       />
       <Flex style={{ justifyContent: "flex-end" }}>
         {save ? (
