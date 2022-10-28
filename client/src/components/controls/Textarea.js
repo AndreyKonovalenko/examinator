@@ -2,17 +2,8 @@ import { useEffect, useState, useRef } from "react";
 import { Button, Conteiner, STextarea, Flex } from "../styles/Textarea.styled";
 
 const Textarea = (props) => {
-  const {
-    onSave,
-    en,
-    ru,
-    maxLength,
-    id,
-    save,
-    defaultValue,
-    styleOption,
-    type,
-  } = props;
+  const { onSave, en, ru, maxLength, id, save, defaultValue, styleOption } =
+    props;
 
   const [data, setData] = useState(defaultValue);
   const textAreaRef = useRef(null);
