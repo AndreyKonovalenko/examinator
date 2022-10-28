@@ -45,6 +45,7 @@ const getFullQuiz = asyncHandler(async (req, res) => {
 const addQuiz = asyncHandler(async (req, res) => {
   const quiz = await Quiz.create({
     title: req.body.title,
+    threshold: req.body.threshold,
   });
 
   res.status(200).json(quiz);

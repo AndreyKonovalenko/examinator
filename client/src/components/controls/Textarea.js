@@ -1,9 +1,18 @@
-import { useEffect, useState, useRef } from 'react';
-import { Button, Conteiner, STextarea, Flex } from '../styles/Textarea.styled';
+import { useEffect, useState, useRef } from "react";
+import { Button, Conteiner, STextarea, Flex } from "../styles/Textarea.styled";
 
 const Textarea = (props) => {
-  const { onSave, en, ru, maxLength, id, save, defaultValue, styleOption } =
-    props;
+  const {
+    onSave,
+    en,
+    ru,
+    maxLength,
+    id,
+    save,
+    defaultValue,
+    styleOption,
+    type,
+  } = props;
 
   const [data, setData] = useState(defaultValue);
   const textAreaRef = useRef(null);
@@ -14,12 +23,12 @@ const Textarea = (props) => {
   };
 
   const resizeTextArea = () => {
-    textAreaRef.current.style.height = 'auto';
-    textAreaRef.current.style.height = textAreaRef.current.scrollHeight + 'px';
+    textAreaRef.current.style.height = "auto";
+    textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
   };
 
   const onClear = () => {
-    setData('');
+    setData("");
   };
 
   useEffect(() => {
@@ -34,15 +43,16 @@ const Textarea = (props) => {
         value={data}
         onChange={onChange}
         maxLength={maxLength}
+        type={type}
       />
-      <Flex style={{ justifyContent: 'flex-end' }}>
+      <Flex style={{ justifyContent: "flex-end" }}>
         {save ? (
           <Button onClick={onSave}>
-            {ru ? 'Сохранить' : null} {en ? 'Save' : null}
+            {ru ? "Сохранить" : null} {en ? "Save" : null}
           </Button>
         ) : null}
         <Button onClick={onClear}>
-          {ru ? 'Очистить' : null} {en ? 'Clear' : null}
+          {ru ? "Очистить" : null} {en ? "Clear" : null}
         </Button>
       </Flex>
     </Conteiner>
