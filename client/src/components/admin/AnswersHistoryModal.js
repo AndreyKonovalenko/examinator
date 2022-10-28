@@ -1,11 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useTheme } from 'styled-components';
-import uniqid from 'uniqid';
-import { ListElem } from '../styles/ListElem.styled';
-import Modal from '../controls/Modal';
+import { useDispatch, useSelector } from "react-redux";
+import { useTheme } from "styled-components";
+import uniqid from "uniqid";
+import Bage from "../controls/Bage";
+import { ListElem } from "../styles/ListElem.styled";
+import Modal from "../controls/Modal";
 
-import { setAnswersHistoryModalOff } from '../../features/ui/uiSlice';
-import { resetAdminFullUserLogState } from '../../features/adminFullUserLog/adminFullUserLogSlice';
+import { setAnswersHistoryModalOff } from "../../features/ui/uiSlice";
+import { resetAdminFullUserLogState } from "../../features/adminFullUserLog/adminFullUserLogSlice";
 
 const AnswersHistoryModal = (props) => {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const AnswersHistoryModal = (props) => {
       );
     });
     return (
-      <div style={{ display: 'flex' }} key={uniqid()}>
+      <div style={{ display: "flex" }} key={uniqid()}>
         <ListElem key={uniqid()}>
           {element.question.question}
           <ul>{optionList}</ul>
@@ -47,12 +48,23 @@ const AnswersHistoryModal = (props) => {
     );
   });
 
+  let textInjection;
+  if (en) {
+    textInjection = "Threshold: ";
+  }
+  if (ru) {
+    textInjection = "Порог: ";
+  }
+
   return (
     <Modal onClose={onClose}>
       <h2>
-        {ru && 'Тема: '}
-        {en && 'Topic: '}
+        <Bage text={`${textInjection}${fullUserLog.threshold} %`} />
+        {ru && "Тема: "}
+        {en && "Topic: "}
         {fullUserLog.title}
+
+        {}
       </h2>
       {list}
     </Modal>
