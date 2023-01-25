@@ -8,7 +8,7 @@ At current stage of development examinator has only one quiz type:
 
 - one correct answer per question;
 - all questions in quiz appears in random order;
-- questions options appears also in random order.
+- questions options appear also in random order.
 
 <kbd>
   <img src="https://user-images.githubusercontent.com/16167616/190920500-0e8fb83a-9fa7-4e7a-9235-c2dc7e38207d.gif"/>
@@ -26,16 +26,16 @@ At current stage of development examinator has only one quiz type:
 
 - Create, delete non-admin users;
 - Create, Edit, Delete quizzes;
-- Create, Edit, Delete(archicve) questions connected to editing quiz.
+- Create, Edit, Delete(archive) questions connected to editing quiz.
 - View all users attempts history;
-- Delete users attempts history.
+- Delete users' attempts history.
 
-## Instalation
+## Installation
 
 You can run it on your local machine.
 
-If you familiar with Heroku you can deploy it on your Heroku account after installing it locally.
-Package.json file has "heroku-postbuild" script for Heroku deployment.
+If you are familiar with Heroku you can deploy it on your Heroku account after installing it locally.
+Package.json file has a "heroku-postbuild" script for Heroku deployment.
 
 Clone latest release branch.
 
@@ -57,7 +57,7 @@ $ npm install --prefix client
 ```
 
 Before run you need setup environment variables in .env
-.env file shoud be maulay created in the root folder.
+.env file should be manually created in the root folder.
 
 ```
 NODE_ENV = development
@@ -73,8 +73,8 @@ Steps for Atlas:
 
 - setup Atlas account;
 - create cluster;
-- create new data base with users collection;
-- open users collecction and create adminstarator user, \_id will be added automaticly.
+- create new database with users collection;
+- open users collection and create administrator user, \_id will be added automatically.
 
 Use this user model:
 
@@ -88,7 +88,7 @@ Use this user model:
 ## Important
 
 For password generation use some free online bcrypt Password Generator with 10 Rounds.
-If you pass password without encryption, it won't work.
+If you pass a password without encryption, it won't work.
 
 ```
 npm run prod
@@ -96,4 +96,6 @@ npm run prod
 
 You can now view app in the browser localhost:5000
 
-Login with admin account, create new users, quizzes, pass quizzes, have fun.
+Login with an admin account, create new users, quizzes, pass quizzes, have fun.
+
+
