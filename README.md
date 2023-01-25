@@ -2,7 +2,7 @@
 
 ![NPM](https://img.shields.io/npm/l/react-toastify.svg?label=%F0%9F%93%9Clicense&style=for-the-badge)
 
-### 🎉 Examinator is a simple quiz app, it allows you to create and pass quizzes!
+### 🎉 Examinator is a quiz app, it allows you to create and pass quizzes!
 
 At current stage of development examinator has only one quiz type:
 
